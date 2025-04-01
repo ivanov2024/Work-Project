@@ -1,11 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinBridge", "FinBridge\FinBridge.csproj", "{2F1D94D1-4A95-48E6-9BF5-89F9859B9260}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinBridge.Data.Models", "FinBridge.Data.Models\FinBridge.Data.Models.csproj", "{02C8D1C7-B481-421F-8007-46A04ED38EA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinBridge.Data.Models.Helpers", "FinBridge.Data.Models.Helpers\FinBridge.Data.Models.Helpers.csproj", "{BC1EB87C-102B-4669-8F51-35FDF78A726D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinBridge.Data.Models.Exceptions", "FinBridge.Data.Models.Exceptions\FinBridge.Data.Models.Exceptions.csproj", "{5258F9B2-0468-40AB-BBA7-30F7F676C963}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		countries.json = countries.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +30,19 @@ Global
 		{02C8D1C7-B481-421F-8007-46A04ED38EA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02C8D1C7-B481-421F-8007-46A04ED38EA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02C8D1C7-B481-421F-8007-46A04ED38EA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC1EB87C-102B-4669-8F51-35FDF78A726D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC1EB87C-102B-4669-8F51-35FDF78A726D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC1EB87C-102B-4669-8F51-35FDF78A726D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC1EB87C-102B-4669-8F51-35FDF78A726D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5258F9B2-0468-40AB-BBA7-30F7F676C963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5258F9B2-0468-40AB-BBA7-30F7F676C963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5258F9B2-0468-40AB-BBA7-30F7F676C963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5258F9B2-0468-40AB-BBA7-30F7F676C963}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A3BD1F8-63BD-483D-9956-7A81251411DB}
 	EndGlobalSection
 EndGlobal

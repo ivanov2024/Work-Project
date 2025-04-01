@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinBridge.Data.Models.Exceptions\FinBridge.Data.Models.Exceptions.csproj" />
+    <ProjectReference Include="..\FinBridge.Data.Models\FinBridge.Data.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,18 +1,39 @@
-﻿namespace FinBridge.Data.Models
+﻿using System.Numerics;
+using System.Text;
+
+namespace FinBridge.Data.Models
 {
-    internal static sealed class IBANGenerator
+    /// <summary>
+    /// This class is used to generate IBAN for the corresponding country 
+    /// </summary>
+    internal static class IBANGenerator
     {
-        private static string GenerateIBAN(string accountId)
+        public static string GenerateIBAN(string countryCode, string bankCode, string accountNumber)
         {
-            string countryCode = "BG";
+            //Temporary using "00" as check digits
+            string ibanWithoutControl = $"{countryCode}00{bankCode}{accountNumber}";
 
-            string controlDigits = "80";
+            // We calculate the checksum with an optimized algorithm
+            int controlDigits = 98 - Modulo97(ibanWithoutControl + countryCode);
 
-            string bankCode = "BNBG";
+            // Return the generated IBAN
+            return $"{countryCode}{controlDigits:D2}{bankCode}{accountNumber}";
+        }
 
-            string accountNumber = accountId.Substring(0, 16);
+        private static int Modulo97(string iban)
+        {
+            long remainder = 0;
 
-            return $"{countryCode}{controlDigits}{bankCode}{accountNumber}";
+            foreach (char ch in iban)
+            {
+                int value = char.IsLetter(ch) ? ch - 'A' + 10 : ch - '0';
+                remainder = (remainder * 10 + value) % 97;
+            }
+
+            return (int)remainder;
         }
     }
+
+    // Code written by @ivanov2024
+    // All rights served
 }

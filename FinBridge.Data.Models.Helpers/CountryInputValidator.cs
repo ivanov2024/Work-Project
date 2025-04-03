@@ -2,8 +2,6 @@
 using FinBridge.Data.Models.Exceptions.CountryCodeErrorHandler;
 using FinBridge.Data.Models.Exceptions.CountryCodeExceptions;
 using FinBridge.Data.Models.Helpers.DataLoader;
-using static FinBridge.Data.Models.Helpers.CountryCodeValidator;
-using static FinBridge.Data.Models.Helpers.CountryNameValidator;
 
 namespace FinBridge.Data.Models.Helpers
 {

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using FinBridge.Data.Models.BankAccountEnums;
+using System.Numerics;
 using System.Text;
 
 namespace FinBridge.Data.Models
@@ -8,7 +9,7 @@ namespace FinBridge.Data.Models
     /// </summary>
     internal static class IBANGenerator
     {
-        public static string GenerateIBAN(string countryCode, string bankCode, string accountNumber)
+        public static string GenerateIBAN(CountryCode countryCode, string bankCode, string accountNumber)
         {
             //Temporary using "00" as check digits
             string ibanWithoutControl = $"{countryCode}00{bankCode}{accountNumber}";

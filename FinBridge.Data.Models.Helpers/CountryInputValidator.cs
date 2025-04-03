@@ -18,7 +18,7 @@ namespace FinBridge.Data.Models.Helpers
     {
         public static bool IsValid(string input)
         {
-            if (string.IsNullOrEmpty(input))
+            if (string.IsNullOrWhiteSpace(input))
                 throw new NullInputException(input);
 
             if (input.Length < 3)

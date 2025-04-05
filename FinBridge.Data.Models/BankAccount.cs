@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using FinBridge.Data.Models.BankAccountEnums;
 
-using static FinBridge.Data.Models.IBANGenerator;
-using static FinBridge.Data.Models.CurrencySeter;
+using static FinBridge.Data.Models.Generators.AccountNumberGenerator;
+using static FinBridge.Data.Models.Generators.IBANGenerator;
+using static FinBridge.Data.Models.Setters.CurrencySeter;
 
 namespace FinBridge.Data.Models
 {
@@ -15,14 +16,19 @@ namespace FinBridge.Data.Models
             = Guid.NewGuid();
 
         [Required]
-        public decimal Balance { get; set; }
+        [Unicode(true)]
+        public string IBAN { get; private set; }
+            = null!;
 
         [Required]
         public string AccountNumber { get; set; }
             = null!;
-
+       
         [Required]
         public CountryCode CountryCode { get; set; }
+
+        [Required]
+        public AccountType AccountType { get; set; }
 
         [Required]
         [ForeignKey(nameof(Bank))]
@@ -33,17 +39,18 @@ namespace FinBridge.Data.Models
         public string Currency { get; private set; } 
             = null!;
 
+
         [Required]
-        [Unicode(true)]
-        public string IBAN { get; private set; } 
-            = null!;
+        public decimal Balance { get; set; }
 
         public BankAccount(string? currencyCode)
         {
-            IBAN 
-                = GenerateIBAN(CountryCode, Bank.BankCode, AccountNumber);
-            Currency 
-                = SetCurrency(currencyCode, CountryCode.ToString());
+            this.AccountNumber
+                = GenerateAccountNumber();
+            this.IBAN 
+                = GenerateIBAN(this.CountryCode, this.Bank.BankCode, this.AccountNumber);
+            this.Currency 
+                = SetCurrency(currencyCode, this.CountryCode.ToString());
         }
     }
 }

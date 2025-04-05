@@ -1,0 +1,30 @@
+[
+  {
+    "code": 0,
+    "type": "CheckingAccount"
+  },
+  {
+    "code": 1,
+    "type": "DepositAccount"
+  },
+  {
+    "code": 2,
+    "type": "SavingsAccount"
+  },
+  {
+    "code": 3,
+    "type": "BudgetEnterpriseAccount"
+  },
+  {
+    "code": 4,
+    "type": "AccumulationAccount"
+  },
+  {
+    "code": 5,
+    "type": "LetterOfCreditAccount"
+  },
+  {
+    "code": 6,
+    "type": "LiquidationAccount"
+  }
+]

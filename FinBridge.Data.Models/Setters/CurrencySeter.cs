@@ -1,4 +1,4 @@
-﻿namespace FinBridge.Data.Models
+﻿namespace FinBridge.Data.Models.Setters
 {
     public static class CurrencySeter
     {

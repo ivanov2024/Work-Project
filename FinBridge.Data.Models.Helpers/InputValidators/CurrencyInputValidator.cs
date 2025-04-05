@@ -2,7 +2,7 @@
 using FinBridge.Data.Models.Exceptions.CurrenciesExceptions;
 using FinBridge.Data.Models.Helpers.DataLoader;
 
-namespace FinBridge.Data.Models.Helpers
+namespace FinBridge.Data.Models.Helpers.InputValidators
 {
     /// <summary>
     /// Provides validation for currency codes by checking if they exist in the loaded currency data.

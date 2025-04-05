@@ -32,13 +32,21 @@ namespace FinBridge.Data.Models
 
         [Required]
         [ForeignKey(nameof(Bank))]
-        public Bank Bank { get; set; } 
-            = null!;
+        public int BankId { get; set; }
+
+        [Required]
+        public Bank Bank { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Customer))]
+        public int CustomerId { get; set; }
+
+        [Required]
+        public Customer Customer { get; set; }
 
         [Required]
         public string Currency { get; private set; } 
             = null!;
-
 
         [Required]
         public decimal Balance { get; set; }

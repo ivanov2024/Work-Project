@@ -39,9 +39,9 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
 
             var countriesDict = new Dictionary<string, string>();
 
-            foreach (var country in countries.countries)
+            foreach (var country in countries)
             {
-                countriesDict[country.code.ToString()] = country.name.ToString();
+                countriesDict[country.Code.ToString()] = country.Name.ToString();
             }
 
             return countriesDict;

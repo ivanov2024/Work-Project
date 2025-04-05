@@ -14,9 +14,9 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
 
             var currenciesDict = new Dictionary<string, string>();
 
-            foreach (var entry in currencyData.currencies)
+            foreach (var entry in currencyData)
             {
-                currenciesDict[entry.Name] = entry.Value.ToString();
+                currenciesDict[entry.Code.ToString()] = entry.Currency.ToString();
             }
 
             return currenciesDict;

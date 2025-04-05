@@ -1,18 +1,18 @@
 [
   {
-    "code": "BG",
-    "currency": "BGN"
+    "Code": "BG",
+    "Currency": "BGN"
   },
   {
-    "code": "UK",
-    "currency": "GBP"
+    "Code": "UK",
+    "Currency": "GBP"
   },
   {
-    "code": "DE",
-    "currency": "EUR"
+    "Code": "DE",
+    "Currency": "EUR"
   },
   {
-    "code": "ES",
-    "currency": "EUR"
+    "Code": "ES",
+    "Currency": "EUR"
   }
 ]

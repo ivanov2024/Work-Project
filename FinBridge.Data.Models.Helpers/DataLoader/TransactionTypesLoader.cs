@@ -14,9 +14,9 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
 
             var transactionTypesDict = new Dictionary<string, string>();
 
-            foreach (var entry in transactionTypesData.currencies)
+            foreach (var entry in transactionTypesData)
             {
-                transactionTypesDict[entry.Name] = entry.Value.ToString();
+                transactionTypesDict[entry.TransactionType.ToString()] = entry.Description.ToString();
             }
 
             return transactionTypesDict;

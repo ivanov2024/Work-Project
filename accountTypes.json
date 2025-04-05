@@ -1,30 +1,30 @@
 [
   {
-    "code": 0,
-    "type": "CheckingAccount"
+    "Code": 0,
+    "Type": "CheckingAccount"
   },
   {
-    "code": 1,
-    "type": "DepositAccount"
+    "Code": 1,
+    "Type": "DepositAccount"
   },
   {
-    "code": 2,
-    "type": "SavingsAccount"
+    "Code": 2,
+    "Type": "SavingsAccount"
   },
   {
-    "code": 3,
-    "type": "BudgetEnterpriseAccount"
+    "Code": 3,
+    "Type": "BudgetEnterpriseAccount"
   },
   {
-    "code": 4,
-    "type": "AccumulationAccount"
+    "Code": 4,
+    "Type": "AccumulationAccount"
   },
   {
-    "code": 5,
-    "type": "LetterOfCreditAccount"
+    "Code": 5,
+    "Type": "LetterOfCreditAccount"
   },
   {
-    "code": 6,
-    "type": "LiquidationAccount"
+    "Code": 6,
+    "Type": "LiquidationAccount"
   }
 ]

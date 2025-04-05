@@ -41,7 +41,7 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
 
             foreach (var accountType in accountTypes)
             {
-                accountTypesDict[(int)accountType.code] = accountType.type.ToString();
+                accountTypesDict[(int)accountType.Code] = accountType.Type.ToString();
             }
 
             return accountTypesDict;

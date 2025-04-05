@@ -21,6 +21,5 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
 
             return currenciesDict;
         }
-
     }
 }

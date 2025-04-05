@@ -1,0 +1,62 @@
+[
+  {
+    "TransactionType": "Deposit",
+    "Description": "A deposit transaction where funds are added to the account."
+  },
+  {
+    "TransactionType": "Withdrawal",
+    "Description": "A withdrawal transaction where funds are taken from the account."
+  },
+  {
+    "TransactionType": "Transfer",
+    "Description": "A transfer transaction where funds are moved between accounts (same bank or different banks)."
+  },
+  {
+    "TransactionType": "Payment",
+    "Description": "A payment transaction, typically for goods or services."
+  },
+  {
+    "TransactionType": "Fee",
+    "Description": "A fee transaction, typically for maintenance or service charges."
+  },
+  {
+    "TransactionType": "Refund",
+    "Description": "A refund transaction where previously paid funds are returned to the account."
+  },
+  {
+    "TransactionType": "Credit",
+    "Description": "A credit transaction, where the account is credited with funds from another source."
+  },
+  {
+    "TransactionType": "Debit",
+    "Description": "A debit transaction, where funds are debited from the account to settle an obligation."
+  },
+  {
+    "TransactionType": "LoanDisbursement",
+    "Description": "A loan disbursement transaction, where loan funds are credited to the account."
+  },
+  {
+    "TransactionType": "LoanRepayment",
+    "Description": "A loan repayment transaction, where funds are debited from the account for loan repayment."
+  },
+  {
+    "TransactionType": "Chargeback",
+    "Description": "A chargeback transaction, where a previously settled payment is reversed."
+  },
+  {
+    "TransactionType": "CurrencyConversion",
+    "Description": "A currency conversion transaction where funds are exchanged between different currencies."
+  },
+  {
+    "TransactionType": "InternalTransfer",
+    "Description": "A transfer between different branches or departments within the same organization."
+  },
+  {
+    "TransactionType": "ScheduledPayment",
+    "Description": "A scheduled payment, such as bill pay or automatic transfer setup."
+  },
+  {
+    "TransactionType": "SpecialWithdrawal",
+    "Description": "A special withdrawal that could be linked to a credit card or loan account."
+  }
+]

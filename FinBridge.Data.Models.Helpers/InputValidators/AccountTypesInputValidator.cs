@@ -36,7 +36,7 @@ namespace FinBridge.Data.Models.Helpers.InputValidators
         {
             var accountTypes = AccountTypesLoader.LoadAccountTypes();
             if (!accountTypes.ContainsValue(input))
-                throw new InvalidAccountTypeNameException(input);
+                throw new InvalidTransactionTypesException(input);
 
             return true;
         }

@@ -6,7 +6,8 @@ namespace FinBridge.Data.Models
     public class Bank
     {
         [Key]
-        public Guid BankId { get; set; } = Guid.NewGuid();
+        public Guid BankId { get; set; } 
+            = Guid.NewGuid();
 
         [Required]
         [MaxLength(70)]
@@ -14,8 +15,8 @@ namespace FinBridge.Data.Models
             = null!;
 
         [Required]
-        public string BankCode { get; set; } =
-            null!;
+        public string BankCode { get; set; } 
+            = null!;
 
         [Required]
         public CountryCode CountryCode { get; set; }

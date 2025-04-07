@@ -15,4 +15,8 @@
     <ProjectReference Include="..\FinBridge.Data.Models\FinBridge.Data.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\Export\" />
+  </ItemGroup>
+
 </Project>

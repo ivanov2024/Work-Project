@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using FinBridge.Data.Models.Exceptions.CommonExceptions;
+using FinBridge.Data.Models.Helpers.DTOs.Import;
+using Newtonsoft.Json;
 
 namespace FinBridge.Data.Models.Helpers.DataLoader
 {
@@ -25,23 +27,22 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
         /// A dictionary where the key is the account type code (e.g., 0) 
         /// and the value is the full account type name (e.g., "CheckingAccount").
         /// </returns>
-        /// <exception cref="FileNotFoundException">
-        /// Thrown if the JSON file is missing.
+        /// <exception cref="JSONDeserializationException">
+        /// Thrown if there is an error deserializing the JSON data.
         /// </exception>
-        /// <exception cref="JsonException">
-        /// Thrown if there is an error parsing the JSON data.
-        /// </exception>
-        public static Dictionary<int, string> LoadAccountTypes()
+        public static Dictionary<string, string> LoadAccountTypes()
         {
             var jsonData = File.ReadAllText(_accountTypesFilePath);
 
-            dynamic accountTypes = JsonConvert.DeserializeObject<dynamic>(jsonData);
+            ImportAccountTypesDto[]? accountTypes
+                = JsonConvert.DeserializeObject<ImportAccountTypesDto[]>(jsonData)
+                ?? throw new JSONDeserializationException(Path.GetFileName(_accountTypesFilePath));
 
-            var accountTypesDict = new Dictionary<int, string>();
+            var accountTypesDict = new Dictionary<string, string>();
 
             foreach (var accountType in accountTypes)
             {
-                accountTypesDict[(int)accountType.Code] = accountType.Type.ToString();
+                accountTypesDict[accountType.Code.ToString()] = accountType.Type.ToString();
             }
 
             return accountTypesDict;

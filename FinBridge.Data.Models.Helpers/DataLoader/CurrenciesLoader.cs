@@ -13,10 +13,8 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
         {
             var jsonData = File.ReadAllText(_currenciesFilePath);
             ImportCurrenciesDto[]? currencyData
-                = JsonConvert.DeserializeObject<ImportCurrenciesDto[]>(jsonData);
-
-            if (currencyData == null)
-                throw new JSONDeserializationException(Path.GetFileName(_currenciesFilePath));
+                = JsonConvert.DeserializeObject<ImportCurrenciesDto[]>(jsonData) 
+                ??  throw new JSONDeserializationException(Path.GetFileName(_currenciesFilePath));
 
             var currenciesDict = new Dictionary<string, string>();
 

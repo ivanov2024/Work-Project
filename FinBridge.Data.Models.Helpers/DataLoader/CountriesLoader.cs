@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using FinBridge.Data.Models.Exceptions.CommonExceptions;
+using FinBridge.Data.Models.Helpers.DTOs.Import;
+using Newtonsoft.Json;
 
 namespace FinBridge.Data.Models.Helpers.DataLoader
 {
@@ -25,17 +27,16 @@ namespace FinBridge.Data.Models.Helpers.DataLoader
         /// A dictionary where the key is the country code (e.g., "BU") 
         /// and the value is the full country name (e.g., "Bulgaria").
         /// </returns>
-        /// <exception cref="FileNotFoundException">
-        /// Thrown if the JSON file is missing.
-        /// </exception>
-        /// <exception cref="JsonException">
-        /// Thrown if there is an error parsing the JSON data.
+        /// <exception cref="JSONDeserializationException">
+        /// Thrown if there is an error deserializing the JSON data.
         /// </exception>
         public static Dictionary<string, string> LoadCountries()
         {
             var jsonData = File.ReadAllText(_countriesFilePath);
 
-            dynamic countries = JsonConvert.DeserializeObject<dynamic>(jsonData);
+            ImportCountriesDto[]? countries
+                = JsonConvert.DeserializeObject<ImportCountriesDto[]>(jsonData)
+                ?? throw new JSONDeserializationException(Path.GetFileName(_countriesFilePath));
 
             var countriesDict = new Dictionary<string, string>();
 

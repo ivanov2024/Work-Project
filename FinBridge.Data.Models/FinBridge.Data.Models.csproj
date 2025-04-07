@@ -14,4 +14,8 @@
     <ProjectReference Include="..\FinBridge.Data.Models.Exceptions\FinBridge.Data.Models.Exceptions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\PaymentEnums\" />
+  </ItemGroup>
+
 </Project>

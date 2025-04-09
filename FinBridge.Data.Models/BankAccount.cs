@@ -55,7 +55,7 @@ namespace FinBridge.Data.Models
             this.AccountNumber
                 = GenerateAccountNumber();
             this.IBAN 
-                = GenerateIBAN(this.CountryCode, this.Bank.BankCode, this.AccountNumber);
+                = GenerateIBAN(this.CountryCode.ToString(), this.Bank.BankCode, this.AccountNumber);
             this.Currency 
                 = SetCurrency(currencyCode, this.CountryCode);
         }

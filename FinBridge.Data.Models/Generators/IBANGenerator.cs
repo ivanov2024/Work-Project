@@ -14,11 +14,11 @@ namespace FinBridge.Data.Models.Generators
         /// <summary>
         /// Generates a valid IBAN for a given country, bank code, and account number.
         /// </summary>
-        /// <param name="countryCode">The country code (ISO-like format) for the IBAN.</param>
+        /// <param name="countryCode">The country code for the IBAN.</param>
         /// <param name="bankCode">The unique bank identifier.</param>
         /// <param name="accountNumber">The customer's account number.</param>
         /// <returns>A valid IBAN string.</returns>
-        public static string GenerateIBAN(CountryCode countryCode, string bankCode, string accountNumber)
+        public static string GenerateIBAN(string countryCode, string bankCode, string accountNumber)
         {
             // Temporarily using "00" as control digits
             string ibanWithoutControl = $"{countryCode}00{bankCode}{accountNumber}";

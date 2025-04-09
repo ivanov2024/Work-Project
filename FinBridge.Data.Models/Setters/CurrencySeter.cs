@@ -1,8 +1,11 @@
-﻿namespace FinBridge.Data.Models.Setters
+﻿using FinBridge.Data.Models.BankAccountEnums;
+
+namespace FinBridge.Data.Models.Setters
 {
     public static class CurrencySeter
     {
-        public static string SetCurrency(string? currency, string countryCode)
-            => !string.IsNullOrWhiteSpace(currency) ? currency : countryCode;
+        public static string SetCurrency(string? currency, CountryCode countryCode)
+            => (string.IsNullOrWhiteSpace(currency))
+            ? countryCode.ToString() : currency;
     }
 }

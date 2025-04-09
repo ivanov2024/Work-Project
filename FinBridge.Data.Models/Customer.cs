@@ -41,5 +41,10 @@ namespace FinBridge.Data.Models
         [Required]
         public DateTime CreatedAt { get; } 
             = DateTime.Now;
+
+        public ICollection<BankAccount> BankAccounts { get; set; }
+            = new HashSet<BankAccount>();
+        public ICollection<Transaction> Transactions { get; set; }
+            = new HashSet<Transaction>();
     }
 }

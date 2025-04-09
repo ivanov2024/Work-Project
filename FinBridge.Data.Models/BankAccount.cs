@@ -45,8 +45,7 @@ namespace FinBridge.Data.Models
         public Customer Customer { get; set; }
 
         [Required]
-        public string Currency { get; private set; } 
-            = null!;
+        public string Currency { get; private set; }
 
         [Required]
         public decimal Balance { get; set; }
@@ -58,7 +57,7 @@ namespace FinBridge.Data.Models
             this.IBAN 
                 = GenerateIBAN(this.CountryCode, this.Bank.BankCode, this.AccountNumber);
             this.Currency 
-                = SetCurrency(currencyCode, this.CountryCode.ToString());
+                = SetCurrency(currencyCode, this.CountryCode);
         }
     }
 }

@@ -31,6 +31,10 @@ namespace FinBridge.Data.Models
         public int? CustomerId { get; set; }
         public Customer? Customer { get; set; }
 
+        [ForeignKey(nameof(Payment))]
+        public int? PaymentId { get; set; }
+        public Payment? Payment { get; set; }
+
         [Unicode(true)]
         [MaxLength(500)]
         public string? Note { get; set; }

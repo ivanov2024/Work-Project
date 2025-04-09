@@ -20,5 +20,8 @@ namespace FinBridge.Data.Models
 
         [Required]
         public CountryCode CountryCode { get; set; }
+
+        public ICollection<BankAccount> BankAccounts { get; set; } 
+            = new HashSet<BankAccount>();
     }
 }

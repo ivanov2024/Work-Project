@@ -1,0 +1,62 @@
+[
+  {
+    "CreditType": "Personal",
+    "Code": 0
+  },
+  {
+    "CreditType": "Mortgage",
+    "Code": 1
+  },
+  {
+    "CreditType": "Auto",
+    "Code": 2
+  },
+  {
+    "CreditType": "Student",
+    "Code": 3
+  },
+  {
+    "CreditType": "Business",
+    "Code": 4
+  },
+  {
+    "CreditType": "Payday",
+    "Code": 5
+  },
+  {
+    "CreditType": "HomeImprovement",
+    "Code": 6
+  },
+  {
+    "CreditType": "CreditCard",
+    "Code": 7
+  },
+  {
+    "CreditType": "Consolidation",
+    "Code": 8
+  },
+  {
+    "CreditType": "Agricultural",
+    "Code": 9
+  },
+  {
+    "CreditType": "Travel",
+    "Code": 10
+  },
+  {
+    "CreditType": "Wedding",
+    "Code": 11
+  },
+  {
+    "CreditType": "Medical",
+    "Code": 12
+  },
+  {
+    "CreditType": "Green",
+    "Code": 13
+  },
+  {
+    "CreditType": "Emergency",
+    "Code": 14
+  }
+]

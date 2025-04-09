@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
+using static FinBridge.Data.Models.Setters.PasswordSetter;
+
 namespace FinBridge.Data.Models
 {
     public class Customer
@@ -34,6 +36,11 @@ namespace FinBridge.Data.Models
             = null!;
 
         [Required]
+        [MaxLength(512)]
+        public string Password { get; private set; }
+            = null!;
+
+        [Required]
         [Phone]
         public string Phone { get; set; }
             = null!;
@@ -46,5 +53,13 @@ namespace FinBridge.Data.Models
             = new HashSet<BankAccount>();
         public ICollection<Transaction> Transactions { get; set; }
             = new HashSet<Transaction>();
+        public ICollection<Credit> Credits { get; set; }
+            = new HashSet<Credit>();
+
+        public Customer(string password)
+        {
+            this.Password
+                = SetPassword(password);
+        }
     }
 }

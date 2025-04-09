@@ -41,5 +41,8 @@ namespace FinBridge.Data.Models
 
         [Required]
         public PaymentStatus Status { get; set; }
+
+        public ICollection<Transaction> Transactions { get; set; }
+            = new HashSet<Transaction>();
     }
 }

@@ -32,14 +32,14 @@ namespace FinBridge.Data.Models
 
         [Required]
         [ForeignKey(nameof(Bank))]
-        public int BankId { get; set; }
+        public Guid BankId { get; set; }
 
         [Required]
         public Bank Bank { get; set; }
 
         [Required]
         [ForeignKey(nameof(Customer))]
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         [Required]
         public Customer Customer { get; set; }
@@ -50,14 +50,13 @@ namespace FinBridge.Data.Models
         [Required]
         public decimal Balance { get; set; }
 
-        public BankAccount(string? currencyCode)
+        public BankAccount() { }
+
+        public void InitializeAccountDetails(string? currencyCode)
         {
-            this.AccountNumber
-                = GenerateAccountNumber();
-            this.IBAN 
-                = GenerateIBAN(this.CountryCode.ToString(), this.Bank.BankCode, this.AccountNumber);
-            this.Currency 
-                = SetCurrency(currencyCode, this.CountryCode);
+            this.AccountNumber = GenerateAccountNumber();
+            this.IBAN = GenerateIBAN(this.CountryCode.ToString(), this.Bank.BankCode, this.AccountNumber);
+            this.Currency = SetCurrency(currencyCode, this.CountryCode);
         }
     }
 }

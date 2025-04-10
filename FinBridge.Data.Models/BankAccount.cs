@@ -36,6 +36,9 @@ namespace FinBridge.Data.Models
 
         public decimal Balance { get; set; }
 
+        public ICollection<Payment> Payments { get; set; } 
+            = new HashSet<Payment>();
+
         public BankAccount() { }
 
         public void InitializeAccountDetails(string? currencyCode)

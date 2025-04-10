@@ -11,43 +11,29 @@ namespace FinBridge.Data.Models
 {
     public class BankAccount
     {
-        [Key]
         public Guid BankAccountId { get; set; } 
             = Guid.NewGuid();
 
-        [Required]
-        [Unicode(true)]
         public string IBAN { get; private set; }
             = null!;
 
-        [Required]
         public string AccountNumber { get; set; }
             = null!;
-       
-        [Required]
+
         public CountryCode CountryCode { get; set; }
 
-        [Required]
         public AccountType AccountType { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(Bank))]
         public Guid BankId { get; set; }
 
-        [Required]
         public Bank Bank { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(Customer))]
         public Guid CustomerId { get; set; }
 
-        [Required]
         public Customer Customer { get; set; }
 
-        [Required]
         public string Currency { get; private set; }
 
-        [Required]
         public decimal Balance { get; set; }
 
         public BankAccount() { }

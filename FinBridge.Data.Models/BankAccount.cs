@@ -38,6 +38,8 @@ namespace FinBridge.Data.Models
 
         public ICollection<Payment> Payments { get; set; } 
             = new HashSet<Payment>();
+        public ICollection<Transaction> Transactions { get; set; }
+            = new HashSet<Transaction>();
 
         public BankAccount() { }
 

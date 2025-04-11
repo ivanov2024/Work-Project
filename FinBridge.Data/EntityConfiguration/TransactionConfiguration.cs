@@ -53,6 +53,13 @@ namespace FinBridge.Data.EntityConfiguration
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
+                .HasOne(t => t.Credit)
+                .WithMany(c => c.Transactions)
+                .HasForeignKey(t => t.CreditId)
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
                 .Property(t => t.Note)
                 .IsUnicode()
                 .HasMaxLength(500)

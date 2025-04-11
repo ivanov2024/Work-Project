@@ -24,6 +24,9 @@ namespace FinBridge.Data.Models
         public int? PaymentId { get; set; }
         public Payment? Payment { get; set; }
 
+        public int? CreditId { get; set; }
+        public Credit? Credit { get; set; }
+
         public string? Note { get; set; }
     }
 }

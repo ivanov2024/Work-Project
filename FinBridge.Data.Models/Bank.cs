@@ -1,5 +1,4 @@
 ﻿using FinBridge.Data.Models.BankAccountEnums;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinBridge.Data.Models
 {

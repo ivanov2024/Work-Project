@@ -29,35 +29,35 @@ namespace FinBridge.Data.EntityConfiguration
                 .WithMany(bk => bk.Transactions)
                 .HasForeignKey(t => t.SenderAccountId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(t => t.ReceiverAccount)
                 .WithMany(bk => bk.Transactions)
                 .HasForeignKey(t => t.ReceiverAccountId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(t => t.Customer)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(t => t.CustomerId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(t => t.Payment)
                 .WithMany(p => p.Transactions)
                 .HasForeignKey(t => t.PaymentId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
-
+                .OnDelete(DeleteBehavior.SetNull);
+                
             builder
                 .HasOne(t => t.Credit)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(t => t.CreditId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .Property(t => t.Note)

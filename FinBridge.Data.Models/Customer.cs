@@ -28,6 +28,8 @@ namespace FinBridge.Data.Models
         public DateTime CreatedAt { get; } 
             = DateTime.Now;
 
+        public bool IsDeleted { get; set; }
+
         public ICollection<BankAccount> BankAccounts { get; set; }
             = new HashSet<BankAccount>();
         public ICollection<Transaction> Transactions { get; set; }

@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FinBridge.Data.Models
+﻿namespace FinBridge.Data.Models
 {
     public class CreditScore
     {

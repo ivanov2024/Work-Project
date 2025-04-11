@@ -8,22 +8,33 @@ namespace FinBridge.Data.EntityConfiguration
     {
         public void Configure(EntityTypeBuilder<Bank> builder)
         {
-            builder.HasKey(b => b.BankId);
+            builder
+                .HasKey(b => b.BankId);
 
-            builder.Property(b => b.Name)
+            builder
+                .Property(b => b.Name)
                 .IsRequired()
                 .HasMaxLength(70)
                 .IsUnicode();
 
-            builder.Property(b => b.BankCode)
+            builder
+                .Property(b => b.BankCode)
                 .IsRequired()
                 .HasMaxLength(12)
                 .IsUnicode(false);
 
-            builder.HasMany(b => b.BankAccounts)
+            builder
+                .HasIndex(b => b.BankCode)
+                .IsUnique();
+
+            builder
+                .Property(b => b.CountryCode)
+                .IsRequired();
+
+            builder
+                .HasMany(b => b.BankAccounts)
                 .WithOne(b => b.Bank)
                 .HasForeignKey(b => b.BankId);
         }
     }
-
 }

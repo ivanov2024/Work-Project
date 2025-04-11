@@ -33,13 +33,14 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasOne(p => p.SenderAccount)
                 .WithMany(bk => bk.Payments)
                 .HasForeignKey(p => p.SenderAccountId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
 
             builder
                 .HasOne(p => p.ReceiverAccount)
                 .WithMany(bk => bk.Payments)
                 .HasForeignKey(p => p.ReceiverAccountId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.SetNull);
+
 
             builder
                 .HasMany(p => p.Transactions)

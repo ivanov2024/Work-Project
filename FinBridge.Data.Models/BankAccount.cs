@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using FinBridge.Data.Models.BankAccountEnums;
+﻿using FinBridge.Data.Models.BankAccountEnums;
 
 using static FinBridge.Data.Models.Generators.AccountNumberGenerator;
 using static FinBridge.Data.Models.Generators.IBANGenerator;

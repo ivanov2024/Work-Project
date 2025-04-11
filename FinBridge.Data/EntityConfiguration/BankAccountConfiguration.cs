@@ -17,10 +17,18 @@ namespace FinBridge.Data.EntityConfiguration
                 .IsUnicode();
 
             builder
+                .HasIndex(bk => bk.IBAN)
+                .IsUnique();
+
+            builder
                 .Property(bk => bk.AccountNumber)
                 .IsRequired()
                 .HasMaxLength(30)
                 .IsUnicode();
+
+            builder
+                .HasIndex(bk => bk.AccountNumber)
+                .IsUnique();
 
             builder
                 .Property(bk => bk.CountryCode)
@@ -28,10 +36,6 @@ namespace FinBridge.Data.EntityConfiguration
 
             builder
                 .Property(bk => bk.AccountType)
-                .IsRequired();
-
-            builder 
-                .Property(bk => bk.BankId)
                 .IsRequired();
 
             builder
@@ -46,15 +50,38 @@ namespace FinBridge.Data.EntityConfiguration
 
             builder
                 .Property(bk => bk.Currency)
+                .HasMaxLength(3)
                 .IsUnicode(false)
-                .IsRequired()
-                .HasMaxLength(3);
+                .IsRequired();
 
             builder
                 .Property(bk => bk.Balance)
-                .HasColumnType("decimal(18,2)")
                 .IsRequired()
                 .HasDefaultValue(0m);
+
+            builder
+                .HasMany(bk => bk.Payments)
+                .WithOne(p => p.SenderAccount)
+                .HasForeignKey(p => p.SenderAccountId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder
+                .HasMany(bk => bk.Payments)
+                .WithOne(p => p.ReceiverAccount)
+                .HasForeignKey(p => p.ReceiverAccountId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder
+                .HasMany(bk => bk.Transactions)
+                .WithOne(t => t.SenderAccount)
+                .HasForeignKey(t => t.SenderAccountId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            builder
+                .HasMany(bk => bk.Transactions)
+                .WithOne(t => t.ReceiverAccount)
+                .HasForeignKey(t => t.ReceiverAccountId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

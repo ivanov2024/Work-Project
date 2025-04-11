@@ -34,6 +34,8 @@ namespace FinBridge.Data.Models
             = new HashSet<Transaction>();
         public ICollection<Credit> Credits { get; set; }
             = new HashSet<Credit>();
+        public ICollection<CreditScore> CreditsScores {  get; set; }
+            = new HashSet<CreditScore>();  
 
         public Customer(string password)
         {

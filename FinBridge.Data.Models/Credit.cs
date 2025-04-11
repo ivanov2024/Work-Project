@@ -1,6 +1,5 @@
 ﻿using FinBridge.Data.Models.Enums.CreditEnums;
 using FinBridge.Data.Models.Enums.PaymentEnums;
-using System.ComponentModel.DataAnnotations;
 
 namespace FinBridge.Data.Models
 {

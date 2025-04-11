@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FinBridge.Data.Models\FinBridge.Data.Models.csproj" />
+    <ProjectReference Include="..\FinBridge.Data\FinBridge.Data.csproj" />
   </ItemGroup>
 
 </Project>

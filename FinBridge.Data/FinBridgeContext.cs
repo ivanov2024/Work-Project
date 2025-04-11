@@ -1,6 +1,6 @@
-﻿using FinBridge.Data.Models;
+﻿using FinBridge.Data.EntityConfiguration;
+using FinBridge.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 using static FinBridge.Data.FinBridgeConnection;
 
@@ -30,7 +30,9 @@ namespace FinBridge.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerConfiguration).Assembly);
         }
     }
 }

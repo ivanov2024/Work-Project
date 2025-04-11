@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FinBridge.Data.EntityConfiguration
 {
-    public class BankAccountConfiguration : IEntityTypeConfiguration<BankAccount>
+    internal class BankAccountConfiguration : IEntityTypeConfiguration<BankAccount>
     {
         public void Configure(EntityTypeBuilder<BankAccount> builder)
         {

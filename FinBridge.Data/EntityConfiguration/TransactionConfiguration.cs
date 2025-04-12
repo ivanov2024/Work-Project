@@ -21,49 +21,45 @@ namespace FinBridge.Data.EntityConfiguration
                 .IsRequired();
 
             builder
-               .Property(t => t.Date)
-               .IsRequired();
+                .Property(t => t.Date)
+                .IsRequired();
 
             builder
                 .HasOne(t => t.SenderAccount)
-                .WithMany(bk => bk.Transactions)
+                .WithMany(bk => bk.PaymentsAsSender)
                 .HasForeignKey(t => t.SenderAccountId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(t => t.ReceiverAccount)
-                .WithMany(bk => bk.Transactions)
+                .WithMany(bk => bk.PaymentsAsReceiver)
                 .HasForeignKey(t => t.ReceiverAccountId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(t => t.Customer)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(t => t.CustomerId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .HasOne(t => t.Payment)
-                .WithMany(p => p.Transactions)
-                .HasForeignKey(t => t.PaymentId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
-                
             builder
                 .HasOne(t => t.Credit)
                 .WithMany(c => c.Transactions)
                 .HasForeignKey(t => t.CreditId)
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Property(t => t.Note)
                 .IsUnicode()
                 .HasMaxLength(500)
                 .IsRequired(false);
+
+            builder
+                .HasMany(t => t.TransactionHistories)
+                .WithOne(th => th.Transaction)
+                .HasForeignKey(th => th.TransactionId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace FinBridge.Data.Models.BankAccountEnums
+﻿namespace FinBridge.Data.Models.Enums.BankAccountEnums
 {
     /// <summary>
     /// Represents country codes used in FinBridge banking operations.

@@ -16,8 +16,7 @@ namespace FinBridge.Data.EntityConfiguration
                 .WithMany(cu => cu.Credits)
                 .HasForeignKey(c => c.CustomerId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.SetNull);
-
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Property(c => c.CreditType)
@@ -61,7 +60,7 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasMany(c => c.Transactions)
                 .WithOne(t => t.Credit)
                 .HasForeignKey(c => c.CreditId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

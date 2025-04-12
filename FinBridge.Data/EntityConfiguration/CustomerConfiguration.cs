@@ -36,6 +36,10 @@ namespace FinBridge.Data.EntityConfiguration
                 .IsUnicode(false);
 
             builder
+                .HasIndex(c => c.Email)
+                .IsUnique();
+
+            builder
                 .Property(c => c.Password)
                 .IsRequired()
                 .HasMaxLength(512);
@@ -50,28 +54,30 @@ namespace FinBridge.Data.EntityConfiguration
 
             builder
                 .Property(c => c.IsDeleted)
-                .IsRequired();
+                .IsRequired()
+                .HasDefaultValue(false);
 
             builder
                 .HasMany(c => c.BankAccounts)
                 .WithOne(b => b.Customer)
                 .HasForeignKey(b => b.CustomerId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(c => c.Transactions)
                 .WithOne(t => t.Customer)
                 .HasForeignKey(t => t.CustomerId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasMany(c => c.Credits)
                 .WithOne(cr => cr.Customer)
                 .HasForeignKey(cr => cr.CustomerId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
+
 }

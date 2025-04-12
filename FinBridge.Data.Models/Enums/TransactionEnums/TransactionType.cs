@@ -1,4 +1,4 @@
-﻿namespace FinBridge.Data.Models.TransactionEnums
+﻿namespace FinBridge.Data.Models.Enums.TransactionEnums
 {
     /// <summary>
     /// Enum representing various types of transactions that can occur in a bank account.

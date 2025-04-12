@@ -1,4 +1,4 @@
-﻿namespace FinBridge.Data.Models.BankAccountEnums
+﻿namespace FinBridge.Data.Models.Enums.BankAccountEnums
 {
     /// <summary>
     /// Enum representing supported currency types.

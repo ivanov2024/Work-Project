@@ -13,10 +13,10 @@ namespace FinBridge.Data.EntityConfiguration
 
             builder
                 .HasOne(cs => cs.Customer)
-                .WithMany(c => c.CreditsScores)
-                .HasForeignKey(cs => cs.CustomerId)
+                .WithOne(c => c.CreditScore) 
+                .HasForeignKey<CreditScore>(cs => cs.CustomerId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Property(cs => cs.Score)
@@ -24,7 +24,8 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasDefaultValue(0);
 
             builder
-            .ToTable("CreditScores", t => t.HasCheckConstraint("CK_CreditScore_Score", "[Score] >= 0 AND [Score] <= 1000"));
+                .ToTable("CreditScores", t => t.HasCheckConstraint("CK_CreditScore_Score", "[Score] >= 0 AND [Score] <= 1000"));
         }
     }
+
 }

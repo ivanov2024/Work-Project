@@ -1,4 +1,4 @@
-﻿using FinBridge.Data.Models.BankAccountEnums;
+﻿using FinBridge.Data.Models.Enums.BankAccountEnums;
 
 namespace FinBridge.Data.Models.Setters
 {

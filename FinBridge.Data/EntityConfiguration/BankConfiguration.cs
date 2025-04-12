@@ -32,9 +32,16 @@ namespace FinBridge.Data.EntityConfiguration
                 .IsRequired();
 
             builder
+                .Property(b => b.IsExisting)
+                .IsRequired()
+                .HasDefaultValue(true);
+
+            builder
                 .HasMany(b => b.BankAccounts)
                 .WithOne(b => b.Bank)
-                .HasForeignKey(b => b.BankId);
+                .HasForeignKey(b => b.BankId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
+
 }

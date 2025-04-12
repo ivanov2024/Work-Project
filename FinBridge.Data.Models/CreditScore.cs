@@ -4,7 +4,7 @@
     {
         public int CreditScoreId { get; set; }
 
-        public int CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
 
         public Customer Customer { get; set; } = null!;
 

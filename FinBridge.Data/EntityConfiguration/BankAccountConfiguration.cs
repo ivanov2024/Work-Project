@@ -9,79 +9,60 @@ namespace FinBridge.Data.EntityConfiguration
         public void Configure(EntityTypeBuilder<BankAccount> builder)
         {
             builder
-                .HasKey(bk => bk.BankAccountId);
+                .HasKey(b => b.BankAccountId);
 
             builder
-                .Property(bk => bk.IBAN)
+                .Property(b => b.AccountNumber)
                 .IsRequired()
-                .IsUnicode();
+                .HasMaxLength(20);
 
             builder
-                .HasIndex(bk => bk.IBAN)
-                .IsUnique();
-
-            builder
-                .Property(bk => bk.AccountNumber)
-                .IsRequired()
-                .HasMaxLength(30)
-                .IsUnicode();
-
-            builder
-                .HasIndex(bk => bk.AccountNumber)
-                .IsUnique();
-
-            builder
-                .Property(bk => bk.CountryCode)
+                .Property(b => b.Currency)
                 .IsRequired();
 
             builder
-                .Property(bk => bk.AccountType)
+                .Property(b => b.Balance)
                 .IsRequired();
 
             builder
-                .HasOne(bk => bk.Bank)
-                .WithMany(b => b.BankAccounts)
-                .HasForeignKey(bk => bk.BankId);
+                .Property(b => b.OpenedAt)
+                .IsRequired();
 
             builder
-                .HasOne(bk => bk.Customer)
+                .Property(b => b.IsActive)
+                .IsRequired();
+
+            builder
+                .HasOne(b => b.Bank)
+                .WithMany(bk => bk.BankAccounts)
+                .HasForeignKey(b => b.BankId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(b => b.Customer)
                 .WithMany(c => c.BankAccounts)
-                .HasForeignKey(bk => bk.CustomerId);
-
-            builder
-                .Property(bk => bk.Currency)
-                .HasMaxLength(3)
-                .IsUnicode(false)
-                .IsRequired();
-
-            builder
-                .Property(bk => bk.Balance)
+                .HasForeignKey(b => b.CustomerId)
                 .IsRequired()
-                .HasDefaultValue(0m);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasMany(bk => bk.Payments)
-                .WithOne(p => p.SenderAccount)
-                .HasForeignKey(p => p.SenderAccountId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            builder
-                .HasMany(bk => bk.Payments)
-                .WithOne(p => p.ReceiverAccount)
-                .HasForeignKey(p => p.ReceiverAccountId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            builder
-                .HasMany(bk => bk.Transactions)
+                .HasMany(b => b.PaymentsAsSender)
                 .WithOne(t => t.SenderAccount)
                 .HasForeignKey(t => t.SenderAccountId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasMany(bk => bk.Transactions)
+                .HasMany(b => b.PaymentsAsReceiver)
                 .WithOne(t => t.ReceiverAccount)
                 .HasForeignKey(t => t.ReceiverAccountId)
-                .OnDelete(DeleteBehavior.SetNull);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasMany(bk => bk.TransactionHistories)
+                .WithOne(th => th.BankAccount)
+                .HasForeignKey(th => th.BankAccountId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

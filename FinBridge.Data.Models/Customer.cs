@@ -30,14 +30,15 @@ namespace FinBridge.Data.Models
 
         public bool IsDeleted { get; set; }
 
+        public int? CreditScoreId { get; set; }
+        public CreditScore? CreditScore { get; set; }
+
         public ICollection<BankAccount> BankAccounts { get; set; }
             = new HashSet<BankAccount>();
         public ICollection<Transaction> Transactions { get; set; }
             = new HashSet<Transaction>();
         public ICollection<Credit> Credits { get; set; }
-            = new HashSet<Credit>();
-        public ICollection<CreditScore> CreditsScores {  get; set; }
-            = new HashSet<CreditScore>();  
+            = new HashSet<Credit>(); 
 
         public Customer(string password)
         {

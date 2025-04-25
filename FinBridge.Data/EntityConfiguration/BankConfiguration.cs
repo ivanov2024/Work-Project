@@ -12,34 +12,25 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasKey(b => b.BankId);
 
             builder
-                .Property(b => b.Name)
-                .IsRequired()
-                .HasMaxLength(70)
-                .IsUnicode();
-
-            builder
-                .Property(b => b.BankCode)
-                .IsRequired()
-                .HasMaxLength(12)
-                .IsUnicode(false);
+                .HasIndex(b => b.Name)
+                .IsUnique();
 
             builder
                 .HasIndex(b => b.BankCode)
                 .IsUnique();
 
             builder
-                .Property(b => b.CountryCode)
-                .IsRequired();
+                .Property(b => b.IsOpenOnWeekends)
+                .HasDefaultValue(true);
 
             builder
                 .Property(b => b.IsExisting)
-                .IsRequired()
                 .HasDefaultValue(true);
 
             builder
                 .HasMany(b => b.BankAccounts)
-                .WithOne(b => b.Bank)
-                .HasForeignKey(b => b.BankId)
+                .WithOne(ba => ba.Bank)
+                .HasForeignKey(ba => ba.BankId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

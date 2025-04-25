@@ -13,26 +13,18 @@ namespace FinBridge.Data.EntityConfiguration
 
             builder
                 .Property(t => t.Amount)
-                .HasDefaultValue(0m)
-                .IsRequired();
-
-            builder
-                .Property(t => t.TransactionType)
-                .IsRequired();
-
-            builder
-                .Property(t => t.Date)
-                .IsRequired();
+                .HasColumnType("decimal(18,2)")
+                .HasDefaultValue(0m);
 
             builder
                 .HasOne(t => t.SenderAccount)
-                .WithMany(bk => bk.PaymentsAsSender)
+                .WithMany(ba => ba.PaymentsAsSender)
                 .HasForeignKey(t => t.SenderAccountId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .HasOne(t => t.ReceiverAccount)
-                .WithMany(bk => bk.PaymentsAsReceiver)
+                .WithMany(ba => ba.PaymentsAsReceiver)
                 .HasForeignKey(t => t.ReceiverAccountId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -43,23 +35,10 @@ namespace FinBridge.Data.EntityConfiguration
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasOne(t => t.Credit)
-                .WithMany(c => c.Transactions)
-                .HasForeignKey(t => t.CreditId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Property(t => t.Note)
-                .IsUnicode()
-                .HasMaxLength(500)
-                .IsRequired(false);
-
-            builder
                 .HasMany(t => t.TransactionHistories)
                 .WithOne(th => th.Transaction)
                 .HasForeignKey(th => th.TransactionId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
-
     }
 }

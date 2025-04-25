@@ -9,59 +9,44 @@ namespace FinBridge.Data.EntityConfiguration
         public void Configure(EntityTypeBuilder<BankAccount> builder)
         {
             builder
-                .HasKey(b => b.BankAccountId);
+                .HasKey(ba => ba.BankAccountId);
 
             builder
-                .Property(b => b.AccountNumber)
-                .IsRequired()
-                .HasMaxLength(20);
+                .Property(ba => ba.Balance)
+                .HasColumnType("decimal(18,2)");
 
             builder
-                .Property(b => b.Currency)
-                .IsRequired();
+                .Property(ba => ba.IsActive)
+                .HasDefaultValue(true);
 
             builder
-                .Property(b => b.Balance)
-                .IsRequired();
-
-            builder
-                .Property(b => b.OpenedAt)
-                .IsRequired();
-
-            builder
-                .Property(b => b.IsActive)
-                .IsRequired();
-
-            builder
-                .HasOne(b => b.Bank)
-                .WithMany(bk => bk.BankAccounts)
-                .HasForeignKey(b => b.BankId)
-                .IsRequired()
+                .HasOne(ba => ba.Bank)
+                .WithMany(b => b.BankAccounts)
+                .HasForeignKey(ba => ba.BankId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasOne(b => b.Customer)
+                .HasOne(ba => ba.Customer)
                 .WithMany(c => c.BankAccounts)
-                .HasForeignKey(b => b.CustomerId)
-                .IsRequired()
+                .HasForeignKey(ba => ba.CustomerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasMany(b => b.PaymentsAsSender)
+                .HasMany(ba => ba.TransactionHistories)
+                .WithOne(th => th.BankAccount)
+                .HasForeignKey(th => th.BankAccountId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasMany(ba => ba.PaymentsAsSender)
                 .WithOne(t => t.SenderAccount)
                 .HasForeignKey(t => t.SenderAccountId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .HasMany(b => b.PaymentsAsReceiver)
+                .HasMany(ba => ba.PaymentsAsReceiver)
                 .WithOne(t => t.ReceiverAccount)
                 .HasForeignKey(t => t.ReceiverAccountId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .HasMany(bk => bk.TransactionHistories)
-                .WithOne(th => th.BankAccount)
-                .HasForeignKey(th => th.BankAccountId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

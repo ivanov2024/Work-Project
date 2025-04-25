@@ -12,49 +12,15 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasKey(c => c.CustomerId);
 
             builder
-                .Property(c => c.FirstName)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode();
-
-            builder
-                .Property(c => c.MiddleName)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode();
-
-            builder
-                .Property(c => c.LastName)
-                .IsRequired()
-                .HasMaxLength(255)
-                .IsUnicode();
-
-            builder
-                .Property(c => c.Email)
-                .IsRequired()
-                .HasMaxLength(320)
-                .IsUnicode(false);
-
-            builder
                 .HasIndex(c => c.Email)
                 .IsUnique();
 
             builder
-                .Property(c => c.Password)
-                .IsRequired()
-                .HasMaxLength(512);
-
-            builder.Property(c => c.Phone)
-                .HasMaxLength(15)
-                .IsRequired();
-
-            builder
-                .Property(c => c.CreatedAt)
-                .IsRequired();
+                .HasIndex(c => c.Phone)
+                .IsUnique();
 
             builder
                 .Property(c => c.IsDeleted)
-                .IsRequired()
                 .HasDefaultValue(false);
 
             builder
@@ -63,7 +29,7 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasForeignKey(b => b.CustomerId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
-
+            
             builder
                 .HasMany(c => c.Transactions)
                 .WithOne(t => t.Customer)
@@ -75,9 +41,8 @@ namespace FinBridge.Data.EntityConfiguration
                 .HasMany(c => c.Credits)
                 .WithOne(cr => cr.Customer)
                 .HasForeignKey(cr => cr.CustomerId)
-                .IsRequired()
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
-
 }

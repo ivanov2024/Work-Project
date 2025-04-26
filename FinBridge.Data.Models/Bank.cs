@@ -10,7 +10,7 @@ namespace FinBridge.Data.Models
         public int BankId { get; set; }
 
         [Required]
-        [StringLength(10, MinimumLength = 200)]
+        [StringLength(200, MinimumLength = 10)]
         [Unicode(true)]
         public string Name { get; set; }
             = null!;
@@ -24,7 +24,7 @@ namespace FinBridge.Data.Models
         public CountryCode CountryCode { get; set; }
         
         [Required]
-        [StringLength(1, MinimumLength = 170)]
+        [StringLength(170, MinimumLength = 1)]
         public string Location { get; set; }
             = null!;
 

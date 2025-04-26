@@ -2,10 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using static FinBridge.Data.Models.Generators.AccountNumberGenerator;
-using static FinBridge.Data.Models.Generators.IBANGenerator;
-using static FinBridge.Data.Models.Setters.CurrencySeter;
-
 namespace FinBridge.Data.Models
 {
     public class BankAccount
@@ -18,6 +14,7 @@ namespace FinBridge.Data.Models
             = null!;
 
         [Required]
+        [StringLength(maximumLength: 16, MinimumLength = 16)]
         public string AccountNumber { get; set; }
             = null!;
 
@@ -52,7 +49,7 @@ namespace FinBridge.Data.Models
 
         [Required]
         public DateTime OpenedAt { get; private set; }
-            = DateTime.Now;
+            = DateTime.UtcNow;
 
         [Required]
         public bool IsActive { get; set; }
@@ -68,14 +65,14 @@ namespace FinBridge.Data.Models
 
         public BankAccount() { }
 
-        public void InitializeAccountDetails(string? currencyCode)
-        {
-            this.AccountNumber 
-                = GenerateAccountNumber();
-            this.IBAN 
-                = GenerateIBAN(this.CountryCode.ToString(), this.Bank.BankCode, this.AccountNumber);
-            this.Currency 
-                = SetCurrency(currencyCode, this.CountryCode);
-        }
+        //public void InitializeAccountDetails(string? currencyCode)
+        //{
+        //    this.AccountNumber
+        //        = GenerateAccountNumber();
+        //    this.IBAN
+        //        = GenerateIBAN(this.CountryCode.ToString(), this.Bank.BankCode, this.AccountNumber);
+        //    this.Currency
+        //        = SetCurrency(currencyCode, this.CountryCode);
+        //}
     }
 }

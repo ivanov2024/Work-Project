@@ -1,0 +1,7 @@
+Entity | Key Highlights
+Customer | Secure password handling (private setter), username generation at runtime, strong relationship mappings to BankAccounts, Transactions, and Credits.
+Bank | Validation for key attributes (e.g., BankCode), strict country code association, extensibility through collections of BankAccounts.
+BankAccount | Initialization logic for IBAN, account number, and currency assignment; fully audited lifecycle attributes (OpenedAt, IsActive, etc.).
+Transaction | Clear transactional relationships (sender/receiver) with optional linkage to a Credit, highly modular transaction history tracking.
+Credit | Complete credit lifecycle tracking (ApplicationDate, ApprovalDate, DisbursementDate), tight coupling to originating transaction.
+CreditScore | Simple but critical entity for customer scoring, linked directly to Customer, ensuring future extensibility (e.g., risk analysis).

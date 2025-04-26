@@ -1,12 +1,13 @@
 ﻿using FinBridge.Data.EntityConfiguration;
 using FinBridge.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 using static FinBridge.Data.FinBridgeConnection;
 
 namespace FinBridge.Data
 {
-    public class FinBridgeContext : DbContext
+    public class FinBridgeContext : IdentityDbContext<ApplicationUser>
     {
         public FinBridgeContext() { }
 
@@ -15,11 +16,11 @@ namespace FinBridge.Data
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Bank> Banks { get; set; }
-        public DbSet<BankAccount> BanksAccounts { get; set; }
+        public DbSet<BankAccount> BankAccounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Credit> Credits { get; set; }
-        public DbSet<CreditScore> CreditsScores { get; set; }
-        public DbSet<TransactionHistory> TransactionsHistories { get; set; }
+        public DbSet<CreditScore> CreditScores { get; set; }
+        public DbSet<TransactionHistory> TransactionHistories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +34,8 @@ namespace FinBridge.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerConfiguration).Assembly);
+
+
         }
     }
 }

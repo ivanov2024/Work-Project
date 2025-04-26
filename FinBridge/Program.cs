@@ -62,19 +62,19 @@ namespace FinBridge
             //Console.WriteLine(bankAccount2.AccountNumber);
             //Console.WriteLine(bankAccount2.Currency);
 
-            //FinBridgeContext finBridgeContext = new FinBridgeContext();
-            //Console.WriteLine("Starting!");
-            //try
-            //{
-            //    finBridgeContext.Database.EnsureDeleted();
-            //    finBridgeContext.Database.EnsureCreated();
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}
+            FinBridgeContext finBridgeContext = new FinBridgeContext();
+            Console.WriteLine("Starting!");
+            try
+            {
+                finBridgeContext.Database.EnsureDeleted();
+                finBridgeContext.Database.EnsureCreated();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
 
-            //Console.WriteLine("Congratulations!!!!!!");
+            Console.WriteLine("Congratulations!!!!!!");
         }
     }
 }

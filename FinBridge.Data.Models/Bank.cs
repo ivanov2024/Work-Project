@@ -1,12 +1,14 @@
 ﻿using FinBridge.Data.Models.Enums.BankAccountEnums;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FinBridge.Data.Models
 {
     public class Bank
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BankId { get; set; }
 
         [Required]

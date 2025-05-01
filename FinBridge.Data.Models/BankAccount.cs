@@ -7,6 +7,7 @@ namespace FinBridge.Data.Models
     public class BankAccount
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BankAccountId { get; set; }
 
         [Required]

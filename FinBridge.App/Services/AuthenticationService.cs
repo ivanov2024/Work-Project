@@ -28,6 +28,11 @@ namespace FinBridge.App.Services
                 MiddleName = model.MiddleName,
             };
 
+            var Customer = new Customer
+            {
+
+            };
+
             var result = await userManager.CreateAsync(user, model.Password);
             return result.Succeeded;
         }

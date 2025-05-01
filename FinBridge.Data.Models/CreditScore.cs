@@ -6,6 +6,7 @@ namespace FinBridge.Data.Models
     public class CreditScore
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CreditScoreId { get; set; }
 
         [Required]

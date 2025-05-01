@@ -8,6 +8,7 @@ namespace FinBridge.Data.Models
         public class Credit
         {
             [Key]
+            [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int CreditId { get; set; }
 
             [Required]

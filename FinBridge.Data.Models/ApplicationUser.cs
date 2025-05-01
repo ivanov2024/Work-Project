@@ -32,7 +32,6 @@ namespace FinBridge.Data.Models
         public bool IsDeleted { get; set; } 
             = false;
 
-        // Navigation property: Optional one-to-one relationship with Customer
         public Customer? CustomerProfile { get; set; }
     }
 }

@@ -1,4 +1,28 @@
-﻿@* @page "/startup" *@
+﻿@page "/startup"
+
+@inject NavigationManager Navigation
+
+<h3>Добре дошли във FinBridge!</h3>
+
+<p>Влизане в профил</p>
+<button @onclick="NavigateToLogin">Вход</button>
+
+<p>Нямате профил?</p>
+<button @onclick="NavigateToRegister">Регистрация</button>
+
+@code {
+    private void NavigateToLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private void NavigateToRegister()
+    {
+        Navigation.NavigateTo("/register");
+    }
+}
+
+@* @page "/startup" *@
 @* @inject NavigationManager Navigation *@
 @* @inject IAuthenticationService AuthService *@
 
@@ -50,13 +74,3 @@
 @*     } *@
 @* } *@
 
-@page "/startup"
-@inject NavigationManager Navigation
-
-<h3>Добре дошли във FinBridge!</h3>
-
-<p>Влизане в профил</p>
-<button @onclick="@(() => Navigation.NavigateTo("/login"))">Вход</button>
-
-<p>Нямате профил?</p>
-<button @onclick="@(() => Navigation.NavigateTo("/register"))">Регистрация</button>

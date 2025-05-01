@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using FinBridge.App.Models;
+using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
+using System.Text.Json;
 
 namespace FinBridge.App.Services
 {
@@ -22,20 +24,36 @@ namespace FinBridge.App.Services
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-        public override Task<AuthenticationState> GetAuthenticationStateAsync()
+        public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            if (string.IsNullOrEmpty(_userName))
+            try
             {
-                return Task.FromResult(new AuthenticationState(_anonymous));
+                var sessionJson = await SecureStorage.GetAsync("user_session");
+
+                if (string.IsNullOrWhiteSpace(sessionJson))
+                {
+                    return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+                }
+
+                var session = JsonSerializer.Deserialize<UserSession>(sessionJson);
+                var identity = new ClaimsIdentity(new[]
+                {
+                    new Claim(ClaimTypes.Name, session.Username),
+                    new Claim(ClaimTypes.Role, session.Role),
+                }, "custom");
+
+                return new AuthenticationState(new ClaimsPrincipal(identity));
             }
-
-            var identity = new ClaimsIdentity(new[]
+            catch
             {
-            new Claim(ClaimTypes.Name, _userName),
-        }, "Custom authentication");
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            }
+        }
 
-            var user = new ClaimsPrincipal(identity);
-            return Task.FromResult(new AuthenticationState(user));
+        public void MarkUserAsLoggedOut()
+        {
+            var anonymousUser = new ClaimsPrincipal(new ClaimsIdentity());
+            NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(anonymousUser)));
         }
     }
 }

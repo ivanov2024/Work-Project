@@ -39,7 +39,7 @@
         var result = await authService.SignInAsync(loginModel);
         if (result)
         {
-            Navigation.NavigateTo("/");
+            Navigation.NavigateTo("/home");
         }
         else
         {

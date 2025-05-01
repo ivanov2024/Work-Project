@@ -1,9 +1,14 @@
-﻿@page "/"
+﻿@page "/home"
+
+@using FinBridge.App.Services
 @using FinBridge.Data.Models
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.Maui.Storage
+@using System.Text.Json
 
 @inject IServiceProvider ServiceProvider
+@inject NavigationManager Navigation
 
 <h1>Hello, world!</h1>
 <p>Welcome to your new app.</p>
@@ -15,6 +20,8 @@
     <p><strong>First Name:</strong> @_user.FirstName</p>
     <p><strong>Middle Name:</strong> @_user.MiddleName</p>
     <p><strong>Last Name:</strong> @_user.LastName</p>
+
+    <button @onclick="Logout">Logout</button>
 }
 else if (_isLoading)
 {
@@ -49,5 +56,18 @@ else
         }
 
         _isLoading = false;
+    }
+
+    private async Task Logout()
+    {
+        SecureStorage.Remove("user_session");
+
+        if (ServiceProvider
+            .GetService<AuthenticationStateProvider>() is CustomAuthStateProvider authProvider)
+        {
+            authProvider.MarkUserAsLoggedOut();
+        }
+
+        Navigation.NavigateTo("/startup", forceLoad: true);
     }
 }

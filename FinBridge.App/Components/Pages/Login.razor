@@ -1,0 +1,49 @@
+﻿@page "/login"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using FinBridge.App.Models
+@using FinBridge.App.Services
+
+@inject NavigationManager Navigation
+@inject IAuthenticationService authService
+
+<h3>Влизане в профил</h3>
+
+<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Имейл:</label>
+        <InputText @bind-Value="loginModel.Email" class="input-field" placeholder="example@example.com" />
+    </div>
+
+    <div>
+        <label>Парола:</label>
+        <InputText @bind-Value="loginModel.Password" type="password" class="input-field" />
+    </div>
+
+    <button type="submit">Вход</button>
+</EditForm>
+
+<p>
+    Нямате профил?
+    <a @onclick="@(() => Navigation.NavigateTo("/register"))">Създайте си един за секунди</a>
+</p>
+
+@code {
+    private LoginRequest loginModel = new();
+
+    private async Task HandleLogin()
+    {
+        var result = await authService.SignInAsync(loginModel);
+        if (result)
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine("Error!");
+        }
+    }
+}

@@ -1,8 +1,18 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:FinBridge.MobileApp"
+             xmlns:views="clr-namespace:FinBridge.MobileApp.Views"
              x:Class="FinBridge.MobileApp.App">
+    <Application.MainPage>
+        <!-- Use a NavigationPage to allow navigation -->
+        <NavigationPage>
+            <x:Arguments>
+                <!-- Start with the LoginPage -->
+                <views:LoginPage />
+            </x:Arguments>
+        </NavigationPage>
+    </Application.MainPage>
+
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

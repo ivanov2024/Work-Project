@@ -1,0 +1,69 @@
+﻿@page "/register"
+
+@using Microsoft.AspNetCore.Components.Forms
+@using FinBridge.App.Models
+@using FinBridge.App.Services
+
+@inject NavigationManager Navigation
+@inject IAuthenticationService authService
+
+<h3>Създаване на акаунт</h3>
+
+<EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Име:</label>
+        <InputText @bind-Value="registerModel.FirstName" class="input-field" placeholder="Име" />
+    </div>
+
+    <div>
+        <label>Презиме:</label>
+        <InputText @bind-Value="registerModel.MiddleName" class="input-field" placeholder="Презиме" />
+    </div>
+
+    <div>
+        <label>Фамилия:</label>
+        <InputText @bind-Value="registerModel.LastName" class="input-field" placeholder="Фамилия" />
+    </div>
+
+    <div>
+        <label>Имейл:</label>
+        <InputText @bind-Value="registerModel.Email" class="input-field" placeholder="example@example.com" />
+    </div>
+
+    <div>
+        <label>Парола:</label>
+        <InputText @bind-Value="registerModel.Password" type="password" class="input-field" />
+    </div>
+
+    <div>
+        <label>Потвърдете паролата:</label>
+        <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="input-field" />
+    </div>
+
+    <button type="submit">Регистрирайте се</button>
+</EditForm>
+
+<p>
+    Вече имате акаунт?
+    <a @onclick="@(() => Navigation.NavigateTo("/login"))">Влезте в профила си</a>
+</p>
+
+@code {
+    private RegisterRequest registerModel = new();
+
+    private async Task HandleRegister()
+    {
+        var result = await authService.RegisterAsync(registerModel);
+        if (result)
+        {
+            Navigation.NavigateTo("/");
+        }
+        else
+        {
+            Console.WriteLine("Authentication failed.");
+        }
+    }
+}

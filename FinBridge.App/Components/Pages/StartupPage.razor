@@ -1,0 +1,62 @@
+﻿@* @page "/startup" *@
+@* @inject NavigationManager Navigation *@
+@* @inject IAuthenticationService AuthService *@
+
+@* <h3>Добре дошли във FinBridge!</h3> *@
+
+@* <EditForm Model="@loginModel" OnValidSubmit="HandleLogin"> *@
+@*     <DataAnnotationsValidator /> *@
+@*     <ValidationSummary /> *@
+
+@*     <div class="form-group"> *@
+@*         <label for="email">Имейл:</label> *@
+@*         <InputText @bind-Value="loginModel.Email" id="email" class="input-field" placeholder="example123@example.com" /> *@
+@*     </div> *@
+
+@*     <div class="form-group"> *@
+@*         <label for="password">Парола:</label> *@
+@*         <InputPassword @bind-Value="loginModel.Password" id="password" class="input-field" /> *@
+@*     </div> *@
+
+@*     <div class="form-group"> *@
+@*         <button type="submit" class="btn-primary">Вход</button> *@
+@*     </div> *@
+@* </EditForm> *@
+
+@* <p> *@
+@*     Нямате профил? *@
+@*     <a @onclick="@(() => Navigation.NavigateTo("/register"))">Създайте си един за секунди</a> *@
+@* </p> *@
+
+@* <p> *@
+@*     <a @onclick="@(() => Navigation.NavigateTo("/forgot-password"))">Забравена парола?</a> *@
+@* </p> *@
+
+@* @code { *@
+@*     private LoginRequest loginModel = new(); *@
+
+@*     private async Task HandleLogin() *@
+@*     { *@
+@*         var result = await AuthService.SignInAsync(loginModel); *@
+@*         if (result.Succeeded) *@
+@*         { *@
+@*             Navigation.NavigateTo("/");  *@
+@*         } *@
+@*         else *@
+@*         { *@
+@*             // TODO: Display an error message (could be with a toast or inline) *@
+@*             Console.WriteLine("Authentication failed."); *@
+@*         } *@
+@*     } *@
+@* } *@
+
+@page "/startup"
+@inject NavigationManager Navigation
+
+<h3>Добре дошли във FinBridge!</h3>
+
+<p>Влизане в профил</p>
+<button @onclick="@(() => Navigation.NavigateTo("/login"))">Вход</button>
+
+<p>Нямате профил?</p>
+<button @onclick="@(() => Navigation.NavigateTo("/register"))">Регистрация</button>

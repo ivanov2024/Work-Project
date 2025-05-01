@@ -1,0 +1,53 @@
+﻿@page "/"
+@using FinBridge.Data.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Identity
+
+@inject IServiceProvider ServiceProvider
+
+<h1>Hello, world!</h1>
+<p>Welcome to your new app.</p>
+
+@if (_user != null)
+{
+    <p><strong>Username:</strong> @_user.UserName</p>
+    <p><strong>Email:</strong> @_user.Email</p>
+    <p><strong>First Name:</strong> @_user.FirstName</p>
+    <p><strong>Middle Name:</strong> @_user.MiddleName</p>
+    <p><strong>Last Name:</strong> @_user.LastName</p>
+}
+else if (_isLoading)
+{
+    <p>Loading user information...</p>
+}
+else
+{
+    <p>User is not authenticated.</p>
+}
+
+@code {
+    private ApplicationUser? _user;
+    private bool _isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var scope = ServiceProvider.CreateScope();
+
+        var authProvider = scope.ServiceProvider.GetRequiredService<AuthenticationStateProvider>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+        var authState = await authProvider.GetAuthenticationStateAsync();
+        var userPrincipal = authState.User;
+
+        if (userPrincipal.Identity?.IsAuthenticated ?? false)
+        {
+            var username = userPrincipal.Identity.Name;
+            if (!string.IsNullOrEmpty(username))
+            {
+                _user = await userManager.FindByNameAsync(username);
+            }
+        }
+
+        _isLoading = false;
+    }
+}

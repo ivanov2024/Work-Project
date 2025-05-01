@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FinBridge.MobileApp.Services;
+using Microsoft.Extensions.Logging;
 
 namespace FinBridge.MobileApp
 {
@@ -14,9 +15,10 @@ namespace FinBridge.MobileApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+                
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
             return builder.Build();

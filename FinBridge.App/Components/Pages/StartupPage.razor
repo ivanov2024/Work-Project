@@ -2,13 +2,17 @@
 
 @inject NavigationManager Navigation
 
-<h3>Добре дошли във FinBridge!</h3>
+<div class="app-background">
+    <h3>Добре дошли във FinBridge!</h3>
 
-<p>Влизане в профил</p>
-<button @onclick="NavigateToLogin">Вход</button>
+    <div class="navigation-menu">
+        <p>Вeче имате профил?</p>
+        <button @onclick="NavigateToLogin">Вход</button>
 
-<p>Нямате профил?</p>
-<button @onclick="NavigateToRegister">Регистрация</button>
+        <p>Нямате профил?</p>
+        <button @onclick="NavigateToRegister">Регистрация</button>
+    </div>
+</div>
 
 @code {
     private void NavigateToLogin()

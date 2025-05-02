@@ -7,49 +7,57 @@
 @inject NavigationManager Navigation
 @inject IAuthenticationService authService
 
-<h3>Създаване на акаунт</h3>
+<div class="app-background">
+    <h3>Създаване на профил</h3>
 
-<EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+    <EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <div>
-        <label>Име:</label>
-        <InputText @bind-Value="registerModel.FirstName" class="input-field" placeholder="Име" />
-    </div>
+        <div>
+            <label>Въведе първото Ви име:</label>
+            <InputText @bind-Value="registerModel.FirstName" class="input-field" placeholder="Например: Иван" />
+        </div>
 
-    <div>
-        <label>Презиме:</label>
-        <InputText @bind-Value="registerModel.MiddleName" class="input-field" placeholder="Презиме" />
-    </div>
+        <div>
+            <label>Въведе вашето презиме:</label>
+            <InputText @bind-Value="registerModel.MiddleName" class="input-field" placeholder="Например: Горанов" />
+        </div>
 
-    <div>
-        <label>Фамилия:</label>
-        <InputText @bind-Value="registerModel.LastName" class="input-field" placeholder="Фамилия" />
-    </div>
+        <div>
+            <label>Въведете вашата фамилия:</label>
+            <InputText @bind-Value="registerModel.LastName" class="input-field" placeholder="например: Цветанков" />
+        </div>
 
-    <div>
-        <label>Имейл:</label>
-        <InputText @bind-Value="registerModel.Email" class="input-field" placeholder="example@example.com" />
-    </div>
+        <div>
+            <label>Въведете вашият имейл:</label>
+            <InputText @bind-Value="registerModel.Email" class="input-field" placeholder="example@example.com" />
+        </div>
 
-    <div>
-        <label>Парола:</label>
-        <InputText @bind-Value="registerModel.Password" type="password" class="input-field" />
-    </div>
+        <div>
+            <label>Въведе измислена от вас парола:</label>
+            <InputText @bind-Value="registerModel.Password" type="password" class="input-field" />
+        </div>
 
-    <div>
-        <label>Потвърдете паролата:</label>
-        <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="input-field" />
-    </div>
+        <div>
+            <label>Потвърдете измислената от вас парола:</label>
+            <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="input-field" />
+        </div>
 
-    <button type="submit">Регистрирайте се</button>
-</EditForm>
+        <div class="checkbox-wrapper">
+            <InputCheckbox @bind-Value="registerModel.RememberMe" />
+            <label>Запомни ме</label>
+        </div>
 
-<p>
-    Вече имате акаунт?
-    <a @onclick="@(() => Navigation.NavigateTo("/login"))">Влезте в профила си</a>
-</p>
+        <button type="submit">Регистрирайте се</button>
+    </EditForm>
+
+    <p>
+        Вече имате акаунт?
+        <a @onclick="@(() => Navigation.NavigateTo("/login"))">Влезте в профила си</a>
+    </p>
+
+</div>
 
 @code {
     private RegisterRequest registerModel = new();

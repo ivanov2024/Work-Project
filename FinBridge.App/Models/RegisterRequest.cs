@@ -28,5 +28,8 @@ namespace FinBridge.App.Models
         [Required]
         public string MiddleName { get; set; } 
             = null!;
+
+        public bool RememberMe { get; set; } 
+            = false;
     }
 }

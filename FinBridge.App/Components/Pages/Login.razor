@@ -7,43 +7,81 @@
 @inject NavigationManager Navigation
 @inject IAuthenticationService authService
 
-<h3>Влизане в профил</h3>
+<div class="app-background">
+    <button class="back-button" @onclick="GoBack">
+        <span class="back-arrow">←</span> Назад
+    </button>
 
-<EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+    <h3>Влизане в профил</h3>
 
-    <div>
-        <label>Имейл:</label>
-        <InputText @bind-Value="loginModel.Email" class="input-field" placeholder="example@example.com" />
-    </div>
+    <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <div>
-        <label>Парола:</label>
-        <InputText @bind-Value="loginModel.Password" type="password" class="input-field" />
-    </div>
+        <div class="form-group">
+            <label>Въведе вашият регистриран имейл:</label>
+            <InputText @bind-Value="loginModel.Email" class="input-field" placeholder="example@example.com" />
+        </div>
 
-    <button type="submit">Вход</button>
-</EditForm>
+        <div class="form-group">
+            <label>Въведете вашата парола:</label>
+            <InputText @bind-Value="loginModel.Password" type="password" class="input-field" />
+        </div>
 
-<p>
-    Нямате профил?
-    <a @onclick="@(() => Navigation.NavigateTo("/register"))">Създайте си един за секунди</a>
-</p>
+        <div class="checkbox-wrapper" @onclick="ToggleRememberMe">
+            <InputCheckbox @bind-Value="loginModel.RememberMe" />
+            <label>Запомни ме</label>
+        </div>
+
+        <button type="submit" disabled="@isSubmitting">Вход</button>
+    </EditForm>
+
+    <p>
+        Нямате профил?
+        <a @onclick="NavigateToRegister">Създайте си един за секунди</a>
+    </p>
+</div>
 
 @code {
     private LoginRequest loginModel = new();
+    private bool isSubmitting;
+
+    private void ToggleRememberMe()
+    {
+        loginModel.RememberMe = !loginModel.RememberMe;
+    }
+
+    private void NavigateToRegister()
+    {
+        Navigation.NavigateTo("/register");
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/startup");
+    }
 
     private async Task HandleLogin()
     {
-        var result = await authService.SignInAsync(loginModel);
-        if (result)
+        if (isSubmitting) return;
+
+        try
         {
-            Navigation.NavigateTo("/home");
+            isSubmitting = true;
+            var result = await authService.SignInAsync(loginModel);
+            if (result)
+            {
+                Navigation.NavigateTo("/home");
+            }
+            else
+            {
+                // TODO: Add proper error handling/display
+                Console.WriteLine("Authentication failed.");
+            }
         }
-        else
+        finally
         {
-            Console.WriteLine("Error!");
+            isSubmitting = false;
         }
     }
 }

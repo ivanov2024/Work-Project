@@ -6,11 +6,15 @@
     <h3>Добре дошли във FinBridge!</h3>
 
     <div class="navigation-menu">
-        <p>Вeче имате профил?</p>
-        <button @onclick="NavigateToLogin">Вход</button>
+        <div class="form-group">
+            <p>Вeче имате профил?</p>
+            <button @onclick="NavigateToLogin" class="nav-button">Вход</button>
+        </div>
 
-        <p>Нямате профил?</p>
-        <button @onclick="NavigateToRegister">Регистрация</button>
+        <div class="form-group">
+            <p>Нямате профил?</p>
+            <button @onclick="NavigateToRegister" class="nav-button">Регистрация</button>
+        </div>
     </div>
 </div>
 

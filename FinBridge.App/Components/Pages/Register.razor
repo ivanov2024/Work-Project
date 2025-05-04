@@ -3,11 +3,16 @@
 @using Microsoft.AspNetCore.Components.Forms
 @using FinBridge.App.Models
 @using FinBridge.App.Services
+@using System.Text.RegularExpressions
 
 @inject NavigationManager Navigation
 @inject IAuthenticationService authService
 
 <div class="app-background">
+    <button class="back-button" @onclick="GoBack">
+        <span class="back-arrow">←</span> Назад
+    </button>
+
     <h3>Създаване на профил</h3>
 
     <EditForm Model="@registerModel" OnValidSubmit="HandleRegister">
@@ -36,15 +41,62 @@
 
         <div class="form-group">
             <label>Въведе измислена от вас парола:</label>
-            <InputText @bind-Value="registerModel.Password" type="password" class="input-field" />
+            <InputText @bind-Value="registerModel.Password" 
+                     type="password" 
+                     class="@($"input-field {(IsPasswordValid ? "valid" : "")}")" 
+                     @onfocus="ShowValidationList"
+                     @onblur="HideValidationList"
+                     @oninput="UpdateValidation" />
+            <div class="form-group">
+                <div class="password-validation-container">          
+                    <div class="password-validation-list @(showValidation ? "show" : "")">
+                        <div class="validation-item">
+                            @if (IsPasswordLengthValid)
+                            {
+                                <span class="check-icon">✓</span>
+                            }
+                            else
+                            {
+                                <span class="x-icon">✕</span>
+                            }
+                            <span>Паролата трябва да е поне 6 символа</span>
+                        </div>
+                        <div class="validation-item">
+                            @if (HasUppercase)
+                            {
+                                <span class="check-icon">✓</span>
+                            }
+                            else
+                            {
+                                <span class="x-icon">✕</span>
+                            }
+                            <span>Паролата трябва да съдържа главни букви</span>
+                        </div>
+                        <div class="validation-item">
+                            @if (HasSpecialChars)
+                            {
+                                <span class="check-icon">✓</span>
+                            }
+                            else
+                            {
+                                <span class="x-icon">✕</span>
+                            }
+                            <span>Паролата трябва да съдържа специални символи</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
             <label>Потвърдете измислената от вас парола:</label>
-            <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="input-field" />
+            <InputText @bind-Value="registerModel.ConfirmPassword" 
+                     type="password" 
+                     class="@($"input-field {(IsPasswordConfirmed ? "valid" : "")}")"
+                     @oninput="UpdateConfirmPassword" />
         </div>
 
-        <div class="checkbox-wrapper">
+        <div class="checkbox-wrapper" @onclick="ToggleRememberMe">
             <InputCheckbox @bind-Value="registerModel.RememberMe" />
             <label>Запомни ме</label>
         </div>
@@ -61,10 +113,52 @@
 @code {
     private RegisterRequest registerModel = new();
     private bool isSubmitting;
+    private bool showValidation;
+
+    private bool IsPasswordLengthValid => !string.IsNullOrEmpty(registerModel.Password) && registerModel.Password.Length >= 6;
+    private bool HasUppercase => !string.IsNullOrEmpty(registerModel.Password) && registerModel.Password.Any(char.IsUpper);
+    private bool HasSpecialChars => !string.IsNullOrEmpty(registerModel.Password) && 
+                                  Regex.IsMatch(registerModel.Password, @"[!@#$%^&*(),.?""':{}|<>]");
+    
+    private bool IsPasswordValid => IsPasswordLengthValid && HasUppercase && HasSpecialChars;
+    private bool IsPasswordConfirmed => !string.IsNullOrEmpty(registerModel.ConfirmPassword) && 
+                                      registerModel.Password == registerModel.ConfirmPassword;
+
+    private void ShowValidationList()
+    {
+        showValidation = true;
+    }
+
+    private void HideValidationList()
+    {
+        showValidation = false;
+    }
+
+    private void UpdateValidation(ChangeEventArgs e)
+    {
+        registerModel.Password = e.Value?.ToString() ?? string.Empty;
+        StateHasChanged();
+    }
+
+    private void UpdateConfirmPassword(ChangeEventArgs e)
+    {
+        registerModel.ConfirmPassword = e.Value?.ToString() ?? string.Empty;
+        StateHasChanged();
+    }
 
     private void NavigateToLogin()
     {
         Navigation.NavigateTo("/login");
+    }
+
+    private void ToggleRememberMe()
+    {
+        registerModel.RememberMe = !registerModel.RememberMe;
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/startup");
     }
 
     private async Task HandleRegister()

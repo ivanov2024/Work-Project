@@ -82,6 +82,20 @@ namespace FinBridge.App.Services
 
             var authProvider = scope.ServiceProvider.GetRequiredService<AuthenticationStateProvider>() as CustomAuthStateProvider;
             authProvider?.SetUser(user.UserName!);
+
+            // If RememberMe is true, set a longer expiration for the session
+            if (userSession.RememberMe)
+            {
+                // Set a longer expiration time (e.g., 30 days)
+                var expiration = DateTime.UtcNow.AddDays(30);
+                await SecureStorage.SetAsync("session_expiration", expiration.ToString("O"));
+            }
+            else
+            {
+                // Set a shorter expiration time (e.g., 1 day)
+                var expiration = DateTime.UtcNow.AddDays(1);
+                await SecureStorage.SetAsync("session_expiration", expiration.ToString("O"));
+            }
         }
 
         public async Task SignOutAsync()

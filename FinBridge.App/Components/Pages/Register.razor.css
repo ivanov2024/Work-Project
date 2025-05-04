@@ -1,91 +1,203 @@
 .app-background {
-    background-color: #fffbf4;
+    background-color: #f8fafc;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 40px 20px;
     min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 h3 {
     text-align: center;
-    color: #2c3e50;
+    color: #1e293b;
     font-size: 28px;
-    margin-bottom: 30px;
-    font-weight: 600;
+    margin-bottom: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
 
 EditForm {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
     box-sizing: border-box;
 }
 
+.form-group {
+    width: 100%;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
 label {
-    font-weight: 500;
-    margin-bottom: 4px;
+    font-weight: 600;
     display: block;
-    color: #34495e;
-    font-size: 15px;
+    color: #1e293b;
+    font-size: 20px;
+    letter-spacing: 0.025em;
+    width: 100%;
+    margin-bottom: 5px;
 }
 
 .input-field {
     width: 100%;
-    padding: 12px 15px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 15px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
     box-sizing: border-box;
+    color: #1f2937;
+    transition: all 0.2s ease;
+    background-color: #f9fafb;
+    margin: 0;
+    display: block;
+    min-width: 0;
+    height: 48px;
+    line-height: 1.5;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    background-color: #ffffff;
+}
+
+.input-field::placeholder {
+    color: #9ca3af;
+    font-size: 14px;
 }
 
 .checkbox-wrapper {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: #34495e;
-    font-size: 14px;
-    margin-top: 10px;
+    gap: 12px;
+    color: #4b5563;
+    font-size: 20px;
+    margin: 8px 0 16px 0;
+    line-height: 1.5;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    accent-color: #2563eb;
+    cursor: pointer;
+}
+
+.checkbox-wrapper label {
+    margin: 0;
+    font-weight: 500;
+    color: #4b5563;
+    font-size: 20px;
+    line-height: 20px;
 }
 
 button[type="submit"] {
-    padding: 12px 15px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #27ae60;
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #2563eb;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.2s ease;
     width: 100%;
     box-sizing: border-box;
-    margin-top: 20px;
+    margin-top: 24px;
+    letter-spacing: 0.025em;
 }
 
 button[type="submit"]:hover {
-    background-color: #1e8449;
+    background-color: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+button[type="submit"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 p {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #2c3e50;
+    margin-top: 24px;
+    font-size: 20px;
+    color: #4b5563;
     text-align: center;
+    line-height: 1.5;
 }
 
 p a {
-    color: #3498db;
+    color: #2563eb;
     cursor: pointer;
     text-decoration: none;
-    margin-left: 5px;
+    font-weight: 600;
+    margin-left: 4px;
+    position: relative;
+    transition: all 0.2s ease;
+    font-size: 20px;
+}
+
+p a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #2563eb;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
 }
 
 p a:hover {
-    text-decoration: underline;
+    color: #1d4ed8;
+}
+
+p a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Validation styles */
+.validation-message {
+    color: #dc2626;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+}
+
+.input-field.invalid {
+    border-color: #dc2626;
+}
+
+.input-field.invalid:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .app-background {
+        padding: 24px 16px;
+    }
+
+    EditForm {
+        padding: 24px;
+    }
+
+    h3 {
+        font-size: 24px;
+        margin-bottom: 24px;
+    }
 }

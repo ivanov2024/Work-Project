@@ -14,32 +14,32 @@
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <div>
+        <div class="form-group">
             <label>Въведе първото Ви име:</label>
             <InputText @bind-Value="registerModel.FirstName" class="input-field" placeholder="Например: Иван" />
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Въведе вашето презиме:</label>
             <InputText @bind-Value="registerModel.MiddleName" class="input-field" placeholder="Например: Горанов" />
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Въведете вашата фамилия:</label>
             <InputText @bind-Value="registerModel.LastName" class="input-field" placeholder="например: Цветанков" />
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Въведете вашият имейл:</label>
             <InputText @bind-Value="registerModel.Email" class="input-field" placeholder="example@example.com" />
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Въведе измислена от вас парола:</label>
             <InputText @bind-Value="registerModel.Password" type="password" class="input-field" />
         </div>
 
-        <div>
+        <div class="form-group">
             <label>Потвърдете измислената от вас парола:</label>
             <InputText @bind-Value="registerModel.ConfirmPassword" type="password" class="input-field" />
         </div>
@@ -49,29 +49,46 @@
             <label>Запомни ме</label>
         </div>
 
-        <button type="submit">Регистрирайте се</button>
+        <button type="submit" disabled="@isSubmitting">Регистрирайте се</button>
     </EditForm>
 
     <p>
         Вече имате акаунт?
-        <a @onclick="@(() => Navigation.NavigateTo("/login"))">Влезте в профила си</a>
+        <a @onclick="NavigateToLogin">Влезте в профила си</a>
     </p>
-
 </div>
 
 @code {
     private RegisterRequest registerModel = new();
+    private bool isSubmitting;
+
+    private void NavigateToLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
 
     private async Task HandleRegister()
     {
-        var result = await authService.RegisterAsync(registerModel);
-        if (result)
+        if (isSubmitting) return;
+
+        try
         {
-            Navigation.NavigateTo("/home");
+            isSubmitting = true;
+            var result = await authService.RegisterAsync(registerModel);
+            
+            if (result)
+            {
+                Navigation.NavigateTo("/home");
+            }
+            else
+            {
+                // TODO: Add proper error handling/display
+                Console.WriteLine("Authentication failed.");
+            }
         }
-        else
+        finally
         {
-            Console.WriteLine("Authentication failed.");
+            isSubmitting = false;
         }
     }
 }

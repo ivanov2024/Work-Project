@@ -53,6 +53,7 @@
         <!-- Images -->
         <MauiImage Include="Resources\Images\*" />
         <MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+        <MauiAsset Include="Resources\Images\appicon_without_background.png" LogicalName="images/appicon_without_background.png" />
 
         <!-- Custom Fonts -->
         <MauiFont Include="Resources\Fonts\*" />

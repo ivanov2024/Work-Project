@@ -86,3 +86,17 @@ h1:focus {
         padding-left: env(safe-area-inset-left);
     }
 }
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem 0;
+    width: 100%;
+}
+
+.app-logo {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+}

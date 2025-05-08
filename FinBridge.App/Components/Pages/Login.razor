@@ -22,12 +22,12 @@
 
         <div class="form-group">
             <label>Въведе вашият регистриран имейл:</label>
-            <InputText @bind-Value="loginModel.Email" class="input-field" placeholder="example@example.com" />
+            <InputText @bind-Value="loginModel.Email" class="input-field" placeholder="example@example.com" type="email" inputmode="email" />
         </div>
 
         <div class="form-group">
             <label>Въведете вашата парола:</label>
-            <InputText @bind-Value="loginModel.Password" type="password" class="input-field" />
+            <InputText @bind-Value="loginModel.Password" type="password" class="input-field" inputmode="text" />
         </div>
 
         <div class="checkbox-wrapper" @onclick="ToggleRememberMe">
@@ -35,7 +35,7 @@
             <label>Запомни ме</label>
         </div>
 
-        <button type="submit" disabled="@isSubmitting">Вход</button>
+        <button type="submit" class="submit-button" disabled="@isSubmitting">Вход</button>
     </EditForm>
 
     <p>

@@ -49,43 +49,42 @@
                      @onfocus="ShowValidationList"
                      @onblur="HideValidationList"
                      @oninput="UpdateValidation" />
-            <div class="form-group">
-                <div class="password-validation-container">          
-                    <div class="password-validation-list @(showValidation ? "show" : "")">
-                        <div class="validation-item">
-                            @if (IsPasswordLengthValid)
-                            {
-                                <span class="check-icon">✓</span>
-                            }
-                            else
-                            {
-                                <span class="x-icon">✕</span>
-                            }
-                            <span>Паролата трябва да е поне 6 символа</span>
-                        </div>
-                        <div class="validation-item">
-                            @if (HasUppercase)
-                            {
-                                <span class="check-icon">✓</span>
-                            }
-                            else
-                            {
-                                <span class="x-icon">✕</span>
-                            }
-                            <span>Паролата трябва да съдържа главни букви</span>
-                        </div>
-                        <div class="validation-item">
-                            @if (HasSpecialChars)
-                            {
-                                <span class="check-icon">✓</span>
-                            }
-                            else
-                            {
-                                <span class="x-icon">✕</span>
-                            }
-                            <span>Паролата трябва да съдържа специални символи</span>
-                        </div>
-                    </div>
+        </div>
+
+        <div class="password-validation-container @(showValidation ? "show" : "")">          
+            <div class="password-validation-list">
+                <div class="validation-item">
+                    @if (IsPasswordLengthValid)
+                    {
+                        <span class="check-icon">✓</span>
+                    }
+                    else
+                    {
+                        <span class="x-icon">✕</span>
+                    }
+                    <span>Паролата трябва да е поне 6 символа</span>
+                </div>
+                <div class="validation-item">
+                    @if (HasUppercase)
+                    {
+                        <span class="check-icon">✓</span>
+                    }
+                    else
+                    {
+                        <span class="x-icon">✕</span>
+                    }
+                    <span>Паролата трябва да съдържа главни букви</span>
+                </div>
+                <div class="validation-item">
+                    @if (HasSpecialChars)
+                    {
+                        <span class="check-icon">✓</span>
+                    }
+                    else
+                    {
+                        <span class="x-icon">✕</span>
+                    }
+                    <span>Паролата трябва да съдържа специални символи</span>
                 </div>
             </div>
         </div>

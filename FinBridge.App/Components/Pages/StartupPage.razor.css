@@ -33,7 +33,7 @@ h3 {
     margin: 0;
     font-size: 18px;
     color: #34495e;
-    align-self:flex-start;
+    align-self: flex-start;
 }
 
 .navigation-menu button {
@@ -138,4 +138,65 @@ h3 {
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+    .app-background {
+        padding: 20px 16px;
+    }
+
+    h3 {
+        font-size: 24px;
+        margin: 24px 0;
+    }
+
+    .navigation-menu {
+        padding: 24px 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .navigation-menu p {
+        font-size: 16px;
+    }
+
+    .nav-button {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    .app-icon {
+        height: 60px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .app-background {
+        padding: 16px 12px;
+    }
+
+    h3 {
+        font-size: 22px;
+        margin: 20px 0;
+    }
+
+    .navigation-menu {
+        padding: 20px 12px;
+    }
+
+    .navigation-menu p {
+        font-size: 15px;
+    }
+
+    .nav-button {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+
+    .app-icon {
+        height: 50px;
+        margin-bottom: 16px;
+    }
 }

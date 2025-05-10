@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Открийте сметка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="products.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="open-account-title">Открийте сметка</span>
+        </header>
+        <main class="open-account-main">
+            <ul class="open-account-list" id="open-account-list"></ul>
+<!-- scroll-indicator will be injected dynamically by JS -->
+<button class="toggle-list-btn" id="toggle-open-list-btn"><span class="toggle-open-arrow">▼</span> <span class="toggle-open-text">Виж всичко</span></button>
+            <div class="open-account-divider">
+                <span class="open-account-divider-line"></span>
+                <span class="open-account-divider-icon"><i class="fa-regular fa-lightbulb"></i></span>
+                <span class="open-account-divider-line"></span>
+            </div>
+            <ul class="open-account-benefits">
+    <li><i class="fa-regular fa-circle-check"></i> Без месечни такси за първите 6 месеца</li>
+    <li><i class="fa-regular fa-circle-check"></i> Мигновен достъп до мобилното банкиране</li>
+    <li><i class="fa-regular fa-circle-check"></i> Персонализирана поддръжка 24/7</li>
+</ul>
+        </main>
+    </div>
+
+<script>
+// open-account.js: Implements expand/collapse for open-account-list, like products.html
+
+const accountTypes = [
+    'Разплащателна сметка',
+    'Депозитна сметка',
+    'Спестовна сметка',
+    'Бюджетна/Фирмена сметка',
+    'Натрупваща сметка',
+    'Акредитивна сметка',
+    'Ликвидационна сметка'
+];
+
+let openExpanded = false;
+
+function renderOpenAccountList() {
+    const list = document.getElementById('open-account-list');
+    list.innerHTML = '';
+    const toShow = openExpanded ? accountTypes.length : Math.min(2, accountTypes.length);
+    accountTypes.slice(0, toShow).forEach(type => {
+        const li = document.createElement('li');
+        li.className = 'open-account-item';
+        li.innerHTML = `
+            <span class="open-account-icon"><img src="account-icon.png" alt="Account Icon" class="account-img-icon"></span>
+            <span class="open-account-label">${type}</span>
+        `;
+        list.appendChild(li);
+    });
+    // Remove any existing scroll indicator
+    const oldIndicator = document.getElementById('scroll-indicator');
+    if (oldIndicator) {
+        oldIndicator.remove();
+    }
+    // Show scroll indicator only if expanded and more than 2 items
+    if (openExpanded && accountTypes.length > 2) {
+        const indicator = document.createElement('div');
+        indicator.className = 'scroll-indicator';
+        indicator.id = 'scroll-indicator';
+        indicator.innerHTML = '<span class="scroll-arrow"><i class="fa-solid fa-angle-down"></i></span><span class="scroll-text">Плъзнете за още</span>';
+        // Insert after the account list
+        list.parentNode.insertBefore(indicator, list.nextSibling);
+        // Remove after fadeOut animation
+        indicator.addEventListener('animationend', function handler(e) {
+            if (e.animationName === 'fadeOut') {
+                indicator.remove();
+                indicator.removeEventListener('animationend', handler);
+            }
+        });
+    }
+    if (openExpanded) {
+        list.classList.add('expanded');
+    } else {
+        list.classList.remove('expanded');
+    }
+    setOpenAccountListMaxHeight();
+}
+
+
+function setOpenAccountListMaxHeight() {
+    const list = document.getElementById('open-account-list');
+    if (!list) return;
+    const items = list.querySelectorAll('.open-account-item');
+    let collapsedHeight = 0;
+    for (let i = 0; i < Math.min(2, items.length); i++) {
+        collapsedHeight += items[i].offsetHeight;
+    }
+    if (items.length > 1) {
+        const gap = parseInt(getComputedStyle(list).gap) || 0;
+        collapsedHeight += gap;
+    }
+    if (openExpanded) {
+        list.style.maxHeight = 'none';
+    } else {
+        list.style.maxHeight = collapsedHeight + 'px';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    renderOpenAccountList();
+    // Add zoom effect for mobile (touch)
+    document.addEventListener('touchstart', function(e) {
+        if (e.target.classList.contains('open-account-item')) {
+            e.target.classList.add('touched');
+        }
+    }, {passive: true});
+    document.addEventListener('touchend', function(e) {
+        if (e.target.classList.contains('open-account-item')) {
+            e.target.classList.remove('touched');
+        }
+    }, {passive: true});
+    document.addEventListener('touchcancel', function(e) {
+        if (e.target.classList.contains('open-account-item')) {
+            e.target.classList.remove('touched');
+        }
+    }, {passive: true});
+    const btn = document.getElementById('toggle-open-list-btn');
+    btn.onclick = function() {
+        const list = document.getElementById('open-account-list');
+        if (!openExpanded) {
+            // EXPAND: just animate, do not re-render if already expanded
+            openExpanded = true;
+            // Only render all items if not already rendered
+            if (list.children.length < accountTypes.length) {
+                renderOpenAccountList();
+            }
+            list.style.maxHeight = list.scrollHeight + 'px';
+            document.querySelector('.toggle-open-arrow').textContent = '▲';
+            document.querySelector('.toggle-open-text').textContent = 'Виж по-малко';
+            list.addEventListener('transitionend', function handler(e) {
+                if (openExpanded && e.propertyName === 'max-height') {
+                    list.style.maxHeight = 'none';
+                    list.removeEventListener('transitionend', handler);
+                }
+            });
+        } else {
+            // COLLAPSE: animate, then render 2 items after transition
+            list.style.maxHeight = list.scrollHeight + 'px';
+            void list.offsetHeight;
+            const items = list.querySelectorAll('.open-account-item');
+            let collapsedHeight = 0;
+            for (let i = 0; i < Math.min(2, items.length); i++) {
+                collapsedHeight += items[i].offsetHeight;
+            }
+            if (items.length > 1) {
+                const gap = parseInt(getComputedStyle(list).gap) || 0;
+                collapsedHeight += gap;
+            }
+            list.style.maxHeight = collapsedHeight + 'px';
+            list.addEventListener('transitionend', function handler(e) {
+                if (e.propertyName === 'max-height') {
+                    openExpanded = false;
+                    document.querySelector('.toggle-open-arrow').textContent = '▼';
+                    document.querySelector('.toggle-open-text').textContent = 'Виж всичко';
+                    renderOpenAccountList();
+                    list.removeEventListener('transitionend', handler);
+                }
+            });
+        }
+    };
+    document.querySelector('.toggle-open-arrow').textContent = openExpanded ? '▲' : '▼';
+    document.querySelector('.toggle-open-text').textContent = openExpanded ? 'Виж по-малко' : 'Виж всичко';
+    window.addEventListener('resize', setOpenAccountListMaxHeight);
+});
+</script>
+</body>
+</html>

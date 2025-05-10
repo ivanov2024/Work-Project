@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "name": "Ihihjoj9",
+    "iban": "BG21 **XX 10",
+    "balance": 8379.51,
+    "currency": "BGN",
+    "transactions": [
+      {"title": "Заплата", "date": "5 май 2025", "amount": 2500.00, "type": "income"},
+      {"title": "Магазин за хранителни стоки", "date": "4 май 2025", "amount": -120.50, "type": "expense"}
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Сметка за кр...",
+    "iban": "BG05 **XX 10",
+    "balance": 0.00,
+    "currency": "BGN",
+    "transactions": []
+  },
+  {
+    "id": "3",
+    "name": "Test two",
+    "iban": "BG72 **XX 10",
+    "balance": 4000.82,
+    "currency": "USD",
+    "transactions": []
+  }
+]

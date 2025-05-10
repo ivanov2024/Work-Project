@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сметки | Продукти</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="products-header">
+            <span class="products-title">Сметки</span>
+            <button class="add-account-btn" onclick="location.href='open-account.html'"><i class="fa-solid fa-plus"></i> Добави</button>
+        </header>
+        <main>
+            <div class="accounts-list-container">
+                <ul class="accounts-list" id="accounts-list"></ul>
+                <button class="toggle-list-btn" id="toggle-list-btn"><span class="toggle-arrow">▼</span> <span class="toggle-text">Виж всичко</span></button>
+            </div>
+        </main>
+    </div>
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-home"></i></span>
+            <span class="nav-label">Начало</span>
+        </a>
+        <a href="products.html" class="nav-item active">
+            <span class="nav-icon"><i class="fa-solid fa-list"></i></span>
+            <span class="nav-label">Продукти</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-exchange-alt"></i></span>
+            <span class="nav-label">Преводи</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-lightbulb"></i></span>
+            <span class="nav-label">Битови</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-ellipsis-h"></i></span>
+            <span class="nav-label">Повече</span>
+        </a>
+    </nav>
+    <script>
+    // Simulated accounts data (should match accounts.json)
+    const accounts = [
+      {
+        id: "1",
+        name: "Ihihjoj9",
+        iban: "BG21 UBBS XXXX XXXX XXXX 10",
+        balance: 8379.51,
+        currency: "BGN"
+      },
+      {
+        id: "2",
+        name: "Сметка за кредитна карта",
+        iban: "BG05 UBBS XXXX XXXX XXXX 10",
+        balance: 0.00,
+        currency: "BGN"
+      },
+      {
+        id: "3",
+        name: "Разплащателна сметка",
+        iban: "BG72 UBBS XXXX XXXX XXXX 10",
+        balance: 2029.82,
+        currency: "EUR"
+      }
+    ];
+    let expanded = false;
+    function renderAccounts() {
+        const list = document.getElementById('accounts-list');
+        list.innerHTML = '';
+        let toShow = expanded ? accounts.length : Math.min(2, accounts.length);
+        accounts.slice(0, toShow).forEach(acc => {
+            const li = document.createElement('li');
+            li.className = 'account-list-item';
+            li.innerHTML = `
+                <div class="account-list-icon"><img src="wallet-icon.png" alt="Wallet Icon" style="width:70%;height:70%;object-fit:contain;" /></div>
+                <div class="account-list-details">
+                    <div class="account-list-name">${acc.name}</div>
+                    <div class="account-list-iban">${acc.iban}</div>
+                    <div class="account-list-balance">${formatAmount(acc.balance, acc.currency)}</div>
+                </div>
+            `;
+            list.appendChild(li);
+        });
+        setListMaxHeight();
+    }
+    function setListMaxHeight() {
+    const list = document.getElementById('accounts-list');
+    if (!list) return;
+    const items = list.querySelectorAll('.account-list-item');
+    let collapsedHeight = 0;
+    for (let i = 0; i < Math.min(2, items.length); i++) {
+        collapsedHeight += items[i].offsetHeight;
+    }
+    if (items.length > 1) {
+        const gap = parseInt(getComputedStyle(list).gap) || 0;
+        collapsedHeight += gap;
+    }
+    if (expanded) {
+        // Expanded: set to scrollHeight for smooth open
+        list.style.maxHeight = list.scrollHeight + 'px';
+        list.classList.add('expanded');
+        // After transition, set max-height to none for dynamic content
+        list.addEventListener('transitionend', function handler(e) {
+            if (expanded && e.propertyName === 'max-height') {
+                list.style.maxHeight = 'none';
+                list.removeEventListener('transitionend', handler);
+            }
+        });
+    } else {
+        // For closing: set to none (auto), then to full, then to collapsed for smooth transition
+        list.style.maxHeight = list.scrollHeight + 'px';
+        // Force reflow
+        void list.offsetHeight;
+        list.style.maxHeight = collapsedHeight + 'px';
+        list.classList.remove('expanded');
+    }
+}
+    window.addEventListener('resize', setListMaxHeight);
+    function formatAmount(amount, currency) {
+        return amount.toLocaleString('bg-BG', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ' + currency;
+    }
+    window.onload = function() {
+        renderAccounts();
+        const btn = document.getElementById('toggle-list-btn');
+        btn.onclick = function() {
+            const list = document.getElementById('accounts-list');
+            if (!expanded) {
+                // EXPAND: render all, then animate
+                expanded = true;
+                document.querySelector('.toggle-arrow').textContent = '▲';
+                document.querySelector('.toggle-text').textContent = 'Виж по-малко';
+                renderAccounts();
+            } else {
+                // COLLAPSE: animate, then render 2 items after transition
+                // Set explicit height for transition
+                list.style.maxHeight = list.scrollHeight + 'px';
+                // Force reflow
+                void list.offsetHeight;
+                // Animate to collapsed height
+                const items = list.querySelectorAll('.account-list-item');
+                let collapsedHeight = 0;
+                for (let i = 0; i < Math.min(2, items.length); i++) {
+                    collapsedHeight += items[i].offsetHeight;
+                }
+                if (items.length > 1) {
+                    const gap = parseInt(getComputedStyle(list).gap) || 0;
+                    collapsedHeight += gap;
+                }
+                list.style.maxHeight = collapsedHeight + 'px';
+                // Wait for transition to end before actually collapsing
+                list.addEventListener('transitionend', function handler(e) {
+                    if (e.propertyName === 'max-height') {
+                        expanded = false;
+                        document.querySelector('.toggle-arrow').textContent = '▼';
+                        document.querySelector('.toggle-text').textContent = 'Виж всичко';
+                        renderAccounts();
+                        list.removeEventListener('transitionend', handler);
+                    }
+                });
+            }
+        };
+        document.querySelector('.toggle-arrow').textContent = expanded ? '▲' : '▼';
+        document.querySelector('.toggle-text').textContent = expanded ? 'Виж по-малко' : 'Виж всичко';
+    };
+
+    </script>
+</body>
+</html>

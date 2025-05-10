@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile App UI Design</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <main>
+<!-- Dashboard Section -->
+<section class="dashboard" id="dashboard">
+
+    <div class="dashboard-header">
+    <div class="user-info">
+        <span class="greeting">Добър ден, Иван!</span>
+        <span class="profile-icon"><i class="fa-solid fa-user"></i></span>
+    </div>
+</div>
+<!-- Accounts Scrollable Menu -->
+<div class="accounts-scroll" id="accounts-scroll"></div>
+    <div class="balance-card" id="balance-card">
+    <span class="balance-label">Баланс по сметката</span>
+    <span class="balance-amount" id="balance-amount">$12,480.75</span>
+    <span class="balance-mask" id="balance-mask">••••••••</span>
+    <button class="show-balance-btn" onclick="toggleBalance()" id="show-balance-btn">Покажи</button>
+</div>
+<div class="quick-actions">
+        <button class="action-btn">
+            <span class="action-icon"><i class="fa-solid fa-money-bill-transfer"></i></span>
+            <span>Превод</span>
+        </button>
+        <button class="action-btn">
+            <span class="action-icon"><i class="fa-solid fa-credit-card"></i></span>
+            <span>Плащане</span>
+        </button>
+        <button class="action-btn">
+            <span class="action-icon"><i class="fa-solid fa-plus"></i></span>
+            <span>Зареди</span>
+        </button>
+    </div>
+    <div class="transactions" id="transactions">
+    <h3>Последни транзакции</h3>
+    <ul class="transaction-list" id="transaction-list">
+        <!-- Transactions will be rendered here -->
+    </ul>
+</div>
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active">
+            <span class="nav-icon"><i class="fa-solid fa-home"></i></span>
+            <span class="nav-label">Начало</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-list"></i></span>
+            <span class="nav-label">Продукти</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-exchange-alt"></i></span>
+            <span class="nav-label">Преводи</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-lightbulb"></i></span>
+            <span class="nav-label">Битови</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-ellipsis-h"></i></span>
+            <span class="nav-label">Повече</span>
+        </a>
+    </nav>
+</section>
+</section>
+        </main>
+    <!-- Bottom Navigation Bar (now inside dashboard) -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item active">
+            <span class="nav-icon"><i class="fa-solid fa-home"></i></span>
+            <span class="nav-label">Начало</span>
+        </a>
+        <a href="products.html" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-list"></i></span>
+            <span class="nav-label">Продукти</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-exchange-alt"></i></span>
+            <span class="nav-label">Преводи</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-lightbulb"></i></span>
+            <span class="nav-label">Битови</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-ellipsis-h"></i></span>
+            <span class="nav-label">Повече</span>
+        </a>
+    </nav>
+    </div>
+    <script>
+// Simulated accounts data (normally loaded from accounts.json)
+const accounts = [
+  {
+    id: "1",
+    name: "Ihihjoj9",
+    iban: "BG21 **XX 10",
+    balance: 8379.51,
+    currency: "BGN",
+    transactions: [
+      {title: "Заплата", date: "5 май 2025", amount: 2500.00, type: "income"},
+      {title: "Магазин за хранителни стоки", date: "4 май 2025", amount: -120.50, type: "expense"}
+    ]
+  },
+  {
+    id: "2",
+    name: "Сметка за кр...",
+    iban: "BG05 **XX 10",
+    balance: 0.00,
+    currency: "BGN",
+    transactions: []
+  },
+  {
+    id: "3",
+    name: "Test two",
+    iban: "BG72 **XX 10",
+    balance: 4000.82,
+    currency: "USD",
+    transactions: []
+  }
+];
+
+let selectedAccount = accounts[0];
+let balanceVisible = false;
+
+function renderAccounts() {
+  const container = document.getElementById('accounts-scroll');
+  container.innerHTML = '';
+  accounts.forEach((acc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'account-card' + (acc === selectedAccount ? ' selected' : '');
+    card.innerHTML = `
+      <div class="account-icon"><img src="wallet-icon.png" alt="Wallet Icon" style="width:70%;height:70%;object-fit:contain;" /></div>
+      <div class="account-name">${acc.name}</div>
+      <div class="account-iban">${acc.iban}</div>
+      <div class="account-balance">${formatAmount(acc.balance, acc.currency)}</div>
+    `;
+    card.onclick = () => {
+      selectedAccount = acc;
+      renderAccounts();
+      renderBalanceCard();
+      renderTransactions();
+      // Re-apply masking if needed
+      if (!balanceVisible) maskAll();
+    };
+    container.appendChild(card);
+  });
+}
+
+function renderBalanceCard() {
+  const amount = document.getElementById('balance-amount');
+  const mask = document.getElementById('balance-mask');
+  amount.textContent = formatAmount(selectedAccount.balance, selectedAccount.currency);
+  mask.textContent = '••••••••';
+}
+
+function renderTransactions() {
+  const list = document.getElementById('transaction-list');
+  list.innerHTML = '';
+  if (!selectedAccount.transactions.length) {
+    list.innerHTML = '<li style="text-align:center;color:#aaa;">Няма транзакции</li>';
+    return;
+  }
+  selectedAccount.transactions.forEach(txn => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <span class="txn-icon ${txn.type}"><i class="fa-solid ${txn.type==='income'?'fa-arrow-down':'fa-arrow-up'}"></i></span>
+      <span class="txn-details">
+        <span class="txn-title">${txn.title}</span>
+        <span class="txn-date">${txn.date}</span>
+      </span>
+      <span class="txn-amount ${txn.type}" data-real="${formatTxnAmount(txn.amount, selectedAccount.currency)}">${formatTxnAmount(txn.amount, selectedAccount.currency)}</span>
+    `;
+    list.appendChild(li);
+  });
+}
+
+function formatAmount(amount, currency) {
+  return amount.toLocaleString('bg-BG', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ' + currency;
+}
+function formatTxnAmount(amount, currency) {
+  const sign = amount > 0 ? '+ ' : amount < 0 ? '- ' : '';
+  return sign + Math.abs(amount).toLocaleString('bg-BG', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + ' ' + currency;
+}
+
+function toggleBalance() {
+  balanceVisible = !balanceVisible;
+  const amount = document.getElementById('balance-amount');
+  const mask = document.getElementById('balance-mask');
+  const txnAmounts = document.querySelectorAll('.txn-amount');
+  const btn = document.getElementById('show-balance-btn');
+  if (!amount || !mask || !btn) return;
+  if (balanceVisible) {
+    amount.style.display = 'inline';
+    mask.style.display = 'none';
+    txnAmounts.forEach(txn => {
+      txn.textContent = txn.dataset.real;
+    });
+    btn.textContent = 'Скрий';
+  } else {
+    amount.style.display = 'none';
+    mask.style.display = 'inline';
+    txnAmounts.forEach(txn => {
+      txn.textContent = '••••••••';
+    });
+    btn.textContent = 'Покажи';
+  }
+}
+function maskAll() {
+  const amount = document.getElementById('balance-amount');
+  const mask = document.getElementById('balance-mask');
+  const txnAmounts = document.querySelectorAll('.txn-amount');
+  const btn = document.getElementById('show-balance-btn');
+  if (amount && mask) {
+    amount.style.display = 'none';
+    mask.style.display = 'inline';
+  }
+  txnAmounts.forEach(txn => {
+    txn.textContent = '••••••••';
+  });
+  if (btn) btn.textContent = 'Покажи';
+}
+window.onload = function() {
+  renderAccounts();
+  renderBalanceCard();
+  renderTransactions();
+  maskAll();
+}
+</script>
+    <script>
+        // Ensure .mobile-frame uses full viewport height on all devices
+        function setMobileFrameHeight() {
+            var frame = document.querySelector('.mobile-frame');
+            if (frame) {
+                frame.style.height = window.innerHeight + 'px';
+            }
+        }
+        window.addEventListener('load', setMobileFrameHeight);
+        window.addEventListener('resize', setMobileFrameHeight);
+    </script>
+</body>
+</html>

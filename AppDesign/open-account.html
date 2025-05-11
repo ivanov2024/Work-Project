@@ -57,6 +57,9 @@ function renderOpenAccountList() {
             <span class="open-account-icon"><img src="account-icon.png" alt="Account Icon" class="account-img-icon"></span>
             <span class="open-account-label">${type}</span>
         `;
+        if (type === 'Разплащателна сметка') {
+            li.onclick = () => window.location.href = 'account-details.html';
+        }
         list.appendChild(li);
     });
     // Remove any existing scroll indicator

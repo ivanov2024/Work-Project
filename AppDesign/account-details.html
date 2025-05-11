@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Нова сметка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="account-details-header">
+            <a href="open-account.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="account-details-title">Нова сметка</span>
+        </header>
+        <main class="account-details-main">
+            <div class="account-user-info">
+                <span class="account-user-label">Имена</span>
+                <span class="account-user-value">Иван</span>
+            </div>
+            <h2 class="account-details-section-title">Детайли по сметка</h2>
+            <div class="account-details-row account-type-row" style="display: flex; flex-direction: column; align-items: flex-start; gap: 7px; margin-bottom: 18px;">
+    <span class="account-details-label">Вид сметка:</span>
+    <span class="account-details-type"><img src="account-icon.png" alt="Account" class="account-type-img"> РАЗПЛАЩАТЕЛНА СМЕТКА</span>
+</div>
+<div class="account-details-row account-currency-row">
+    <label class="account-details-label" for="currency-select">Валутa на сметката</label>
+    <!-- Custom currency select trigger -->
+    <div id="currency-select-trigger" class="account-details-select custom-select-trigger">Избери валута</div>
+    <input type="hidden" id="currency-select-value" name="currency" value="">
+    <!-- Native select hidden for accessibility fallback -->
+    <select id="currency-select" class="account-details-select" style="display:none;">
+        <option value="">Избери валута</option>
+        <option value="BGN">BGN</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+    </select>
+</div>
+<!-- Currency Bottom Sheet Popup -->
+<div id="currency-sheet" class="currency-sheet" style="display:none;">
+    <div class="currency-sheet-backdrop"></div>
+    <div class="currency-sheet-modal">
+        <div class="currency-sheet-bar"></div>
+        <div class="currency-sheet-options">
+            <div class="currency-sheet-option" data-value="BGN">BGN</div>
+            <div class="currency-sheet-option" data-value="EUR">EUR</div>
+            <div class="currency-sheet-option" data-value="GBP">GBP</div>
+        </div>
+    </div>
+</div>
+
+            <form class="account-details-form">
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="confirm-all">
+                    <label for="confirm-all">Потвърди всичко</label>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms1">
+                    <label for="terms1">Запознат съм с и приемам <a href="#" target="_blank">Общи условия на FinBridge за платежни услуги за физически лица</a>.</label>
+<div class="term-desc" style="display:none;">Този документ съдържа всички основни правила, права и задължения, свързани с използването на платежните услуги на FinBridge.</div>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms2">
+                    <label for="terms2">Запознат съм с <a href="#" target="_blank">Такси и комисиони</a>.</label>
+<div class="term-desc" style="display:none;">Тук са описани всички приложими такси и комисиони за откриване, поддържане и използване на сметката.</div>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms3">
+                    <label for="terms3">Запознат съм с <a href="#" target="_blank">Тарифи за лихвени условия за физически лица</a>.</label>
+<div class="term-desc" style="display:none;">Този документ съдържа информация за лихвените проценти, които се прилагат към средствата по сметката.</div>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms4">
+                    <label for="terms4">Запознат съм и приемам <a href="#" target="_blank">Договор за стандартна разплащателна сметка</a>.</label>
+<div class="term-desc" style="display:none;">Официалният договор, който урежда отношенията между клиента и FinBridge за тази сметка.</div>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms5">
+                    <label for="terms5">Запознат съм с <a href="#" target="_blank">Информационен бюлетин за вложителите</a>.</label>
+<div class="term-desc" style="display:none;">Бюлетинът предоставя важна информация за защита на вложителите и гаранционни механизми.</div>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms6">
+                    <label for="terms6">Запознат съм с <a href="#" target="_blank">Документ за информация за таксите</a>.</label>
+<div class="term-desc" style="display:none;">Документът съдържа подробна информация за всички такси, които могат да бъдат начислени по сметката.</div>
+                </div>
+                <div class="account-checkbox-row">
+                    <input type="checkbox" id="terms7">
+                    <label for="terms7">Декларирам, че обичайното ми местопребиваване е в България и/или заявявам продукта/услугата по моя собствена инициатива.</label>
+<div class="term-desc" style="display:none;">Това е необходима декларация за съответствие с регулаторните изисквания и за правилното предоставяне на услугата.</div>
+                </div>
+                <button type="submit" class="account-details-submit" disabled>Продължи</button>
+            </form>
+        <script>
+// --- Custom Currency Bottom Sheet Logic ---
+(function() {
+    const currencyTrigger = document.getElementById('currency-select-trigger');
+    const currencySheet = document.getElementById('currency-sheet');
+    const currencyBackdrop = document.querySelector('.currency-sheet-backdrop');
+    const currencyOptions = document.querySelectorAll('.currency-sheet-option');
+    const currencyHidden = document.getElementById('currency-select-value');
+    const nativeSelect = document.getElementById('currency-select');
+    const submitBtn = document.querySelector('.account-details-submit');
+
+    function openCurrencySheet() {
+        currencySheet.style.display = 'flex';
+        setTimeout(() => currencySheet.querySelector('.currency-sheet-modal').focus(), 10);
+    }
+    function closeCurrencySheet() {
+        currencySheet.style.display = 'none';
+    }
+    function updateSubmitState() {
+        const allowed = ['BGN','EUR','GBP'];
+        // Only allow submit if the hidden input (custom select) is set to a valid value
+        const selected = currencyHidden.value;
+        const allChecked = Array.from(document.querySelectorAll('.account-details-form input[type="checkbox"]')).every(cb => cb.checked);
+        submitBtn.disabled = !(allowed.includes(selected) && allChecked);
+    }
+    // Also update submit state when any checkbox is changed
+    document.querySelectorAll('.account-details-form input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', updateSubmitState);
+    });
+
+    currencyTrigger.addEventListener('click', openCurrencySheet);
+    currencyBackdrop.addEventListener('click', closeCurrencySheet);
+    currencyOptions.forEach(opt => {
+        opt.addEventListener('click', function() {
+            // Remove highlight from all
+        currencyOptions.forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        // Set value
+        currencyHidden.value = this.dataset.value;
+        currencyTrigger.textContent = this.textContent;
+        currencyTrigger.classList.add('selected');
+        // Sync native select
+        nativeSelect.value = this.dataset.value;
+        updateSubmitState();
+        closeCurrencySheet();
+    });
+});
+// If user changes native select (accessibility fallback)
+nativeSelect.addEventListener('change', function() {
+    currencyHidden.value = nativeSelect.value;
+    currencyTrigger.textContent = nativeSelect.value || 'Избери валута';
+    currencyTrigger.classList.toggle('selected', !!nativeSelect.value);
+    currencyOptions.forEach(o => o.classList.toggle('selected', o.dataset.value === nativeSelect.value));
+        updateSubmitState();
+    });
+    // Initial state
+    updateSubmitState();
+})();
+</script>
+</main>
+    </div>
+
+    <!-- Popup Modal for Terms -->
+    <div id="terms-modal" class="terms-modal" style="display:none;">
+        <div class="terms-modal-content">
+            <button class="terms-modal-close back-btn" id="terms-modal-close" aria-label="Затвори"><i class="fa-solid fa-xmark"></i></button>
+            <div id="terms-modal-title" class="terms-modal-title"></div>
+            <div id="terms-modal-body" class="terms-modal-body"></div>
+        </div>
+        <div class="terms-modal-backdrop"></div>
+    </div>
+
+    <script>
+    // Enable the submit button only if all checkboxes are checked
+    const form = document.querySelector('.account-details-form');
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    const submitBtn = form.querySelector('.account-details-submit');
+    const confirmAll = document.getElementById('confirm-all');
+    function updateSubmitState() {
+        let allChecked = true;
+        checkboxes.forEach(cb => { if (!cb.checked && cb.id !== 'confirm-all') allChecked = false; });
+        submitBtn.disabled = !allChecked;
+    }
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', updateSubmitState);
+    });
+    confirmAll.addEventListener('change', function() {
+        checkboxes.forEach(cb => { if (cb.id !== 'confirm-all') cb.checked = confirmAll.checked; });
+        updateSubmitState();
+    });
+    form.addEventListener('change', updateSubmitState);
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Формата е изпратена!');
+    });
+
+    // Terms modal logic
+    const termsContent = {
+        'terms1': {
+            title: 'Общи условия на FinBridge за платежни услуги за физически лица',
+            body: 'Този документ съдържа всички основни правила, права и задължения, свързани с използването на платежните услуги на FinBridge. Той урежда взаимоотношенията между клиента и доставчика на услуги, включително процедури по откриване и закриване на сметка, права за достъп, защита на лични данни и др.'
+        },
+        'terms2': {
+            title: 'Такси и комисиони',
+            body: 'Тук са описани всички приложими такси и комисиони за откриване, поддържане и използване на сметката. Включва информация за месечни такси, такси за преводи, тегления и други услуги.'
+        },
+        'terms3': {
+            title: 'Тарифи за лихвени условия за физически лица',
+            body: 'Този документ съдържа информация за лихвените проценти, които се прилагат към средствата по сметката. Описва как се начислява лихва, периоди на изплащане и условия за промяна на лихвения процент.'
+        },
+        'terms4': {
+            title: 'Договор за стандартна разплащателна сметка',
+            body: 'Официалният договор, който урежда отношенията между клиента и FinBridge за тази сметка. Включва права и задължения, условия за прекратяване и други важни клаузи.'
+        },
+        'terms5': {
+            title: 'Информационен бюлетин за вложителите',
+            body: 'Бюлетинът предоставя важна информация за защита на вложителите и гаранционни механизми. Описва как се защитават средствата на клиента в случай на неплатежоспособност на банката.'
+        },
+        'terms6': {
+            title: 'Документ за информация за таксите',
+            body: 'Документът съдържа подробна информация за всички такси, които могат да бъдат начислени по сметката, както и примери за изчисление.'
+        }
+    };
+    document.querySelectorAll('.account-checkbox-row a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Find the closest checkbox row and get its input id
+            const row = e.target.closest('.account-checkbox-row');
+            const input = row ? row.querySelector('input[type="checkbox"]') : null;
+            if (input && termsContent[input.id]) {
+                document.getElementById('terms-modal-title').textContent = termsContent[input.id].title;
+                document.getElementById('terms-modal-body').textContent = termsContent[input.id].body;
+                document.getElementById('terms-modal').style.display = 'flex';
+            }
+        });
+    });
+    document.getElementById('terms-modal-close').onclick = function() {
+        document.getElementById('terms-modal').style.display = 'none';
+    };
+    document.querySelector('.terms-modal-backdrop').onclick = function() {
+        document.getElementById('terms-modal').style.display = 'none';
+    };
+    </script>
+</body>
+</html>

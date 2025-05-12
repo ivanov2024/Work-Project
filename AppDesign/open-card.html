@@ -45,7 +45,9 @@
                 <span class="open-account-icon"><img src="card-icon.png" alt="Card Icon" class="account-img-icon"></span>
                 <span class="open-account-label">${type}</span>
             `;
-            // You can add click handling here for each card type
+            li.addEventListener('click', function() {
+                window.location.href = 'CreditCardDemo/card.html';
+            });
             list.appendChild(li);
         });
     }

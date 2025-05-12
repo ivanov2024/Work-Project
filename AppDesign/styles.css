@@ -695,33 +695,40 @@ body, html {
 }
 .open-account-benefits {
     list-style: none;
-    padding: 0;
-    margin: 0 16px;
-    width: 100%;
+    padding: 0 0 0 0;
+    margin: 24px 18px 0 18px;
+    width: auto;
+    max-width: 410px;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    align-items: center;
-    opacity: 0.7;
+    gap: 14px;
 }
-
 .open-account-benefits li {
-    font-size: 1.03rem;
+    font-size: 1.08rem;
     color: #17436a;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 14px;
-    font-weight: 400;
-    text-align: left;
-    line-height: 1.32;
-    width: auto;
-    word-break: break-word;
+    gap: 12px;
+    font-weight: 500;
+    background: none;
+    margin: 0;
+    padding: 0;
 }
 .open-account-benefits i {
     color: #7bb927;
-    font-size: 1.38em;
-    min-width: 1.7em;
+    background: #e6f7d9;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.22rem;
+    box-shadow: 0 1px 4px #b8e2b0aa;
     text-align: center;
     line-height: 1.2;
     margin-top: 0;
@@ -767,13 +774,53 @@ body, html {
 /* --- Products Page Styles --- */
 .products-header {
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-    padding: 20px 16px 8px 16px;
+    justify-content: space-between;
+    padding: 18px 16px 10px 16px;
     background: #fff;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    border-radius: 0;
+    box-shadow: none;
+    min-height: 56px;
+    margin-bottom: 0;
+    gap: 16px;
+    width: 100%;
+    max-width: 430px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+.products-header > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-right: 8px;
+    flex-shrink: 1;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    max-width: 60%;
+}
+.products-header .products-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #1b2d4b;
+    letter-spacing: 0.5px;
+}
+.products-header .add-account-btn {
+    margin-left: 8px;
+}
+.products-header .add-account-btn:last-child {
+    margin-right: 0;
+}
+.products-header .products-title {
+    flex: 1;
+    text-align: left;
+}
+.products-header > div {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-right: 8px;
 }
 .products-title {
     font-size: 1.7rem;

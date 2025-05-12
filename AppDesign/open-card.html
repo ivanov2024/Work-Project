@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заяви карта</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="products.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="open-account-title section-title">Заяви карта</span>
+        </header>
+        <main class="open-account-main">
+            <ul class="open-account-list" id="open-card-list"></ul>
+            <button class="toggle-list-btn" id="toggle-card-list-btn" style="display:none;"><span class="toggle-open-arrow">▼</span> <span class="toggle-open-text">Виж всичко</span></button>
+            <div class="open-account-divider">
+                <span class="open-account-divider-line"></span>
+                <span class="open-account-divider-icon"><i class="fa-regular fa-lightbulb"></i></span>
+                <span class="open-account-divider-line"></span>
+            </div>
+            <ul class="open-account-benefits">
+                <li><i class="fa-regular fa-circle-check"></i> Без такса за издаване</li>
+                <li><i class="fa-regular fa-circle-check"></i> Мигновен достъп до картата в мобилното банкиране</li>
+            </ul>
+        </main>
+    </div>
+    <script>
+    // Only two card types: Credit and Debit
+    const cardTypes = [
+        'Кредитна карта',
+        'Дебитна карта'
+    ];
+
+    function renderCardList() {
+        const list = document.getElementById('open-card-list');
+        list.innerHTML = '';
+        cardTypes.forEach(type => {
+            const li = document.createElement('li');
+            li.className = 'open-account-item';
+            li.innerHTML = `
+                <span class="open-account-icon"><img src="card-icon.png" alt="Card Icon" class="account-img-icon"></span>
+                <span class="open-account-label">${type}</span>
+            `;
+            // You can add click handling here for each card type
+            list.appendChild(li);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderCardList();
+    });
+    </script>
+</body>
+</html>

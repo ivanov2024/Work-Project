@@ -19,6 +19,13 @@
                 <ul class="accounts-list" id="accounts-list"></ul>
                 <button class="toggle-list-btn" id="toggle-list-btn"><span class="toggle-arrow">▼</span> <span class="toggle-text">Виж всичко</span></button>
             </div>
+            <header class="products-header" style="margin-top: 18px;">
+    <span class="products-title">Карти</span>
+    <div style="display: flex; gap: 10px; margin-left: auto;">
+        <button class="add-account-btn" id="request-card-btn"><i class="fa-solid fa-plus"></i> Заяви</button>
+        <button class="add-account-btn" id="add-card-btn" onclick="location.href='open-card.html'"><i class="fa-solid fa-plus"></i> Добави</button>
+    </div>
+</header>
         </main>
     </div>
     <nav class="bottom-nav">
@@ -86,6 +93,27 @@
             `;
             list.appendChild(li);
         });
+        // Remove any existing scroll indicator
+        const oldIndicator = document.getElementById('scroll-indicator');
+        if (oldIndicator) {
+            oldIndicator.remove();
+        }
+        // Show scroll indicator only if expanded and more than 3 accounts
+        if (expanded && accounts.length > 3) {
+            const indicator = document.createElement('div');
+            indicator.className = 'scroll-indicator';
+            indicator.id = 'scroll-indicator';
+            indicator.innerHTML = '<span class="scroll-arrow"><i class="fa-solid fa-angle-down"></i></span><span class="scroll-text">Плъзнете за още</span>';
+            // Insert after the accounts list
+            list.parentNode.insertBefore(indicator, list.nextSibling);
+            // Remove after fadeOut animation
+            indicator.addEventListener('animationend', function handler(e) {
+                if (e.animationName === 'fadeOut') {
+                    indicator.remove();
+                    indicator.removeEventListener('animationend', handler);
+                }
+            });
+        }
         setListMaxHeight();
     }
     function setListMaxHeight() {

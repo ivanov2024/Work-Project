@@ -66,10 +66,9 @@ main {
 .account-details-header .back-btn:hover {
     background: #f1f5fa;
 }
-.account-details-title {
-    flex: 1;
+.section-title {
     text-align: center;
-    font-size: 1.14rem;
+    font-size: 1.7rem;
     font-weight: 600;
     color: #19335a;
     letter-spacing: 0.01em;
@@ -79,17 +78,49 @@ main {
     user-select: none;
 }
 
+.account-details-title {
+    flex: 1;
+}
+
+
 /* --- Open Account Page Styles --- */
 .open-account-header {
     display: flex;
     align-items: center;
-    padding: 22px 16px 12px 10px;
+    justify-content: center;
+    position: relative;
+    height: 56px;
     background: #fff;
-    position: sticky;
+    border-bottom: 1px solid #f1f5fa;
+    box-shadow: none;
+    padding: 0;
     top: 0;
     z-index: 10;
-    gap: 10px;
 }
+
+.open-account-header .back-btn {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background: none;
+    border: none;
+    color: #29a8ff;
+    font-size: 1.2rem;
+    padding: 7px 9px 7px 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.16s;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.open-account-header .back-btn:hover {
+    background: #f1f5fa;
+}
+
 .back-btn {
     display: flex;
     align-items: center;
@@ -111,10 +142,10 @@ main {
     color: #1766a6;
 }
 .open-account-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1b2d4b;
-    letter-spacing: 0.5px;
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
 }
 .open-account-main {
     display: flex;
@@ -745,7 +776,7 @@ body, html {
     z-index: 10;
 }
 .products-title {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 700;
     color: #1b2d4b;
     letter-spacing: 0.5px;
@@ -907,7 +938,7 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.7rem;
     color: #29a8ff;
 }
 .account-list-details {

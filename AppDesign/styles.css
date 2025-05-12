@@ -1434,6 +1434,9 @@ body, html {
     border-radius: 14px;
     padding: 16px 10px 10px 10px;
     box-shadow: 0 1px 4px rgba(60,60,130,0.03);
+    max-width: 340px;
+    margin: 0 auto 12px auto;
+    width: 100%;
 }
 .transactions h3 {
     margin: 0 0 10px 8px;
@@ -1448,15 +1451,18 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
 }
 .transaction-list li {
     display: flex;
     align-items: center;
-    padding: 8px 8px;
-    border-radius: 8px;
+    padding: 12px 14px;
+    border-radius: 12px;
     background: #fff;
     box-shadow: 0 1px 2px rgba(60,60,130,0.03);
-    gap: 12px;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
 }
 .txn-icon {
     font-size: 1.3rem;

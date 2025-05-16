@@ -1031,12 +1031,12 @@ body, html {
 }
 .products-header > div {
     display: flex;
-    gap: 10px;
     align-items: center;
     flex-shrink: 1;
     flex-wrap: nowrap;
     white-space: nowrap;
     max-width: 60%;
+    margin-right: 20px;
 }
 .products-header .products-title {
     font-size: 1.7rem;
@@ -1055,11 +1055,7 @@ body, html {
     flex: 1;
     text-align: left;
 }
-.products-header > div {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-} 
+
 .products-title {
     font-size: 1.7rem;
     font-weight: 700;

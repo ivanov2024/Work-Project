@@ -66,12 +66,20 @@ main {
 .account-details-header .back-btn:hover {
     background: #f1f5fa;
 }
+
+.open-account-title,
 .section-title {
+    width: 100%;
+    display: block;
+    position: relative;
     text-align: center;
     font-size: 1.7rem;
     font-weight: 600;
     color: #19335a;
     letter-spacing: 0.01em;
+}
+
+.section-title {
     margin: 0 auto;
     z-index: 1;
     pointer-events: none;
@@ -102,6 +110,7 @@ main {
     position: absolute;
     left: 14px;
     top: 50%;
+    width: 38px;
     transform: translateY(-50%);
     z-index: 2;
     background: none;
@@ -116,31 +125,12 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 }
 .open-account-header .back-btn:hover {
     background: #f1f5fa;
 }
 
-.back-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 16px;
-    background: #f1f5fa;
-    color: #29a8ff;
-    font-size: 1.25rem;
-    border: none;
-    box-shadow: 0 1px 4px #c2e3fa22;
-    transition: background 0.18s, color 0.18s;
-    margin-right: 10px;
-    text-decoration: none;
-}
-.back-btn:hover {
-    background: #e5f2fa;
-    color: #1766a6;
-}
 .open-account-title {
     width: 100%;
     display: block;
@@ -184,6 +174,47 @@ main {
     display: flex;
     flex-direction: column;
     gap: 16px;
+}
+
+.open-account-main .open-account-benefits {
+    align-items: flex-start;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 430px;
+    margin-bottom: 36px;
+    width: 100%;
+    gap: 22px;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+.open-account-main .open-account-benefits li {
+    font-size: 1.18rem;
+    font-weight: 500;
+    color: #17436a;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    background: none;
+    margin: 0;
+    padding: 0;
+}
+.open-account-main .open-account-benefits i {
+    color: #7bb927;
+    background: #e6f7d9;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.22rem;
+    box-shadow: 0 1px 4px #b8e2b0aa;
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 0;
+    margin-right: 0;
+    font-weight: 400;
 }
 .open-account-list {
     list-style: none;
@@ -884,16 +915,35 @@ body, html {
 }
 .open-account-benefits {
     list-style: none;
-    padding: 0 0 0 0;
-    margin: 24px 18px 0 18px;
-    width: auto;
-    max-width: 410px;
+    box-sizing: border-box;
+    padding: 0 12px 0 12px; /* Padding keeps content away from screen edge */
+    margin: 24px 0 0 0;
+    width: 100%;
+    max-width: 100%;
     background: none;
     border-radius: 0;
     box-shadow: none;
     display: flex;
     flex-direction: column;
     gap: 14px;
+}
+@media (max-width: 430px) {
+    .open-account-benefits {
+        padding-left: 6px;
+        padding-right: 6px;
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100vw;
+    }
+}
+@media (max-width: 430px) {
+    .open-account-benefits {
+        margin-left: 2px;
+        margin-right: 2px;
+        padding-left: 0;
+        padding-right: 0;
+        max-width: 100vw;
+    }
 }
 .open-account-benefits li {
     font-size: 1.08rem;
@@ -1009,7 +1059,7 @@ body, html {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-right: 8px;
+    margin-right: 50px;
 }
 .products-title {
     font-size: 1.7rem;

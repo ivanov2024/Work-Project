@@ -5,88 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Credit Card Demo</title>
     <link rel="stylesheet" href="card.css">
-<link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="card" id="credit-card">
-    <div class="card-inner">
-      <div class="card-front">
-        <div class="card-bg"></div>
-        <div class="card-glow"></div>
-        <svg
-          width="72"
-          height="24"
-          viewBox="0 0 72 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          class="logo"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M52.3973 1.01093L51.5588 5.99054C49.0448 4.56717 43.3231 4.23041 43.3231 6.85138C43.3231 7.89285 44.6177 8.60913 46.178 9.47241C48.5444 10.7817 51.5221 12.4291 51.5221 16.062C51.5221 21.8665 45.4731 24 41.4645 24C37.4558 24 34.8325 22.6901 34.8325 22.6901L35.7065 17.4848C38.1115 19.4688 45.4001 20.032 45.4001 16.8863C45.4001 15.5645 43.9656 14.785 42.3019 13.8811C40.0061 12.6336 37.2742 11.1491 37.2742 7.67563C37.2742 1.30988 44.1978 0 47.1132 0C49.8102 0 52.3973 1.01093 52.3973 1.01093ZM66.6055 23.6006H72L67.2966 0.414276H62.5732C60.3923 0.414276 59.8612 2.14215 59.8612 2.14215L51.0996 23.6006H57.2234L58.4481 20.1566H65.9167L66.6055 23.6006ZM60.1406 15.399L63.2275 6.72235L64.9642 15.399H60.1406ZM14.7942 16.3622L20.3951 0.414917H26.7181L17.371 23.6012H11.2498L6.14551 3.45825C2.83215 1.41281 0 0.807495 0 0.807495L0.108643 0.414917H9.36816C11.9161 0.414917 12.1552 2.50314 12.1552 2.50314L14.1313 12.9281L14.132 12.9294L14.7942 16.3622ZM25.3376 23.6006H31.2126L34.8851 0.414917H29.0095L25.3376 23.6006Z"
-            fill="white"
-          />
-        </svg>
-        <div class="card-contactless">
-          <svg xmlns="http://www.w3.org/2000/svg" width="46" height="56">
+  <div class="mobile-frame">
+    <header class="open-account-header">
+      <a href="../open-card.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+      <span class="open-account-title section-title">Добави карта</span>
+    </header>
+    <div class="center-content">
+      <div class="card" id="credit-card">
+      <div class="card-inner">
+        <div class="card-front">
+          <div class="card-bg"></div>
+          <div class="card-glow"></div>
+          <svg
+            width="72"
+            height="24"
+            viewBox="0 0 72 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="logo"
+          >
             <path
-              fill="none"
-              stroke="#f9f9f9"
-              stroke-width="6"
-              stroke-linecap="round"
-              d="m35,3a50,50 0 0,1 0,50M24,8.5a39,39 0 0,1 0,39M13.5,13.55a28.2,28.5
-0 0,1 0,28.5M3,19a18,17 0 0,1 0,18"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M52.3973 1.01093L51.5588 5.99054C49.0448 4.56717 43.3231 4.23041 43.3231 6.85138C43.3231 7.89285 44.6177 8.60913 46.178 9.47241C48.5444 10.7817 51.5221 12.4291 51.5221 16.062C51.5221 21.8665 45.4731 24 41.4645 24C37.4558 24 34.8325 22.6901 34.8325 22.6901L35.7065 17.4848C38.1115 19.4688 45.4001 20.032 45.4001 16.8863C45.4001 15.5645 43.9656 14.785 42.3019 13.8811C40.0061 12.6336 37.2742 11.1491 37.2742 7.67563C37.2742 1.30988 44.1978 0 47.1132 0C49.8102 0 52.3973 1.01093 52.3973 1.01093ZM66.6055 23.6006H72L67.2966 0.414276H62.5732C60.3923 0.414276 59.8612 2.14215 59.8612 2.14215L51.0996 23.6006H57.2234L58.4481 20.1566H65.9167L66.6055 23.6006ZM60.1406 15.399L63.2275 6.72235L64.9642 15.399H60.1406ZM14.7942 16.3622L20.3951 0.414917H26.7181L17.371 23.6012H11.2498L6.14551 3.45825C2.83215 1.41281 0 0.807495 0 0.807495L0.108643 0.414917H9.36816C11.9161 0.414917 12.1552 2.50314 12.1552 2.50314L14.1313 12.9281L14.132 12.9294L14.7942 16.3622ZM25.3376 23.6006H31.2126L34.8851 0.414917H29.0095L25.3376 23.6006Z"
+              fill="white"
             />
           </svg>
-        </div>
-        <div class="card-chip"></div>
-        <div class="card-holder-container">
-  <input class="card-holder" type="text" placeholder="JOHN DOE" maxlength="26" />
-  <span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
-</div>
-        <div class="card-number-container">
-  <input class="card-number" type="text" placeholder="1234 5678 9000 1234" maxlength="19" /><span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
-</div>
-        <div class="card-valid-container">
-  <input class="card-valid" type="text" placeholder="12/24" maxlength="5" />
-  <span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
-</div>
-      </div>
-      <div class="card-back">
-        <div class="card-signature-row">
-  <div class="card-signature">John Doe</div>
-  <div class="card-seccode-container">
-    <input class="card-seccode" type="text" placeholder="CVV" maxlength="4" />
+          <div class="card-contactless">
+            <svg xmlns="http://www.w3.org/2000/svg" width="46" height="56">
+              <path
+                fill="none"
+                stroke="#f9f9f9"
+                stroke-width="6"
+                stroke-linecap="round"
+                d="m35,3a50,50 0 0,1 0,50M24,8.5a39,39 0 0,1 0,39M13.5,13.55a28.2,28.5
+  0 0,1 0,28.5M3,19a18,17 0 0,1 0,18"
+              />
+            </svg>
+          </div>
+          <div class="card-chip"></div>
+          <div class="card-holder-container">
+    <input class="card-holder" type="text" placeholder="JOHN DOE" maxlength="26" />
     <span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
   </div>
-</div>
-      </div>
+          <div class="card-number-container">
+    <input class="card-number" type="text" placeholder="1234 5678 9000 1234" maxlength="19" /><span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
+  </div>
+          <div class="card-valid-container">
+    <input class="card-valid" type="text" placeholder="12/24" maxlength="5" />
+    <span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
+  </div>
+        </div>
+        <div class="card-back">
+          <div class="card-signature-row">
+    <div class="card-signature">John Doe</div>
+    <div class="card-seccode-container">
+      <input class="card-seccode" type="text" placeholder="CVV" maxlength="4" />
+      <span class="card-edit-icon"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 14.5V18h3.5l10.06-10.06-3.5-3.5L2 14.5zM17.71 6.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.5 3.5 1.83-1.83z" fill="#e0e0e0"/></svg></span>
     </div>
   </div>
-  <button id="continue-btn" style="display:none;margin:32px auto 0;display:block;padding:12px 32px;font-size:1.1em;background:#01adef;color:#fff;border:none;border-radius:8px;cursor:pointer;box-shadow:0 2px 10px rgba(1,173,239,0.12);">Продължи</button>
-  <script>
-    const cardNumber = document.querySelector('.card-number');
-    const cardHolder = document.querySelector('.card-holder');
-    const cardValid = document.querySelector('.card-valid');
-    const continueBtn = document.getElementById('continue-btn');
-    const card = document.getElementById('credit-card');
+        </div>
+      </div>
+    </div>
+    <button id="continue-btn" style="display:none;margin:32px auto 0;display:block;padding:12px 32px;font-size:1.1em;background:#01adef;color:#fff;border:none;border-radius:8px;cursor:pointer;box-shadow:0 2px 10px rgba(1,173,239,0.12);">Продължи</button>
+    <script>
+      const cardNumber = document.querySelector('.card-number');
+      const cardHolder = document.querySelector('.card-holder');
+      const cardValid = document.querySelector('.card-valid');
+      const continueBtn = document.getElementById('continue-btn');
+      const card = document.getElementById('credit-card');
 
-    function checkFields() {
-      if (cardNumber.value.trim() && cardHolder.value.trim() && cardValid.value.trim()) {
-        continueBtn.style.display = 'block';
-      } else {
-        continueBtn.style.display = 'none';
+      function checkFields() {
+        if (cardNumber.value.trim() && cardHolder.value.trim() && cardValid.value.trim()) {
+          continueBtn.style.display = 'block';
+        } else {
+          continueBtn.style.display = 'none';
+        }
       }
-    }
-    cardNumber.addEventListener('input', checkFields);
-    cardHolder.addEventListener('input', checkFields);
-    cardValid.addEventListener('input', checkFields);
+      cardNumber.addEventListener('input', checkFields);
+      cardHolder.addEventListener('input', checkFields);
+      cardValid.addEventListener('input', checkFields);
 
-    continueBtn.addEventListener('click', function() {
-      card.classList.add('flipped');
-    });
-  </script>
+      continueBtn.addEventListener('click', function() {
+        card.classList.add('flipped');
+      });
+    </script>
+  </div>
 </body>
 </html>

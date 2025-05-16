@@ -1033,7 +1033,6 @@ body, html {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-right: 8px;
     flex-shrink: 1;
     flex-wrap: nowrap;
     white-space: nowrap;
@@ -1047,6 +1046,7 @@ body, html {
 }
 .products-header .add-account-btn {
     margin-left: 8px;
+    margin-right: 12px;
 }
 .products-header .add-account-btn:last-child {
     margin-right: 0;
@@ -1059,8 +1059,7 @@ body, html {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-right: 50px;
-}
+} 
 .products-title {
     font-size: 1.7rem;
     font-weight: 700;

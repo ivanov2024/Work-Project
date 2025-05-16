@@ -62,6 +62,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
 }
 .account-details-header .back-btn:hover {
     background: #f1f5fa;

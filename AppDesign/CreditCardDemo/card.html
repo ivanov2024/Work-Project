@@ -16,6 +16,41 @@
       <span class="open-account-title section-title">Добави карта</span>
     </header>
     <div class="center-content">
+      <div class="instruction-block">
+        <i class="fa-solid fa-circle-info"></i>
+        <div class="instruction-content">
+          <span>Моля, попълнете данните на картата и потвърдете, че сте съгласни с <a href="#" target="_blank" class="terms-link">условията за ползване</a>, преди да продължите.</span>
+          <div class="terms-checkbox-row">
+            <input type="checkbox" id="terms-checkbox" />
+            <label for="terms-checkbox">Съгласен съм с <a href="#" target="_blank" class="terms-link">условията за ползване</a></label>
+          </div>
+        </div>
+      </div>
+      <div id="terms-modal" class="terms-modal" style="display:none;">
+        <div class="terms-modal-content">
+          <button class="terms-modal-close back-btn" id="terms-modal-close" aria-label="Затвори"><i class="fa-solid fa-xmark"></i></button>
+          <div id="terms-modal-title" class="terms-modal-title">Условия за ползване</div>
+          <div id="terms-modal-body" class="terms-modal-body">
+            <h3>1. Общи условия</h3>
+            <p>С приемане на тези общи условия, Вие се съгласявате да използвате картовата услуга в съответствие с приложимите разпоредби на българското законодателство и вътрешните правила на FinBridge.</p>
+            
+            <h3>2. Данни и поверителност</h3>
+            <p>Всички предоставени от Вас лични данни се обработват в съответствие с Общия регламент за защита на данните (РЕЗЮМЕ 2016/679) и Закона за кредитните институции. Повече информация за обработването на Вашите лични данни може да намерите в нашата Политика за поверителност.</p>
+            
+            <h3>3. Отговорности на клиента</h3>
+            <p>Клиентът е длъжен да пази в тайна своя ПИН код и да не го разкрива на трети лица. Всички операции, извършени с картата, се смятат за извършени от притежателя на картата.</p>
+            
+            <h3>4. Такси и комисиони</h3>
+            <p>За издаване и поддръжка на картата се дължат такси, посочени в тарифата на банката. Пълният пречень на такси и комисиони е достъпен в клоновете на банката и на уебсайта ни.</p>
+            
+            <h3>5. Прекратяване на договора</h3>
+            <p>Договорът за използване на картовата услуга може да бъде прекратен от всяка от страните при спазване на 30-дневен срок за уведомление.</p>
+            
+            <p style="margin-top: 20px; font-size: 0.9em; color: #666;">Дата на последна актуализация: 16.05.2025 г.</p>
+          </div>
+        </div>
+        <div class="terms-modal-backdrop"></div>
+      </div>
       <div class="card" id="credit-card">
       <div class="card-inner">
         <div class="card-front">
@@ -96,5 +131,20 @@
       });
     </script>
   </div>
+<script>
+  // Terms modal logic for card.html
+  document.querySelectorAll('.terms-link').forEach(link => {
+    link.onclick = function(e) {
+      e.preventDefault();
+      document.getElementById('terms-modal').style.display = 'flex';
+    };
+  });
+  document.getElementById('terms-modal-close').onclick = function() {
+    document.getElementById('terms-modal').style.display = 'none';
+  };
+  document.querySelector('.terms-modal-backdrop').onclick = function() {
+    document.getElementById('terms-modal').style.display = 'none';
+  };
+</script>
 </body>
 </html>

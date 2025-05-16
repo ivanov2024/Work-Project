@@ -1036,7 +1036,7 @@ body, html {
     flex-wrap: nowrap;
     white-space: nowrap;
     max-width: 60%;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 .products-header .products-title {
     font-size: 1.7rem;

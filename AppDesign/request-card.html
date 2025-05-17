@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заявка за карта</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="products.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="open-account-title section-title">Заявка за карта</span>
+        </header>
+        
+        <div class="request-card-container">
+            <div class="instruction-block">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="instruction-content">
+                    <span>Моля, изберете банка и тип карта, след което потвърдете, че сте съгласни с <a href="#" class="terms-link">условията за ползване</a>, преди да продължите.</span>
+                    <div class="terms-checkbox-row">
+                        <input type="checkbox" id="terms-checkbox" />
+                        <label for="terms-checkbox">Съгласен съм с <a href="#" class="terms-link">условията за ползване</a></label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="terms-modal" class="terms-modal" style="display:none;">
+                <div class="terms-modal-content">
+                    <button class="terms-modal-close back-btn" id="terms-modal-close" aria-label="Затвори"><i class="fa-solid fa-xmark"></i></button>
+                    <div id="terms-modal-title" class="terms-modal-title">Условия за ползване</div>
+                    <div id="terms-modal-body" class="terms-modal-body">
+                        <h3>1. Общи условия</h3>
+                        <p>С приемане на тези общи условия, Вие се съгласявате да използвате картовата услуга в съответствие с приложимите разпоредби на българското законодателство и вътрешните правила на FinBridge.</p>
+                        
+                        <h3>2. Данни и поверителност</h3>
+                        <p>Всички предоставени от Вас лични данни се обработват в съответствие с Общия регламент за защита на данните (РЕЗЮМЕ 2016/679) и Закона за кредитните институции. Повече информация за обработването на Вашите лични данни може да намерите в нашата Политика за поверителност.</p>
+                        
+                        <h3>3. Отговорности на клиента</h3>
+                        <p>Клиентът е длъжен да пази в тайна своя ПИН код и да не го разкрива на трети лица. Всички операции, извършени с картата, се смятат за извършени от притежателя на картата.</p>
+                        
+                        <h3>4. Такси и комисиони</h3>
+                        <p>За издаване и поддръжка на картата се дължат такси, посочени в тарифата на банката. Пълният пречень на такси и комисиони е достъпен в клоновете на банката и на уебсайта ни.</p>
+                        
+                        <h3>5. Прекратяване на договора</h3>
+                        <p>Договорът за използване на картовата услуга може да бъде прекратен от всяка от страните при спазване на 30-дневен срок за уведомление.</p>
+                        
+                        <p style="margin-top: 20px; font-size: 0.9em; color: #666;">Дата на последна актуализация: 16.05.2025 г.</p>
+                    </div>
+                </div>
+                <div class="terms-modal-backdrop"></div>
+            </div>
+
+            <div class="request-card-header">
+                <div class="request-card-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h1 class="request-card-title">Изберете вашата карта</h1>
+                <p class="request-card-subtitle">Изберете типа карта, която искате да заявите и попълнете необходимите данни.</p>
+            </div>
+
+            <div class="request-card-form">
+                <div class="form-group">
+                    <label class="form-label" for="bank">Банка</label>
+                    <div class="account-details-row account-currency-row">
+                        <div id="bank-select-trigger" class="account-details-select custom-select-trigger">Изберете банка</div>
+                        <input type="hidden" id="bank-select-value" name="bank" value="">
+                        <select id="bank" class="form-select" style="display:none;" required>
+                            <option value="">Изберете банка</option>
+                            <option value="eagle">Орлов Банк</option>
+                            <option value="vitosha">Витоша Банк</option>
+                            <option value="danube">Дунав Финанс</option>
+                            <option value="balkan">Балкан Кредит</option>
+                            <option value="east">Източна Финансова Група</option>
+                            <option value="capital">Капитал Траст</option>
+                            <option value="euro">Евро Стар Банк</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Bank Selection Bottom Sheet Popup -->
+                <div id="bank-sheet" class="currency-sheet" style="display:none;">
+                    <div class="currency-sheet-backdrop"></div>
+                    <div class="currency-sheet-modal">
+                        <div class="currency-sheet-bar"></div>
+                        <div class="currency-sheet-options">
+                            <div class="currency-sheet-option" data-value="eagle">Орлов Банк</div>
+                            <div class="currency-sheet-option" data-value="vitosha">Витоша Банк</div>
+                            <div class="currency-sheet-option" data-value="danube">Дунав Финанс</div>
+                            <div class="currency-sheet-option" data-value="balkan">Балкан Кредит</div>
+                            <div class="currency-sheet-option" data-value="east">Източна Финансова Група</div>
+                            <div class="currency-sheet-option" data-value="capital">Капитал Траст</div>
+                            <div class="currency-sheet-option" data-value="euro">Евро Стар Банк</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="card-type">Тип карта</label>
+                    <div class="account-details-row account-currency-row">
+                        <div id="card-type-select-trigger" class="account-details-select custom-select-trigger">Изберете тип карта</div>
+                        <input type="hidden" id="card-type-select-value" name="card-type" value="">
+                        <select id="card-type" class="form-select" style="display:none;" required>
+                            <option value="">Изберете тип карта</option>
+                            <option value="debit">Дебитна карта</option>
+                            <option value="credit">Кредитна карта</option>
+                            <option value="prepaid">Предплатена карта</option>
+                            <option value="virtual">Виртуална карта</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Card Type Bottom Sheet Popup -->
+                <div id="card-type-sheet" class="currency-sheet" style="display:none;">
+                    <div class="currency-sheet-backdrop"></div>
+                    <div class="currency-sheet-modal">
+                        <div class="currency-sheet-bar"></div>
+                        <div class="currency-sheet-options">
+                            <div class="currency-sheet-option" data-value="debit">Дебитна карта</div>
+                            <div class="currency-sheet-option" data-value="credit">Кредитна карта</div>
+                            <div class="currency-sheet-option" data-value="prepaid">Предплатена карта</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="card-network">Мрежа на картата</label>
+                    <div class="account-details-row account-currency-row">
+                        <div id="card-network-select-trigger" class="account-details-select custom-select-trigger">Изберете мрежа</div>
+                        <input type="hidden" id="card-network-select-value" name="card-network" value="">
+                        <select id="card-network" class="form-select" style="display:none;" required>
+                            <option value="">Изберете мрежа</option>
+                            <option value="mastercard">Mastercard</option>
+                            <option value="visa">Visa</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Card Network Bottom Sheet Popup -->
+                <div id="card-network-sheet" class="currency-sheet" style="display:none;">
+                    <div class="currency-sheet-backdrop"></div>
+                    <div class="currency-sheet-modal">
+                        <div class="currency-sheet-bar"></div>
+                        <div class="currency-sheet-options">
+                            <div class="currency-sheet-option" data-value="mastercard">Mastercard</div>
+                            <div class="currency-sheet-option" data-value="visa">Visa</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Изглед на картата</label>
+                    <div class="card-preview">
+                        <div class="card-type">STANDARD</div>
+                        <div class="card-number">•••• •••• •••• ••••</div>
+                        <div class="card-details">
+                            <div class="card-holder">ИМЕ НА ПРИТЕЖАТЕЛЯ</div>
+                            <div class="card-expiry">••/••</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="account">Сметка за обвързване</label>
+                    <div class="account-details-row account-currency-row">
+                        <div id="account-select-trigger" class="account-details-select custom-select-trigger">Изберете сметка</div>
+                        <input type="hidden" id="account-select-value" name="account" value="">
+                        <select id="account" class="form-select" style="display:none;">
+                            <option value="">Изберете сметка</option>
+                            <option value="acc1">BG12 FINB 1234 5678 9012 34 (BGN)</option>
+                            <option value="acc2">BG34 FINB 5678 9012 3456 78 (EUR)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Account Selection Bottom Sheet Popup -->
+                <div id="account-sheet" class="currency-sheet" style="display:none;">
+                    <div class="currency-sheet-backdrop"></div>
+                    <div class="currency-sheet-modal">
+                        <div class="currency-sheet-bar"></div>
+                        <div class="currency-sheet-options">
+                            <div class="currency-sheet-option" data-value="acc1">BG12 FINB 1234 5678 9012 34 (BGN)</div>
+                            <div class="currency-sheet-option" data-value="acc2">BG34 FINB 5678 9012 3456 78 (EUR)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="delivery">Начин на получаване</label>
+                    <div class="account-details-row">
+                        <div id="delivery-select-trigger" class="account-details-select custom-select-trigger">Изберете начин</div>
+                        <input type="hidden" id="delivery-select-value" name="delivery" value="">
+                        <select id="delivery" class="form-select" style="display:none;" required>
+                            <option value="">Изберете начин</option>
+                            <option value="office">Офис на банката</option>
+                            <option value="courier">Куриер</option>
+                            <option value="branch">Клон на банката</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Delivery Method Bottom Sheet Popup -->
+                <div id="delivery-sheet" class="currency-sheet" style="display:none;">
+                    <div class="currency-sheet-backdrop"></div>
+                    <div class="currency-sheet-modal">
+                        <div class="currency-sheet-bar"></div>
+                        <div class="currency-sheet-options">
+                            <div class="currency-sheet-option" data-value="office">Офис на банката</div>
+                            <div class="currency-sheet-option" data-value="courier">Куриер</div>
+                            <div class="currency-sheet-option" data-value="branch">Клон на банката</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" id="submit-request">Подай заявка</button>
+                    <button class="btn btn-outline" onclick="window.location.href='products.html'">Отказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div id="terms-modal" class="terms-modal" style="display:none;">
+        <div class="terms-modal-content">
+            <button class="terms-modal-close" id="terms-modal-close" aria-label="Затвори"><i class="fa-solid fa-xmark"></i></button>
+            <div id="terms-modal-title" class="terms-modal-title"></div>
+            <div id="terms-modal-body" class="terms-modal-body"></div>
+        </div>
+        <div class="terms-modal-backdrop"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cardPreview = document.querySelector('.card-preview');
+            const submitBtn = document.getElementById('submit-request');
+            const cardTypeElement = cardPreview.querySelector('.card-type');
+            
+            // Bank logos mapping
+            const bankLogos = {
+                'eagle': 'eagle-logo.png',
+                'vitosha': 'vitosha-logo.png',
+                'danube': 'danube-logo.png',
+                'balkan': 'balkan-logo.png',
+                'east': 'east-logo.png',
+                'capital': 'capital-logo.png',
+                'euro': 'euro-logo.png'
+            };
+            
+            // Bank names mapping
+            const bankNames = {
+                'eagle': 'ОРЛОВ БАНК',
+                'vitosha': 'ВИТОША БАНК',
+                'danube': 'ДУНАВ ФИНАНС',
+                'balkan': 'БАЛКАН КРЕДИТ',
+                'east': 'ИЗТОЧНА ГРУПА',
+                'capital': 'КАПИТАЛ ТРАСТ',
+                'euro': 'ЕВРО СТАР'
+            };
+
+            // Initialize all bottom sheets
+            function initBottomSheet(triggerId, sheetId, selectId, hiddenInputId) {
+                const trigger = document.getElementById(triggerId);
+                const sheet = document.getElementById(sheetId);
+                const select = document.getElementById(selectId);
+                const hiddenInput = document.getElementById(hiddenInputId);
+                const backdrop = sheet.querySelector('.currency-sheet-backdrop');
+                const options = sheet.querySelectorAll('.currency-sheet-option');
+                
+                function openSheet() {
+                    sheet.style.display = 'flex';
+                    setTimeout(() => sheet.querySelector('.currency-sheet-modal').focus(), 10);
+                }
+                
+                function closeSheet() {
+                    sheet.style.display = 'none';
+                }
+                
+                trigger.addEventListener('click', openSheet);
+                backdrop.addEventListener('click', closeSheet);
+                
+                options.forEach(option => {
+                    option.addEventListener('click', function() {
+                        options.forEach(opt => opt.classList.remove('selected'));
+                        this.classList.add('selected');
+                        hiddenInput.value = this.dataset.value;
+                        trigger.textContent = this.textContent;
+                        trigger.classList.add('selected');
+                        select.value = this.dataset.value;
+                        
+                        // Trigger change event on the hidden select for any dependent logic
+                        const event = new Event('change');
+                        select.dispatchEvent(event);
+                        
+                        closeSheet();
+                    });
+                });
+                
+                // Sync with native select for accessibility
+                select.addEventListener('change', function() {
+                    hiddenInput.value = select.value;
+                    const selectedOption = Array.from(select.options).find(opt => opt.value === select.value);
+                    if (selectedOption) {
+                        trigger.textContent = selectedOption.text;
+                        trigger.classList.toggle('selected', !!select.value);
+                        
+                        // Update selected state in the sheet
+                        options.forEach(opt => {
+                            opt.classList.toggle('selected', opt.dataset.value === select.value);
+                        });
+                    }
+                });
+                
+                // Initialize from any existing value
+                if (select.value) {
+                    select.dispatchEvent(new Event('change'));
+                }
+            }
+            
+            // Initialize all bottom sheets
+            initBottomSheet('bank-select-trigger', 'bank-sheet', 'bank', 'bank-select-value');
+            initBottomSheet('card-type-select-trigger', 'card-type-sheet', 'card-type', 'card-type-select-value');
+            initBottomSheet('card-network-select-trigger', 'card-network-sheet', 'card-network', 'card-network-select-value');
+            initBottomSheet('account-select-trigger', 'account-sheet', 'account', 'account-select-value');
+            initBottomSheet('delivery-select-trigger', 'delivery-sheet', 'delivery', 'delivery-select-value');
+            
+            // Update card preview based on selected bank, card type, and network
+            function updateCardPreview() {
+                const bank = document.getElementById('bank').value;
+                const cardType = document.getElementById('card-type').value;
+                const cardNetwork = document.getElementById('card-network').value;
+                const cardPreview = document.querySelector('.card-preview');
+                const cardTypeElement = document.querySelector('.card-type');
+                
+                // Update card type text
+                if (cardType === 'debit') {
+                    cardTypeElement.textContent = 'DEBIT';
+                } else if (cardType === 'credit') {
+                    cardTypeElement.textContent = 'CREDIT';
+                } else if (cardType === 'prepaid') {
+                    cardTypeElement.textContent = 'PREPAID';
+                } else {
+                    cardTypeElement.textContent = 'STANDARD';
+                }
+                
+                // Update card network styling if needed
+                if (cardNetwork === 'mastercard') {
+                    // Add Mastercard specific styling if needed
+                    cardPreview.classList.add('mastercard-preview');
+                    cardPreview.classList.remove('visa-preview');
+                } else if (cardNetwork === 'visa') {
+                    // Add Visa specific styling if needed
+                    cardPreview.classList.add('visa-preview');
+                    cardPreview.classList.remove('mastercard-preview');
+                } else {
+                    cardPreview.classList.remove('mastercard-preview', 'visa-preview');
+                }
+                
+                // Update bank name and logo
+                if (bank && bankNames[bank]) {
+                    // Remove existing logo if it exists
+                    const bankLogo = cardPreview.querySelector('.bank-logo');
+                    if (bankLogo) {
+                        bankLogo.remove();
+                    }
+                    
+                    // Create new bank logo
+                    const newBankLogo = document.createElement('div');
+                    newBankLogo.className = 'bank-logo';
+                    newBankLogo.textContent = bankNames[bank].charAt(0);
+                    
+                    // Insert logo before the card type
+                    cardPreview.insertBefore(newBankLogo, cardTypeElement);
+                    
+                    // Update bank name
+                    cardTypeElement.textContent = bankNames[bank];
+                } else {
+                    cardTypeElement.textContent = 'STANDARD';
+                    if (bankLogo) bankLogo.remove();
+                }
+                
+                // Update card type styling
+                switch(cardType) {
+                    case 'debit':
+                        cardPreview.style.background = 'linear-gradient(135deg, #0066cc, #0099ff)';
+                        break;
+                    case 'credit':
+                        cardPreview.style.background = 'linear-gradient(135deg, #8e44ad, #9b59b6)';
+                        break;
+                    case 'prepaid':
+                        cardPreview.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
+                        break;
+                    default:
+                        cardPreview.style.background = 'linear-gradient(135deg, #0066cc, #0099ff)';
+                }
+            }
+            
+            // Add event listeners for card preview updates
+            document.getElementById('bank').addEventListener('change', updateCardPreview);
+            document.getElementById('card-type').addEventListener('change', updateCardPreview);
+            document.getElementById('card-network').addEventListener('change', updateCardPreview);
+            
+            // Initial card preview update
+            updateCardPreview();
+
+            // Terms modal logic
+            document.querySelectorAll('.terms-link').forEach(link => {
+                link.onclick = function(e) {
+                    e.preventDefault();
+                    document.getElementById('terms-modal').style.display = 'flex';
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+                };
+            });
+
+            // Close modal when clicking the close button or backdrop
+            document.getElementById('terms-modal-close').onclick = function() {
+                document.getElementById('terms-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            document.querySelector('.terms-modal-backdrop').onclick = function() {
+                document.getElementById('terms-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            };
+
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && document.getElementById('terms-modal').style.display === 'flex') {
+                    document.getElementById('terms-modal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Form submission
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const bankValue = document.getElementById('bank-select-value').value;
+                const cardTypeValue = document.getElementById('card-type-select-value').value;
+                const accountValue = document.getElementById('account-select-value').value;
+                const deliveryValue = document.getElementById('delivery-select-value').value;
+                
+                if (!bankValue) {
+                    alert('Моля, изберете банка');
+                    return;
+                }
+                
+                if (!cardTypeValue) {
+                    alert('Моля, изберете тип карта');
+                    return;
+                }
+                
+                if (!accountValue) {
+                    alert('Моля, изберете сметка за обвързване');
+                    return;
+                }
+                
+                if (!deliveryValue) {
+                    alert('Моля, изберете начин на получаване');
+                    return;
+                }
+                
+                const termsCheckbox = document.getElementById('terms-checkbox');
+                if (!termsCheckbox.checked) {
+                    alert('Моля, потвърдете, че сте съгласни с условията за ползване');
+                    return;
+                }
+                
+                // Here you would typically submit the form data to your server
+                console.log('Form data:', {
+                    bank: bankValue,
+                    cardType: cardTypeValue,
+                    account: accountValue,
+                    delivery: deliveryValue
+                });
+                
+                alert('Вашата заявка е изпратена успешно!');
+                // window.location.href = 'confirmation.html';
+            });
+
+            // Account Selection Bottom Sheet Logic
+            const accountTrigger = document.getElementById('account-select-trigger');
+            const accountSheet = document.getElementById('account-sheet');
+            const accountBackdrop = accountSheet.querySelector('.currency-sheet-backdrop');
+            const accountOptions = document.querySelectorAll('#account-sheet .currency-sheet-option');
+            const accountHidden = document.getElementById('account-select-value');
+            const accountNativeSelect = document.getElementById('account');
+
+            function openAccountSheet() {
+                accountSheet.style.display = 'flex';
+                setTimeout(() => accountSheet.querySelector('.currency-sheet-modal').focus(), 10);
+            }
+
+            function closeAccountSheet() {
+                accountSheet.style.display = 'none';
+            }
+
+            accountTrigger.addEventListener('click', openAccountSheet);
+            accountBackdrop.addEventListener('click', closeAccountSheet);
+            
+            accountOptions.forEach(opt => {
+                opt.addEventListener('click', function() {
+                    // Remove highlight from all
+                    accountOptions.forEach(o => o.classList.remove('selected'));
+                    // Highlight selected
+                    this.classList.add('selected');
+                    // Set value
+                    accountHidden.value = this.dataset.value;
+                    accountTrigger.textContent = this.textContent;
+                    accountTrigger.classList.add('selected');
+                    // Sync native select
+                    accountNativeSelect.value = this.dataset.value;
+                    closeAccountSheet();
+                });
+            });
+
+            // If user changes native select (accessibility fallback)
+            accountNativeSelect.addEventListener('change', function() {
+                accountHidden.value = accountNativeSelect.value;
+                accountTrigger.textContent = accountNativeSelect.options[accountNativeSelect.selectedIndex]?.text || 'Изберете сметка';
+                accountTrigger.classList.toggle('selected', !!accountNativeSelect.value);
+                accountOptions.forEach(o => o.classList.toggle('selected', o.dataset.value === accountNativeSelect.value));
+            });
+        });
+    </script>
+</body>
+</html>

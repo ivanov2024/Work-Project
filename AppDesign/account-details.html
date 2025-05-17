@@ -20,7 +20,7 @@
                 <span class="account-user-value">Иван</span>
             </div>
             <h2 class="account-details-section-title">Детайли по сметка</h2>
-            <div class="account-details-row account-type-row" style="display: flex; flex-direction: column; align-items: flex-start; gap: 7px; margin-bottom: 18px;">
+            <div class="account-details-row account-type-row">
     <span class="account-details-label">Вид сметка:</span>
     <span class="account-details-type"><img src="account-icon.png" alt="Account" class="account-type-img"> РАЗПЛАЩАТЕЛНА СМЕТКА</span>
 </div>
@@ -36,6 +36,51 @@
         <option value="EUR">EUR</option>
         <option value="GBP">GBP</option>
     </select>
+</div>
+
+<!-- Bank Selection -->
+<div class="account-details-row account-bank-row">
+    <label class="account-details-label" for="bank-select">Банка</label>
+    <div id="bank-select-trigger" class="account-details-select custom-select-trigger">Изберете банка</div>
+    <input type="hidden" id="bank-select-value" name="bank" value="">
+    <select id="bank-select" class="account-details-select" style="display:none;">
+        <option value="">Изберете банка</option>
+        <option value="eagle">Орлов Банк</option>
+        <option value="vitosha">Витоша Банк</option>
+        <option value="danube">Дунав Финанс</option>
+        <option value="balkan">Балкан Кредит</option>
+        <option value="east">Източна Финансова Група</option>
+        <option value="capital">Капитал Траст</option>
+        <option value="euro">Евро Стар Банк</option>
+    </select>
+</div>
+
+<!-- Card Linking Section -->
+<div class="account-details-row account-card-row">
+    <label class="account-details-label" for="card-link-option">Връзка с карта</label>
+    <div class="account-details-select-wrapper">
+        <div id="card-link-option-trigger" class="account-details-select custom-select-trigger">Без карта</div>
+        <input type="hidden" id="card-link-option-value" name="card_link_option" value="none">
+        <select id="card-link-option" class="account-details-select" style="display:none;">
+            <option value="none">Без карта</option>
+            <option value="existing">Свържи съществуваща карта</option>
+            <option value="new">Нова карта</option>
+        </select>
+    </div>
+</div>
+
+<!-- Card Selection (shown when 'existing' is selected) -->
+<div id="existing-card-row" class="account-details-row" style="display: none; margin-top: -15px;">
+    <label class="account-details-label">Изберете карта</label>
+    <div class="account-details-select-wrapper">
+        <div id="card-select-trigger" class="account-details-select custom-select-trigger">Изберете карта</div>
+        <input type="hidden" id="card-select-value" name="linked_card" value="">
+        <select id="card-select" class="account-details-select" style="display:none;">
+            <option value="">Изберете карта</option>
+            <option value="card1">**** 1234 (Visa)</option>
+            <option value="card2">**** 5678 (Mastercard)</option>
+        </select>
+    </div>
 </div>
 <!-- Currency Bottom Sheet Popup -->
 <div id="currency-sheet" class="currency-sheet" style="display:none;">
@@ -93,60 +138,291 @@
                 <button type="submit" class="account-details-submit" disabled>Продължи</button>
             </form>
         <script>
-// --- Custom Currency Bottom Sheet Logic ---
+// --- Custom Bottom Sheet Logic ---
 (function() {
-    const currencyTrigger = document.getElementById('currency-select-trigger');
-    const currencySheet = document.getElementById('currency-sheet');
-    const currencyBackdrop = document.querySelector('.currency-sheet-backdrop');
-    const currencyOptions = document.querySelectorAll('.currency-sheet-option');
-    const currencyHidden = document.getElementById('currency-select-value');
-    const nativeSelect = document.getElementById('currency-select');
-    const submitBtn = document.querySelector('.account-details-submit');
-
-    function openCurrencySheet() {
-        currencySheet.style.display = 'flex';
-        setTimeout(() => currencySheet.querySelector('.currency-sheet-modal').focus(), 10);
+    // --- Bank Selection Logic ---
+    const bankTrigger = document.getElementById('bank-select-trigger');
+    const bankSheet = document.createElement('div');
+    bankSheet.id = 'bank-sheet';
+    bankSheet.className = 'currency-sheet';
+    bankSheet.style.display = 'none';
+    bankSheet.innerHTML = `
+        <div class="currency-sheet-backdrop"></div>
+        <div class="currency-sheet-modal">
+            <div class="currency-sheet-bar"></div>
+            <div class="currency-sheet-options">
+                <div class="currency-sheet-option" data-value="eagle">Орлов Банк</div>
+                <div class="currency-sheet-option" data-value="vitosha">Витоша Банк</div>
+                <div class="currency-sheet-option" data-value="danube">Дунав Финанс</div>
+                <div class="currency-sheet-option" data-value="balkan">Балкан Кредит</div>
+                <div class="currency-sheet-option" data-value="east">Източна Финансова Група</div>
+                <div class="currency-sheet-option" data-value="capital">Капитал Траст</div>
+                <div class="currency-sheet-option" data-value="euro">Евро Стар Банк</div>
+            </div>
+        </div>`;
+    document.body.appendChild(bankSheet);
+    const bankBackdrop = bankSheet.querySelector('.currency-sheet-backdrop');
+    
+    // --- Card Selection Logic ---
+    const cardTrigger = document.getElementById('card-select-trigger');
+    const cardSheet = document.createElement('div');
+    cardSheet.id = 'card-sheet';
+    cardSheet.className = 'currency-sheet';
+    cardSheet.style.display = 'none';
+    cardSheet.innerHTML = `
+        <div class="currency-sheet-backdrop"></div>
+        <div class="currency-sheet-modal">
+            <div class="currency-sheet-bar"></div>
+            <div class="currency-sheet-options">
+                <div class="currency-sheet-option" data-value="card1">**** 1234 (Visa)</div>
+                <div class="currency-sheet-option" data-value="card2">**** 5678 (Mastercard)</div>
+            </div>
+        </div>`;
+    document.body.appendChild(cardSheet);
+    const cardBackdrop = cardSheet.querySelector('.currency-sheet-backdrop');
+    const cardOptions = cardSheet.querySelectorAll('.currency-sheet-option');
+    
+    // Card link option elements
+    const cardLinkOptionTrigger = document.getElementById('card-link-option-trigger');
+    const cardLinkOptionSelect = document.getElementById('card-link-option');
+    const cardLinkOptionValue = document.getElementById('card-link-option-value');
+    const existingCardRow = document.getElementById('existing-card-row');
+    const cardHiddenInput = document.getElementById('card-select-value');
+    
+    // Card link option sheet
+    const cardLinkOptionSheet = document.createElement('div');
+    cardLinkOptionSheet.id = 'card-link-option-sheet';
+    cardLinkOptionSheet.className = 'currency-sheet';
+    cardLinkOptionSheet.style.display = 'none';
+    cardLinkOptionSheet.innerHTML = `
+        <div class="currency-sheet-backdrop"></div>
+        <div class="currency-sheet-modal">
+            <div class="currency-sheet-bar"></div>
+            <div class="currency-sheet-options">
+                <div class="currency-sheet-option" data-value="none">Без карта</div>
+                <div class="currency-sheet-option" data-value="existing">Свържи съществуваща карта</div>
+            </div>
+        </div>`;
+    document.body.appendChild(cardLinkOptionSheet);
+    const cardLinkOptionBackdrop = cardLinkOptionSheet.querySelector('.currency-sheet-backdrop');
+    const cardLinkOptionOptions = cardLinkOptionSheet.querySelectorAll('.currency-sheet-option');
+    
+    // Initialize bank selection
+    const bankOptions = bankSheet.querySelectorAll('.currency-sheet-option');
+    const bankHiddenInput = document.getElementById('bank-select-value');
+    const bankSelect = document.getElementById('bank-select');
+    
+    // Bank selection handlers
+    function openBankSheet(e) {
+        if (e) e.stopPropagation();
+        bankSheet.style.display = 'flex';
+        setTimeout(() => bankSheet.querySelector('.currency-sheet-modal').focus(), 10);
     }
-    function closeCurrencySheet() {
+    
+    function closeBankSheet() {
+        bankSheet.style.display = 'none';
+    }
+    
+    if (bankTrigger) {
+        bankTrigger.addEventListener('click', openBankSheet);
+    }
+    
+    if (bankBackdrop) {
+        bankBackdrop.addEventListener('click', closeBankSheet);
+    }
+    
+    bankOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            bankOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            const value = this.dataset.value;
+            const text = this.textContent;
+            bankHiddenInput.value = value;
+            bankTrigger.textContent = text;
+            bankTrigger.classList.add('selected');
+            bankSelect.value = value;
+            closeBankSheet();
+        });
+    });
+    
+    // Card selection handlers
+    function openCardSheet() {
+        cardSheet.style.display = 'flex';
+        setTimeout(() => cardSheet.querySelector('.currency-sheet-modal').focus(), 10);
+    }
+    
+    function closeCardSheet() {
+        cardSheet.style.display = 'none';
+    }
+    
+    // Card link option handlers
+    function openCardLinkOptionSheet() {
+        cardLinkOptionSheet.style.display = 'flex';
+        setTimeout(() => cardLinkOptionSheet.querySelector('.currency-sheet-modal').focus(), 10);
+    }
+    
+    function closeCardLinkOptionSheet() {
+        cardLinkOptionSheet.style.display = 'none';
+    }
+    
+    // Event listeners for card selection
+    if (cardTrigger) {
+        cardTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openCardSheet();
+        });
+    }
+    
+    if (cardBackdrop) {
+        cardBackdrop.addEventListener('click', closeCardSheet);
+    }
+    
+    cardOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            cardOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            const value = this.dataset.value;
+            const text = this.textContent;
+            cardHiddenInput.value = value;
+            cardTrigger.textContent = text;
+            cardTrigger.classList.add('selected');
+            closeCardSheet();
+        });
+    });
+    
+    // Event listeners for card link option
+    if (cardLinkOptionTrigger) {
+        cardLinkOptionTrigger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            openCardLinkOptionSheet();
+        });
+    }
+    
+    if (cardLinkOptionBackdrop) {
+        cardLinkOptionBackdrop.addEventListener('click', closeCardLinkOptionSheet);
+    }
+    
+    cardLinkOptionOptions.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const value = this.dataset.value;
+            const text = this.textContent;
+            
+            // Update the selected option
+            cardLinkOptionOptions.forEach(opt => opt.classList.remove('selected'));
+            this.classList.add('selected');
+            
+            // Update the trigger and hidden input
+            cardLinkOptionTrigger.textContent = text;
+            cardLinkOptionValue.value = value;
+            
+            // Show/hide card selection based on choice
+            if (value === 'existing') {
+                existingCardRow.style.display = 'flex';
+            } else {
+                existingCardRow.style.display = 'none';
+                cardHiddenInput.value = '';
+                cardTrigger.textContent = 'Изберете карта';
+                cardTrigger.classList.remove('selected');
+            }
+            
+            closeCardLinkOptionSheet();
+        });
+    });
+    
+    // Initialize with 'none' selected for card link options
+    const initialOption = Array.from(cardLinkOptionOptions).find(opt => opt.dataset.value === 'none');
+    if (initialOption) {
+        initialOption.classList.add('selected');
+    }
+
+// --- Custom Currency Bottom Sheet Logic ---
+const currencyTrigger = document.getElementById('currency-select-trigger');
+const currencySheet = document.getElementById('currency-sheet');
+const currencyBackdrop = currencySheet ? currencySheet.querySelector('.currency-sheet-backdrop') : null;
+const currencyOptions = currencySheet ? currencySheet.querySelectorAll('.currency-sheet-option') : [];
+const currencyHiddenInput = document.getElementById('currency-select-value');
+const currencySelect = document.getElementById('currency-select');
+const submitBtn = document.querySelector('.account-details-submit');
+
+function openCurrencySheet(e) {
+    if (e) e.stopPropagation();
+    if (currencySheet) {
+        currencySheet.style.display = 'flex';
+        const modal = currencySheet.querySelector('.currency-sheet-modal');
+        if (modal) setTimeout(() => modal.focus(), 10);
+    }
+}
+
+function closeCurrencySheet() {
+    if (currencySheet) {
         currencySheet.style.display = 'none';
     }
-    function updateSubmitState() {
-        const allowed = ['BGN','EUR','GBP'];
-        // Only allow submit if the hidden input (custom select) is set to a valid value
-        const selected = currencyHidden.value;
-        const allChecked = Array.from(document.querySelectorAll('.account-details-form input[type="checkbox"]')).every(cb => cb.checked);
+}
+
+function updateSubmitState() {
+    const allowed = ['BGN','EUR','GBP'];
+    const selected = currencyHiddenInput ? currencyHiddenInput.value : '';
+    const allChecked = Array.from(document.querySelectorAll('.account-details-form input[type="checkbox"]'))
+        .every(cb => cb.checked);
+    
+    if (submitBtn) {
         submitBtn.disabled = !(allowed.includes(selected) && allChecked);
     }
+}
     // Also update submit state when any checkbox is changed
-    document.querySelectorAll('.account-details-form input[type="checkbox"]').forEach(cb => {
+    const checkboxes = document.querySelectorAll('.account-details-form input[type="checkbox"]');
+    checkboxes.forEach(cb => {
         cb.addEventListener('change', updateSubmitState);
     });
 
-    currencyTrigger.addEventListener('click', openCurrencySheet);
-    currencyBackdrop.addEventListener('click', closeCurrencySheet);
+    if (currencyTrigger) {
+        currencyTrigger.addEventListener('click', openCurrencySheet);
+    }
+    
+    if (currencyBackdrop) {
+        currencyBackdrop.addEventListener('click', closeCurrencySheet);
+    }
+    
     currencyOptions.forEach(opt => {
-        opt.addEventListener('click', function() {
+        opt.addEventListener('click', function(e) {
+            e.stopPropagation();
             // Remove highlight from all
-        currencyOptions.forEach(o => o.classList.remove('selected'));
-        this.classList.add('selected');
-        // Set value
-        currencyHidden.value = this.dataset.value;
-        currencyTrigger.textContent = this.textContent;
-        currencyTrigger.classList.add('selected');
-        // Sync native select
-        nativeSelect.value = this.dataset.value;
-        updateSubmitState();
-        closeCurrencySheet();
+            currencyOptions.forEach(o => o.classList.remove('selected'));
+            this.classList.add('selected');
+            // Set value
+            if (currencyHiddenInput) {
+                currencyHiddenInput.value = this.dataset.value;
+            }
+            if (currencyTrigger) {
+                currencyTrigger.textContent = this.textContent;
+                currencyTrigger.classList.add('selected');
+            }
+            // Sync native select
+            if (currencySelect) {
+                currencySelect.value = this.dataset.value;
+            }
+            updateSubmitState();
+            closeCurrencySheet();
+        });
     });
-});
-// If user changes native select (accessibility fallback)
-nativeSelect.addEventListener('change', function() {
-    currencyHidden.value = nativeSelect.value;
-    currencyTrigger.textContent = nativeSelect.value || 'Избери валута';
-    currencyTrigger.classList.toggle('selected', !!nativeSelect.value);
-    currencyOptions.forEach(o => o.classList.toggle('selected', o.dataset.value === nativeSelect.value));
-        updateSubmitState();
-    });
+    
+    // If user changes native select (accessibility fallback)
+    if (currencySelect) {
+        currencySelect.addEventListener('change', function() {
+            if (currencyHiddenInput) {
+                currencyHiddenInput.value = this.value;
+            }
+            if (currencyTrigger) {
+                currencyTrigger.textContent = this.value || 'Избери валута';
+                currencyTrigger.classList.toggle('selected', !!this.value);
+            }
+            currencyOptions.forEach(o => o.classList.toggle('selected', o.dataset.value === this.value));
+            updateSubmitState();
+        });
+    }
     // Initial state
     updateSubmitState();
 })();

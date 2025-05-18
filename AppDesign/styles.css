@@ -1811,22 +1811,139 @@ body, html {
 .transaction-list {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 0 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-    width: 100%;
+    width: auto;
+}
+
+@media (max-width: 400px) {
+    .transaction-list {
+        margin: 0 8px;
+    }
+}
+
+@media (max-width: 400px) {
+    .transaction-list {
+        margin: 0 2px;
+    }
 }
 .transaction-list li {
     display: flex;
-    align-items: center;
-    padding: 12px 14px;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(60,60,130,0.03);
-    gap: 16px;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 12px 0;
+    background: transparent;
+    border-bottom: 1px solid #e8eaf0;
+    gap: 0;
     width: 100%;
     box-sizing: border-box;
+}
+.transaction-list li:last-child {
+    border-bottom: none;
+}
+
+.txn-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+    background: #f5f8fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    color: #1b2d4b;
+    margin-right: 14px;
+}
+
+.txn-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2px;
+}
+
+.txn-title {
+    font-size: 1.09rem;
+    font-weight: 700;
+    color: #14325a;
+    margin-bottom: 0;
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+}
+
+.txn-type {
+    font-size: 0.97rem;
+    color: #345;
+    font-weight: 400;
+    opacity: 0.85;
+    letter-spacing: 0.01em;
+}
+
+.txn-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    min-width: 80px;
+    margin-left: 10px;
+}
+
+.txn-amount {
+    font-size: 1.13rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    letter-spacing: 0.01em;
+}
+.txn-amount.income {
+    color: #3bb06b;
+    background: #eafbe9;
+    border-radius: 6px;
+    padding: 2px 7px;
+}
+.txn-amount.expense {
+    color: #e03c3c;
+}
+.txn-amount.zero {
+    color: #3b6bb0;
+}
+
+.txn-date {
+    font-size: 0.98rem;
+    color: #8a99b3;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin-top: 0;
+}
+
+@media (max-width: 400px) {
+    .transaction-list li {
+        padding: 10px 0;
+    }
+    .txn-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        min-height: 34px;
+        font-size: 1.1rem;
+        margin-right: 8px;
+    }
+    .txn-title {
+        font-size: 1rem;
+    }
+    .txn-amount {
+        font-size: 1.01rem;
+    }
+    .txn-details {
+        gap: 1px;
+    }
+    .txn-right {
+        min-width: 60px;
+        margin-left: 4px;
+    }
 }
 .txn-icon {
     font-size: 1.3rem;

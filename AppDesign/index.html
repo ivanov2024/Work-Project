@@ -176,9 +176,12 @@ function renderTransactions() {
       <span class="txn-icon ${txn.type}"><i class="fa-solid ${txn.type==='income'?'fa-arrow-down':'fa-arrow-up'}"></i></span>
       <span class="txn-details">
         <span class="txn-title">${txn.title}</span>
+        <span class="txn-type">${txn.type === 'income' ? 'ПРИХОД' : txn.type === 'expense' ? 'РАЗХОД' : 'ПРЕВОД'}</span>
+      </span>
+      <span class="txn-right">
+        <span class="txn-amount ${txn.type} ${txn.amount === 0 ? 'zero' : ''}" data-real="${formatTxnAmount(txn.amount, selectedAccount.currency)}">${formatTxnAmount(txn.amount, selectedAccount.currency)}</span>
         <span class="txn-date">${txn.date}</span>
       </span>
-      <span class="txn-amount ${txn.type}" data-real="${formatTxnAmount(txn.amount, selectedAccount.currency)}">${formatTxnAmount(txn.amount, selectedAccount.currency)}</span>
     `;
     list.appendChild(li);
   });

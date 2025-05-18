@@ -225,9 +225,28 @@
     <!-- Terms Modal -->
     <div id="terms-modal" class="terms-modal" style="display:none;">
         <div class="terms-modal-content">
-            <button class="terms-modal-close" id="terms-modal-close" aria-label="Затвори"><i class="fa-solid fa-xmark"></i></button>
-            <div id="terms-modal-title" class="terms-modal-title"></div>
-            <div id="terms-modal-body" class="terms-modal-body"></div>
+            <div class="terms-modal-content-inner">
+                <button class="terms-modal-close" id="terms-modal-close" aria-label="Затвори"><i class="fa-solid fa-xmark"></i></button>
+                <div id="terms-modal-title" class="terms-modal-title">Условия за ползване</div>
+                <div id="terms-modal-body" class="terms-modal-body">
+                    <h3>1. Общи условия</h3>
+                    <p>С приемане на тези общи условия, Вие се съгласявате да използвате картовата услуга в съответствие с приложимите разпоредби на българското законодателство и вътрешните правила на FinBridge.</p>
+                    
+                    <h3>2. Данни и поверителност</h3>
+                    <p>Всички предоставени от Вас лични данни се обработват в съответствие с Общия регламент за защита на данните (РЕЗЮМЕ 2016/679) и Закона за кредитните институции. Повече информация за обработването на Вашите лични данни може да намерите в нашата Политика за поверителност.</p>
+                    
+                    <h3>3. Отговорности на клиента</h3>
+                    <p>Клиентът е длъжен да пази в тайна своя ПИН код и да не го разкрива на трети лица. Всички операции, извършени с картата, се смятат за извършени от притежателя на картата.</p>
+                    
+                    <h3>4. Такси и комисиони</h3>
+                    <p>За издаване и поддръжка на картата се дължат такси, посочени в тарифата на банката. Пълният пречень на такси и комисиони е достъпен в клоновете на банката и на уебсайта ни.</p>
+                    
+                    <h3>5. Прекратяване на договора</h3>
+                    <p>Договорът за използване на картовата услуга може да бъде прекратен от всяка от страните при спазване на 30-дневен срок за уведомление.</p>
+                    
+                    <p style="margin-top: 20px; font-size: 0.9em; color: #666;">Дата на последна актуализация: 16.05.2025 г.</p>
+                </div>
+            </div>
         </div>
         <div class="terms-modal-backdrop"></div>
     </div>
@@ -236,7 +255,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const cardPreview = document.querySelector('.card-preview');
             const submitBtn = document.getElementById('submit-request');
-            const cardTypeElement = cardPreview.querySelector('.card-type');
+            const cardTypeElement = cardPreview ? cardPreview.querySelector('.card-type') : null;
             
             // Bank logos mapping
             const bankLogos = {
@@ -266,12 +285,17 @@
                 const sheet = document.getElementById(sheetId);
                 const select = document.getElementById(selectId);
                 const hiddenInput = document.getElementById(hiddenInputId);
-                const backdrop = sheet.querySelector('.currency-sheet-backdrop');
-                const options = sheet.querySelectorAll('.currency-sheet-option');
+                const backdrop = sheet ? sheet.querySelector('.currency-sheet-backdrop') : null;
+                const options = sheet ? sheet.querySelectorAll('.currency-sheet-option') : [];
+                
+                if (!trigger || !sheet || !select || !hiddenInput) return;
                 
                 function openSheet() {
                     sheet.style.display = 'flex';
-                    setTimeout(() => sheet.querySelector('.currency-sheet-modal').focus(), 10);
+                    const modal = sheet.querySelector('.currency-sheet-modal');
+                    if (modal) {
+                        setTimeout(() => modal.focus(), 10);
+                    }
                 }
                 
                 function closeSheet() {
@@ -279,7 +303,9 @@
                 }
                 
                 trigger.addEventListener('click', openSheet);
-                backdrop.addEventListener('click', closeSheet);
+                if (backdrop) {
+                    backdrop.addEventListener('click', closeSheet);
+                }
                 
                 options.forEach(option => {
                     option.addEventListener('click', function() {
@@ -300,23 +326,13 @@
                 
                 // Sync with native select for accessibility
                 select.addEventListener('change', function() {
-                    hiddenInput.value = select.value;
-                    const selectedOption = Array.from(select.options).find(opt => opt.value === select.value);
+                    const selectedOption = sheet.querySelector(`.currency-sheet-option[data-value="${this.value}"]`);
                     if (selectedOption) {
-                        trigger.textContent = selectedOption.text;
-                        trigger.classList.toggle('selected', !!select.value);
-                        
-                        // Update selected state in the sheet
-                        options.forEach(opt => {
-                            opt.classList.toggle('selected', opt.dataset.value === select.value);
-                        });
+                        hiddenInput.value = this.value;
+                        trigger.textContent = selectedOption.textContent;
+                        trigger.classList.add('selected');
                     }
                 });
-                
-                // Initialize from any existing value
-                if (select.value) {
-                    select.dispatchEvent(new Event('change'));
-                }
             }
             
             // Initialize all bottom sheets
@@ -328,156 +344,175 @@
             
             // Update card preview based on selected bank, card type, and network
             function updateCardPreview() {
-                const bank = document.getElementById('bank').value;
-                const cardType = document.getElementById('card-type').value;
-                const cardNetwork = document.getElementById('card-network').value;
-                const cardPreview = document.querySelector('.card-preview');
-                const cardTypeElement = document.querySelector('.card-type');
+                if (!cardPreview) return;
+                
+                const bank = document.getElementById('bank')?.value;
+                const cardType = document.getElementById('card-type')?.value;
+                const cardNetwork = document.getElementById('card-network')?.value;
                 
                 // Update card type text
-                if (cardType === 'debit') {
-                    cardTypeElement.textContent = 'DEBIT';
-                } else if (cardType === 'credit') {
-                    cardTypeElement.textContent = 'CREDIT';
-                } else if (cardType === 'prepaid') {
-                    cardTypeElement.textContent = 'PREPAID';
-                } else {
-                    cardTypeElement.textContent = 'STANDARD';
+                if (cardType && cardTypeElement) {
+                    const cardTypeText = cardType === 'debit' ? 'DEBIT' : 
+                                        cardType === 'credit' ? 'CREDIT' : 
+                                        cardType === 'prepaid' ? 'PREPAID' : 'STANDARD';
+                    cardTypeElement.textContent = cardTypeText;
                 }
                 
-                // Update card network styling if needed
-                if (cardNetwork === 'mastercard') {
-                    // Add Mastercard specific styling if needed
-                    cardPreview.classList.add('mastercard-preview');
-                    cardPreview.classList.remove('visa-preview');
-                } else if (cardNetwork === 'visa') {
-                    // Add Visa specific styling if needed
-                    cardPreview.classList.add('visa-preview');
-                    cardPreview.classList.remove('mastercard-preview');
-                } else {
-                    cardPreview.classList.remove('mastercard-preview', 'visa-preview');
+                // Update card number preview based on network
+                const cardNumberEl = cardPreview.querySelector('.card-number');
+                if (cardNetwork && cardNumberEl) {
+                    let cardNumber = '•••• •••• •••• ••••';
+                    if (cardNetwork === 'visa') cardNumber = '4••• •••• •••• ••••';
+                    else if (cardNetwork === 'mastercard') cardNumber = '5••• •••• •••• ••••';
+                    
+                    cardNumberEl.textContent = cardNumber;
                 }
                 
-                // Update bank name and logo
-                if (bank && bankNames[bank]) {
-                    // Remove existing logo if it exists
-                    const bankLogo = cardPreview.querySelector('.bank-logo');
-                    if (bankLogo) {
-                        bankLogo.remove();
+                // Update bank logo and name if bank is selected
+                if (bank) {
+                    const bankLogo = bankLogos[bank];
+                    const bankName = bankNames[bank];
+                    const logoEl = cardPreview.querySelector('.card-logo');
+                    const bankNameEl = cardPreview.querySelector('.bank-name');
+                    
+                    if (bankLogo && logoEl) {
+                        logoEl.src = `images/banks/${bankLogo}`;
+                        logoEl.style.display = 'block';
                     }
                     
-                    // Create new bank logo
-                    const newBankLogo = document.createElement('div');
-                    newBankLogo.className = 'bank-logo';
-                    newBankLogo.textContent = bankNames[bank].charAt(0);
-                    
-                    // Insert logo before the card type
-                    cardPreview.insertBefore(newBankLogo, cardTypeElement);
-                    
-                    // Update bank name
-                    cardTypeElement.textContent = bankNames[bank];
-                } else {
-                    cardTypeElement.textContent = 'STANDARD';
-                    if (bankLogo) bankLogo.remove();
+                    if (bankName && bankNameEl) {
+                        bankNameEl.textContent = bankName;
+                    }
                 }
                 
-                // Update card type styling
-                switch(cardType) {
-                    case 'debit':
-                        cardPreview.style.background = 'linear-gradient(135deg, #0066cc, #0099ff)';
-                        break;
-                    case 'credit':
-                        cardPreview.style.background = 'linear-gradient(135deg, #8e44ad, #9b59b6)';
-                        break;
-                    case 'prepaid':
-                        cardPreview.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-                        break;
-                    default:
-                        cardPreview.style.background = 'linear-gradient(135deg, #0066cc, #0099ff)';
+                // Update card type class
+                if (cardPreview) {
+                    cardPreview.className = 'card-preview';
+                    if (cardType) cardPreview.classList.add(cardType);
+                    if (bank) cardPreview.classList.add(bank);
                 }
             }
             
             // Add event listeners for card preview updates
-            document.getElementById('bank').addEventListener('change', updateCardPreview);
-            document.getElementById('card-type').addEventListener('change', updateCardPreview);
-            document.getElementById('card-network').addEventListener('change', updateCardPreview);
+            const bankSelect = document.getElementById('bank');
+            const cardTypeSelect = document.getElementById('card-type');
+            const cardNetworkSelect = document.getElementById('card-network');
+            
+            if (bankSelect) bankSelect.addEventListener('change', updateCardPreview);
+            if (cardTypeSelect) cardTypeSelect.addEventListener('change', updateCardPreview);
+            if (cardNetworkSelect) cardNetworkSelect.addEventListener('change', updateCardPreview);
             
             // Initial card preview update
             updateCardPreview();
-
-            // Terms modal logic
-            document.querySelectorAll('.terms-link').forEach(link => {
-                link.onclick = function(e) {
+            
+            // Form submission
+            if (submitBtn) {
+                submitBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    document.getElementById('terms-modal').style.display = 'flex';
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
-                };
+                    
+                    const bankValue = document.getElementById('bank-select-value')?.value;
+                    const cardTypeValue = document.getElementById('card-type-select-value')?.value;
+                    const cardNetworkValue = document.getElementById('card-network-select-value')?.value;
+                    const accountValue = document.getElementById('account-select-value')?.value;
+                    const deliveryValue = document.getElementById('delivery-select-value')?.value;
+                    const termsAgreed = document.getElementById('terms-checkbox')?.checked;
+                    
+                    // Basic validation
+                    if (!bankValue) {
+                        alert('Моля, изберете банка');
+                        return;
+                    }
+                    
+                    if (!cardTypeValue) {
+                        alert('Моля, изберете тип карта');
+                        return;
+                    }
+                    
+                    if (!cardNetworkValue) {
+                        alert('Моля, изберете мрежа на картата');
+                        return;
+                    }
+                    
+                    if (!accountValue) {
+                        alert('Моля, изберете сметка за обвързване');
+                        return;
+                    }
+                    
+                    if (!deliveryValue) {
+                        alert('Моля, изберете начин на доставка');
+                        return;
+                    }
+                    
+                    if (!termsAgreed) {
+                        alert('Моля, потвърдете, че сте съгласни с условията за ползване');
+                        return;
+                    }
+                    
+                    // If all validations pass, submit the form
+                    alert('Заявката е изпратена успешно!');
+                    // Here you would typically submit the form data to your server
+                    // For now, we'll just log it to the console
+                    console.log({
+                        bank: bankValue,
+                        cardType: cardTypeValue,
+                        cardNetwork: cardNetworkValue,
+                        account: accountValue,
+                        delivery: deliveryValue,
+                        termsAgreed: termsAgreed
+                    });
+                });
+            }
+
+            // Terms modal functionality
+            const termsModal = document.getElementById('terms-modal');
+            const closeButton = document.getElementById('terms-modal-close');
+            const backdrop = document.querySelector('.terms-modal-backdrop');
+            const termsLinks = document.querySelectorAll('.terms-link');
+
+            // Function to open modal
+            function openTermsModal() {
+                if (termsModal) {
+                    termsModal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                    // Scroll to top when opening
+                    const contentInner = termsModal.querySelector('.terms-modal-content-inner');
+                    if (contentInner) {
+                        contentInner.scrollTop = 0;
+                    }
+                }
+            }
+
+            // Function to close modal
+            function closeTermsModal() {
+                if (termsModal) {
+                    termsModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+            // Open modal when clicking terms links
+            termsLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openTermsModal();
+                });
             });
 
-            // Close modal when clicking the close button or backdrop
-            document.getElementById('terms-modal-close').onclick = function() {
-                document.getElementById('terms-modal').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            };
+            // Close modal with close button
+            if (closeButton) {
+                closeButton.addEventListener('click', closeTermsModal);
+            }
 
-            document.querySelector('.terms-modal-backdrop').onclick = function() {
-                document.getElementById('terms-modal').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            };
+            // Close modal when clicking on backdrop
+            if (backdrop) {
+                backdrop.addEventListener('click', closeTermsModal);
+            }
 
             // Close modal with Escape key
             document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && document.getElementById('terms-modal').style.display === 'flex') {
-                    document.getElementById('terms-modal').style.display = 'none';
-                    document.body.style.overflow = 'auto';
+                if (e.key === 'Escape' && termsModal.style.display === 'flex') {
+                    closeTermsModal();
                 }
-            });
-
-            // Form submission
-            submitBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const bankValue = document.getElementById('bank-select-value').value;
-                const cardTypeValue = document.getElementById('card-type-select-value').value;
-                const accountValue = document.getElementById('account-select-value').value;
-                const deliveryValue = document.getElementById('delivery-select-value').value;
-                
-                if (!bankValue) {
-                    alert('Моля, изберете банка');
-                    return;
-                }
-                
-                if (!cardTypeValue) {
-                    alert('Моля, изберете тип карта');
-                    return;
-                }
-                
-                if (!accountValue) {
-                    alert('Моля, изберете сметка за обвързване');
-                    return;
-                }
-                
-                if (!deliveryValue) {
-                    alert('Моля, изберете начин на получаване');
-                    return;
-                }
-                
-                const termsCheckbox = document.getElementById('terms-checkbox');
-                if (!termsCheckbox.checked) {
-                    alert('Моля, потвърдете, че сте съгласни с условията за ползване');
-                    return;
-                }
-                
-                // Here you would typically submit the form data to your server
-                console.log('Form data:', {
-                    bank: bankValue,
-                    cardType: cardTypeValue,
-                    account: accountValue,
-                    delivery: deliveryValue
-                });
-                
-                alert('Вашата заявка е изпратена успешно!');
-                // window.location.href = 'confirmation.html';
             });
 
             // Account Selection Bottom Sheet Logic

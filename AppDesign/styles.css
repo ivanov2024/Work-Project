@@ -27,9 +27,11 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 24px 16px;
+    padding: 24px 16px 80px; /* Added bottom padding for bottom nav */
     overflow: visible;
     min-height: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* --- Account Details Header Styles --- */
@@ -866,6 +868,7 @@ body, html {
     line-height: 1.55;
     width: 100%;
     margin-bottom: 4px;
+    padding-right: 20px; /* Add padding to account for scrollbar */
 }
 .terms-modal-backdrop {
     position: fixed;
@@ -1145,7 +1148,8 @@ body, html {
     flex-direction: column;
     align-items: center;
 }
-.accounts-list {
+.accounts-list,
+.cards-list {
     list-style: none;
     margin: 0 12px 24px 12px;
     padding: 0;
@@ -1154,12 +1158,16 @@ body, html {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    overflow: hidden;
     transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1);
+    max-height: 202px;
+    overflow: hidden;
 }
-.accounts-list.expanded {
-    overflow-y: auto;
-    max-height: 260px;
+
+.accounts-list.expanded,
+.cards-list.expanded {
+    overflow-y: auto !important;
+    max-height: 320px !important;
+    min-height: 80px;
 }
 .account-list-item {
     margin: 0 8px 18px 8px;
@@ -1560,6 +1568,21 @@ body, html {
     }
 }
 
+@media (max-width: 400px) {
+    .add-account-btn {
+        font-size: 1rem;
+        gap: 6px;
+    }
+    .add-account-btn i {
+        width: 28px;
+        height: 28px;
+        font-size: 1.1rem;
+    }
+    .add-account-btn span, .add-account-btn-text {
+        font-size: 1rem;
+    }
+}
+
 @media (max-width: 350px) {
     .mobile-frame {
         width: 100vw;
@@ -1899,7 +1922,7 @@ body, html {
 }
 
 .terms-checkbox-row label {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     line-height: 1.4;
 }
 
@@ -2011,17 +2034,22 @@ body, html {
 
 /* Terms Modal */
 .terms-modal {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1000;
-    align-items: center;
+    display: none;
+    align-items: flex-start; /* Changed from center to flex-start */
     justify-content: center;
-    padding: 16px;
+    padding: 20px 16px;
     box-sizing: border-box;
+    pointer-events: none;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
 }
 
 .terms-modal-backdrop {
@@ -2038,13 +2066,66 @@ body, html {
     position: relative;
     background: white;
     border-radius: 12px;
-    width: 100%;
+    width: calc(100% - 32px); /* Account for padding */
     max-width: 500px;
     max-height: 80vh;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
     z-index: 1002;
-    padding: 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    pointer-events: auto;
+    overflow-y: auto;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    margin: 20px 0; /* Reduced margin */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.terms-modal-content-inner {
+    width: 100%;
+    padding: 24px;
+    box-sizing: border-box;
+    position: relative;
+    max-width: 100%;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    word-wrap: break-word; /* Break long words if needed */
+}
+/* Products page specific styles */
+body.products-page .mobile-frame {
+    height: 230vh;
+    height: auto;
+    min-height: 100vh;
+}
+
+body.products-page main {
+    padding-bottom: 80px; /* Added bottom padding for bottom nav */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.terms-modal-content-inner::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terms-modal-content-inner::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+    margin: 8px 0;
+}
+
+.terms-modal-content-inner::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 4px;
+}
+
+.terms-modal-content-inner::-webkit-scrollbar-thumb:hover {
+    background-color: #a8a8a8;
+}
+
+/* Firefox scrollbar */
+.terms-modal-content-inner {
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
 }
 
 .terms-modal-close {
@@ -2081,6 +2162,9 @@ body, html {
     font-size: 0.95rem;
     line-height: 1.6;
     color: #333;
+    word-wrap: break-word; /* Ensure long words break and wrap */
+    overflow-wrap: break-word; /* Alternative for better browser support */
+    max-width: 100%; /* Ensure content doesn't exceed container width */
 }
 
 .terms-modal-body h3 {

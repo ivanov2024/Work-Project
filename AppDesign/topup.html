@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зареждане на сметка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="open-account-title">Зареждане на мобилни услуги</span>
+        </header>
+        <main>
+            <div class="topup-container">
+                
+                <div class="topup-card">
+                    <!-- Payment Method Type Selection -->
+                    <div class="form-group">
+                        <label class="form-label">Начин на плащане</label>
+                        <div id="payment-method-trigger" class="account-details-select custom-select-trigger">Изберете начин на плащане</div>
+                        <input type="hidden" id="payment-method-value" value="">
+                        <select id="payment-method" class="form-select" style="display:none;">
+                            <option value="">Изберете начин на плащане</option>
+                            <option value="bank">Банкова сметка</option>
+                            <option value="card">Кредитна/дебитна карта</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Bank Account Selection (initially hidden) -->
+                    <div id="bank-account-group" class="form-group" style="display: none;">
+                        <label class="form-label" for="account-select">Изберете сметка</label>
+                        <div id="account-select-trigger" class="account-details-select custom-select-trigger">Изберете сметка</div>
+                        <input type="hidden" id="account-select-value" value="">
+                        <select id="account-select" class="form-select" style="display:none;">
+                            <option value="">Изберете сметка</option>
+                            <option value="account1">BG12 3456 7890 1234 56 - 1,245.67 BGN</option>
+                            <option value="account2">BG98 7654 3210 9876 54 - 3,210.45 EUR</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Card Selection (initially hidden) -->
+                    <div id="card-group" class="form-group" style="display: none;">
+                        <label class="form-label" for="card-select">Изберете карта</label>
+                        <div id="card-select-trigger" class="account-details-select custom-select-trigger">Изберете карта</div>
+                        <input type="hidden" id="card-select-value" value="">
+                        <select id="card-select" class="form-select" style="display:none;">
+                            <option value="">Изберете карта</option>
+                            <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
+                            <option value="card2">**** 5678 (Mastercard) - 3,210.45 EUR</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="amount">Сума за зареждане</label>
+                        <input type="number" id="amount" class="form-input amount-input" placeholder="0,00" min="5" step="0.01">
+                        
+                        <div class="quick-amounts">
+                            <button class="amount-btn" data-amount="5">5 лв</button>
+                            <button class="amount-btn" data-amount="10">10 лв</button>
+                            <button class="amount-btn" data-amount="20">20 лв</button>
+                            <button class="amount-btn" data-amount="30">30 лв</button>
+                            <button class="amount-btn" data-amount="50">50 лв</button>
+                            <button class="amount-btn" data-amount="100">100 лв</button>
+                        </div>
+                        <p class="info-text">Минимална сума за зареждане: 5.00 лв</p>
+                    </div>
+                    
+                    <button id="submit-btn" class="submit-btn" disabled>Продължи</button>
+                </div>
+                
+                <div class="topup-card">
+                    <h3>Информация</h3>
+                    <ul style="padding-left: 20px; color: #666; line-height: 1.6;">
+                        <li>Зареждането се осъществява незабавно</li>
+                        <li>Няма такси за зареждане</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Payment Method Type Selection ---
+            const paymentMethodTrigger = document.getElementById('payment-method-trigger');
+            const paymentMethodSheet = document.createElement('div');
+            paymentMethodSheet.id = 'payment-method-sheet';
+            paymentMethodSheet.className = 'currency-sheet';
+            paymentMethodSheet.style.display = 'none';
+            paymentMethodSheet.innerHTML = `
+                <div class="currency-sheet-backdrop"></div>
+                <div class="currency-sheet-modal">
+                    <div class="currency-sheet-bar"></div>
+                    <div class="currency-sheet-options">
+                        <div class="currency-sheet-option" data-value="bank">Банкова сметка</div>
+                        <div class="currency-sheet-option" data-value="card">Кредитна/дебитна карта</div>
+                    </div>
+                </div>`;
+            document.body.appendChild(paymentMethodSheet);
+            const paymentMethodBackdrop = paymentMethodSheet.querySelector('.currency-sheet-backdrop');
+            const paymentMethodOptions = paymentMethodSheet.querySelectorAll('.currency-sheet-option');
+            const paymentMethodHiddenInput = document.getElementById('payment-method-value');
+            const paymentMethodSelect = document.getElementById('payment-method');
+
+            // --- Account Selection Logic ---
+            const accountTrigger = document.getElementById('account-select-trigger');
+            const accountSheet = document.createElement('div');
+            accountSheet.id = 'account-sheet';
+            accountSheet.className = 'currency-sheet';
+            accountSheet.style.display = 'none';
+            accountSheet.innerHTML = `
+                <div class="currency-sheet-backdrop"></div>
+                <div class="currency-sheet-modal">
+                    <div class="currency-sheet-bar"></div>
+                    <div class="currency-sheet-options">
+                        <div class="currency-sheet-option" data-value="account1">BG12 3456 7890 1234 56 - 1,245.67 BGN</div>
+                        <div class="currency-sheet-option" data-value="account2">BG98 7654 3210 9876 54 - 3,210.45 EUR</div>
+                    </div>
+                </div>`;
+            document.body.appendChild(accountSheet);
+            const accountBackdrop = accountSheet.querySelector('.currency-sheet-backdrop');
+            const accountOptions = accountSheet.querySelectorAll('.currency-sheet-option');
+            const accountHiddenInput = document.getElementById('account-select-value');
+            const accountSelect = document.getElementById('account-select');
+
+            // --- Card Selection Logic ---
+            const cardTrigger = document.getElementById('card-select-trigger');
+            const cardSheet = document.createElement('div');
+            cardSheet.id = 'card-sheet';
+            cardSheet.className = 'currency-sheet';
+            cardSheet.style.display = 'none';
+            cardSheet.innerHTML = `
+                <div class="currency-sheet-backdrop"></div>
+                <div class="currency-sheet-modal">
+                    <div class="currency-sheet-bar"></div>
+                    <div class="currency-sheet-options">
+                        <div class="currency-sheet-option" data-value="card1">**** 1234 (Visa) - 1,245.67 BGN</div>
+                        <div class="currency-sheet-option" data-value="card2">**** 5678 (Mastercard) - 3,210.45 EUR</div>
+                    </div>
+                </div>`;
+            document.body.appendChild(cardSheet);
+            const cardBackdrop = cardSheet.querySelector('.currency-sheet-backdrop');
+            const cardOptions = cardSheet.querySelectorAll('.currency-sheet-option');
+            const cardHiddenInput = document.getElementById('card-select-value');
+            const cardSelect = document.getElementById('card-select');
+
+            // --- UI Elements ---
+            const bankAccountGroup = document.getElementById('bank-account-group');
+            const cardGroup = document.getElementById('card-group');
+
+            // --- Payment Method Handlers ---
+            function openPaymentMethodSheet(e) {
+                if (e) e.stopPropagation();
+                paymentMethodSheet.style.display = 'flex';
+                setTimeout(() => paymentMethodSheet.querySelector('.currency-sheet-modal').focus(), 10);
+            }
+            
+            function closePaymentMethodSheet() {
+                paymentMethodSheet.style.display = 'none';
+            }
+
+            // --- Account Sheet Handlers ---
+            function openAccountSheet(e) {
+                if (e) e.stopPropagation();
+                accountSheet.style.display = 'flex';
+                setTimeout(() => accountSheet.querySelector('.currency-sheet-modal').focus(), 10);
+            }
+            
+            function closeAccountSheet() {
+                accountSheet.style.display = 'none';
+            }
+
+            // --- Card Sheet Handlers ---
+            function openCardSheet(e) {
+                if (e) e.stopPropagation();
+                cardSheet.style.display = 'flex';
+                setTimeout(() => cardSheet.querySelector('.currency-sheet-modal').focus(), 10);
+            }
+            
+            function closeCardSheet() {
+                cardSheet.style.display = 'none';
+            }
+
+            // --- Event Listeners for Payment Method Selection ---
+            if (paymentMethodTrigger) {
+                paymentMethodTrigger.addEventListener('click', openPaymentMethodSheet);
+            }
+            
+            if (paymentMethodBackdrop) {
+                paymentMethodBackdrop.addEventListener('click', closePaymentMethodSheet);
+            }
+            
+            paymentMethodOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    paymentMethodOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const value = this.dataset.value;
+                    const text = this.textContent;
+                    paymentMethodHiddenInput.value = value;
+                    paymentMethodTrigger.textContent = text;
+                    paymentMethodTrigger.classList.add('selected');
+                    paymentMethodSelect.value = value;
+                    
+                    // Show/hide appropriate selection group
+                    if (value === 'bank') {
+                        bankAccountGroup.style.display = 'block';
+                        cardGroup.style.display = 'none';
+                        // Reset card selection
+                        cardHiddenInput.value = '';
+                        cardTrigger.textContent = 'Изберете карта';
+                        cardTrigger.classList.remove('selected');
+                        cardSelect.value = '';
+                    } else if (value === 'card') {
+                        bankAccountGroup.style.display = 'none';
+                        cardGroup.style.display = 'block';
+                        // Reset account selection
+                        accountHiddenInput.value = '';
+                        accountTrigger.textContent = 'Изберете сметка';
+                        accountTrigger.classList.remove('selected');
+                        accountSelect.value = '';
+                    }
+                    
+                    updateSubmitButton();
+                    closePaymentMethodSheet();
+                });
+            });
+
+            // --- Event Listeners for Account Selection ---
+            if (accountTrigger) {
+                accountTrigger.addEventListener('click', openAccountSheet);
+            }
+            
+            if (accountBackdrop) {
+                accountBackdrop.addEventListener('click', closeAccountSheet);
+            }
+            
+            accountOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    accountOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const value = this.dataset.value;
+                    const text = this.textContent;
+                    accountHiddenInput.value = value;
+                    accountTrigger.textContent = text;
+                    accountTrigger.classList.add('selected');
+                    accountSelect.value = value;
+                    updateSubmitButton();
+                    closeAccountSheet();
+                });
+            });
+
+            // --- Event Listeners for Card Selection ---
+            if (cardTrigger) {
+                cardTrigger.addEventListener('click', openCardSheet);
+            }
+            
+            if (cardBackdrop) {
+                cardBackdrop.addEventListener('click', closeCardSheet);
+            }
+            
+            cardOptions.forEach(option => {
+                option.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    cardOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
+                    const value = this.dataset.value;
+                    const text = this.textContent;
+                    cardHiddenInput.value = value;
+                    cardTrigger.textContent = text;
+                    cardTrigger.classList.add('selected');
+                    cardSelect.value = value;
+                    updateSubmitButton();
+                    closeCardSheet();
+                });
+            });
+
+            // --- Amount Selection Logic ---
+            const amountInput = document.getElementById('amount');
+            const quickAmounts = document.querySelectorAll('.amount-btn');
+            const submitBtn = document.getElementById('submit-btn');
+            
+            // Quick amount buttons
+            quickAmounts.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const amount = this.getAttribute('data-amount');
+                    if (amount) {
+                        // Toggle the amount - if already selected, clear it, otherwise set it
+                        if (this.classList.contains('active')) {
+                            amountInput.value = '';
+                            this.classList.remove('active');
+                        } else {
+                            amountInput.value = amount;
+                            quickAmounts.forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                        }
+                        updateSubmitButton();
+                    }
+                });
+            });
+            
+            // Input validation
+            amountInput.addEventListener('input', updateSubmitButton);
+            
+            function updateSubmitButton() {
+                const amount = parseFloat(amountInput.value) || 0;
+                const paymentMethodSelected = paymentMethodHiddenInput.value !== '';
+                const accountSelected = accountHiddenInput.value !== '';
+                const cardSelected = cardHiddenInput.value !== '';
+                
+                // Validate based on selected payment method
+                if (!paymentMethodSelected) {
+                    submitBtn.disabled = true;
+                    return;
+                }
+                
+                const paymentMethod = paymentMethodHiddenInput.value;
+                const isPaymentMethodValid = (paymentMethod === 'bank' && accountSelected) || 
+                                           (paymentMethod === 'card' && cardSelected);
+                
+                submitBtn.disabled = !(amount >= 5 && isPaymentMethodValid);
+            }
+            
+            // Format amount on blur
+            amountInput.addEventListener('blur', function() {
+                if (this.value) {
+                    const num = parseFloat(this.value).toFixed(2);
+                    this.value = num;
+                }
+            });
+            
+            // Submit button handler
+            submitBtn.addEventListener('click', function(e) {
+                if (submitBtn.disabled) return;
+                
+                const amount = amountInput.value;
+                const paymentMethod = paymentMethodHiddenInput.value;
+                let paymentSource = '';
+                
+                if (paymentMethod === 'bank') {
+                    paymentSource = accountTrigger.textContent;
+                } else if (paymentMethod === 'card') {
+                    paymentSource = cardTrigger.textContent;
+                }
+                
+                const paymentMethodText = paymentMethod === 'bank' ? 'сметка' : 'карта';
+                alert(`Заявка за зареждане на ${amount} лв от ${paymentMethodText} ${paymentSource} е изпратена!`);
+                // In a real app, this would submit the form
+            });
+            
+            // Initialize the form state
+            updateSubmitButton();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Плащане - Добавяне на средства</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="open-account-title">Такси и сметки</span>
+        </header>
+        <main>
+            <div class="taxes-container">
+                <!-- Monthly Summary Card -->
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <h3>Общо за месеца</h3>
+                        <div class="month-selector-container" id="month-selector">
+                            <button type="button" id="month-btn" class="month-selector-btn">
+                                <i class="fas fa-calendar-alt"></i>
+                            </button>
+                            <!-- Hidden input for form submission if needed -->
+                            <input type="hidden" id="selected-month" value="2025-05">
+                            <!-- Month picker dropdown -->
+                            <div class="month-picker" id="month-picker">
+                                <div class="month-picker-header">
+                                    <button type="button" class="nav-btn" id="prev-year">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <span id="picker-year">2025</span>
+                                    <button type="button" class="nav-btn" id="next-year">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="month-grid" id="month-grid">
+                                    <!-- Months will be inserted here by JavaScript -->
+                                </div>
+                            </div>
+                            
+                            <!-- Year Picker -->
+                            <div class="year-picker" id="year-picker">
+                                <div class="year-picker-header">
+                                    <button type="button" class="nav-btn" id="prev-decade">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <span id="year-range">2020-2029</span>
+                                    <button type="button" class="nav-btn" id="next-decade">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <div class="year-grid" id="year-grid">
+                                    <!-- Years will be inserted here by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="summary-amount">
+                        <span class="amount">427,50</span>
+                        <span class="currency">лв</span>
+                    </div>
+                    <div class="summary-details">
+                        <div class="detail-item">
+                            <span class="label">Платени</span>
+                            <span class="value paid">327,50 лв</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">Чакащи плащане</span>
+                            <span class="value pending">100,00 лв</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sorting Info Box -->
+                <div class="sorting-info">
+                    <button class="sorting-info-header" id="sorting-toggle" aria-expanded="true">
+                        <i class="fas fa-sort-amount-down"></i>
+                        <span class="sorting-info-title">Как работи сортирането?</span>
+                        <i class="fas fa-chevron-up" id="sorting-arrow"></i>
+                    </button>
+                    <div class="sorting-info-content" id="sorting-content" style="max-height: 1000px; padding: 10px 16px; opacity: 1; margin-top: 0;">
+                        <div class="info-section">
+                            <h4>Филтриране на сметки:</h4>
+                            <p><strong>Всички:</strong> Показва всички сметки, независимо от статуса им.</p>
+                            <p><strong>Неплатени:</strong> Показва само сметките, които изискват плащане.</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <h4>Сортиране на сметки:</h4>
+                            <p><strong>По дата:</strong> Подрежда сметките според датата на плащане.</p>
+                            <p><strong>По сума:</strong> Подрежда сметките според тяхната стойност.</p>
+                        </div>
+                        
+                        <div class="info-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Можете да комбинирате филтрирането и сортирането за по-лесно управление на сметките си.</span>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const sortingInfo = document.querySelector('.sorting-info');
+                    const toggleBtn = document.getElementById('sorting-toggle');
+                    const content = document.getElementById('sorting-content');
+                    const arrow = document.getElementById('sorting-arrow');
+                    let isOpen = true;
+
+                    function updateContentState() {
+                        if (isOpen) {
+                            content.style.maxHeight = '392px';
+                            content.style.padding = '10px 16px';
+                            content.style.opacity = '1';
+                            arrow.style.transform = 'rotate(0)';
+                            toggleBtn.setAttribute('aria-expanded', 'true');
+                        } else {
+                            content.style.maxHeight = '0';
+                            content.style.padding = '0 16px';
+                            content.style.opacity = '0';
+                            arrow.style.transform = 'rotate(180deg)';
+                            toggleBtn.setAttribute('aria-expanded', 'false');
+                        }
+                    }
+
+                    // Initialize
+                    toggleBtn.addEventListener('click', function() {
+                        isOpen = !isOpen;
+                        updateContentState();
+                    });
+                    
+                    // Set initial state
+                    updateContentState();
+                });
+                </script>
+
+                <!-- Bills List -->
+                <div class="bills-header">
+                    <h3>Сметки</h3>
+                    <div class="header-actions">
+                        <div class="filter-options">
+                            <button class="filter-btn" data-filter="all">
+                                <i class="fas fa-list"></i>
+                                <span>Всички</span>
+                            </button>
+                            <button class="filter-btn active" data-filter="unpaid">
+                                <i class="far fa-clock"></i>
+                                <span>Неплатени</span>
+                            </button>
+                        </div>
+                        <div class="sort-options">
+                            <button class="sort-btn" data-sort="date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>Дата</span>
+                            </button>
+                            <button class="sort-btn" data-sort="amount">
+                                <i class="fas fa-sort-amount-down"></i>
+                                <span>Сума</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bills-list">
+                    <!-- Bill Item 1 -->
+                    <div class="bill-item">
+                        <div class="bill-item-content">
+                            <div class="bill-icon water">
+                                <i class="fas fa-tint"></i>
+                            </div>
+                            <div class="bill-details">
+                                <div class="bill-name">Вода и канализация</div>
+                                <div class="bill-date">Платена на 05.05.2025</div>
+                            </div>
+                            <div class="bill-amount">
+                                <div class="amount">85,60 лв</div>
+                                <div class="status paid">Платена</div>
+                            </div>
+                        </div>
+                        <!-- No Pay button for paid bills -->
+                    </div>
+
+                    <!-- Bill Item 2 -->
+                    <div class="bill-item">
+                        <div class="bill-item-content">
+                            <div class="bill-icon electricity">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="bill-details">
+                                <div class="bill-name">Електроенергия</div>
+                                <div class="bill-date">Платена на 10.05.2025</div>
+                            </div>
+                            <div class="bill-amount">
+                                <div class="amount">142,30 лв</div>
+                                <div class="status paid">Платена</div>
+                            </div>
+                        </div>
+                        <!-- No Pay button for paid bills -->
+                    </div>
+
+                    <!-- Bill Item 3 -->
+                    <div class="bill-item">
+                        <div class="bill-item-content">
+                            <div class="bill-icon heating">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="bill-details">
+                                <div class="bill-name">Топлофикация</div>
+                                <div class="bill-date">До 25.05.2025</div>
+                            </div>
+                            <div class="bill-amount">
+                                <div class="amount">100,00 лв</div>
+                                <div class="status pending">Чака плащане</div>
+                            </div>
+                        </div>
+                        <button class="bill-pay-btn">
+                            <i class="fas fa-credit-card"></i>
+                            Плати
+                        </button>
+                    </div>
+
+                    <!-- Bill Item 4 -->
+                    <div class="bill-item">
+                        <div class="bill-item-content">
+                            <div class="bill-icon internet">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <div class="bill-details">
+                                <div class="bill-name">Интернет</div>
+                                <div class="bill-date">Платена на 05.05.2025</div>
+                            </div>
+                            <div class="bill-amount">
+                                <div class="amount">29,90 лв</div>
+                                <div class="status paid">Платена</div>
+                            </div>
+                        </div>
+                        <!-- No Pay button for paid bills -->
+                    </div>
+
+                    <!-- Bill Item 5 -->
+                    <div class="bill-item">
+                        <div class="bill-item-content">
+                            <div class="bill-icon phone">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="bill-details">
+                                <div class="bill-name">Телефон</div>
+                                <div class="bill-date">Платена на 05.05.2025</div>
+                            </div>
+                            <div class="bill-amount">
+                                <div class="amount">19,90 лв</div>
+                                <div class="status paid">Платена</div>
+                            </div>
+                        </div>
+                        <!-- No Pay button for paid bills -->
+                    </div>
+                </div>
+
+                <!-- Pay All Button -->
+                <button id="pay-all-btn" class="pay-all-btn">
+                    <i class="fas fa-credit-card"></i>
+                    <span id="pay-all-text">Плати всички чакащи сметки (0,00 лв)</span>
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Month names in Bulgarian
+            const monthNames = [
+                'Януари', 'Февруари', 'Март', 'Април', 'Май', 'Юни',
+                'Юли', 'Август', 'Септември', 'Октомври', 'Ноември', 'Декември'
+            ];
+            
+            // Initialize elements
+            const monthBtn = document.getElementById('month-btn');
+            const monthSelector = document.getElementById('month-selector');
+            const monthPicker = document.getElementById('month-picker');
+            const monthGrid = document.getElementById('month-grid');
+            const pickerYearEl = document.getElementById('picker-year');
+            const prevYearBtn = document.getElementById('prev-year');
+            const nextYearBtn = document.getElementById('next-year');
+            const selectedMonthInput = document.getElementById('selected-month');
+            const payAllBtn = document.getElementById('pay-all-btn');
+            const payAllText = document.getElementById('pay-all-text');
+            
+            // Year picker elements
+            const yearPicker = document.getElementById('year-picker');
+            const yearGrid = document.getElementById('year-grid');
+            const yearRangeEl = document.getElementById('year-range');
+            const prevDecadeBtn = document.getElementById('prev-decade');
+            const nextDecadeBtn = document.getElementById('next-decade');
+            
+            // Current date and state
+            const today = new Date();
+            let currentYear = today.getFullYear();
+            let currentMonth = today.getMonth();
+            let currentDecadeStart = Math.floor(currentYear / 10) * 10; // Start of current decade (e.g., 2020 for 2020-2029)
+            
+            // Initialize the picker
+            function initMonthPicker() {
+                // Set initial selected month to current month
+                const monthStr = String(currentMonth + 1).padStart(2, '0');
+                selectedMonthInput.value = `${currentYear}-${monthStr}`;
+                
+                // Initialize the year display in the picker
+                pickerYearEl.textContent = currentYear;
+                renderMonthGrid(currentYear);
+                renderYearGrid(currentDecadeStart);
+                
+                // Initialize the UI with current month
+                handleMonthChange();
+                
+                // Add year picker toggle
+                pickerYearEl.style.cursor = 'pointer';
+                let isYearPickerTransitioning = false;
+                
+                pickerYearEl.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopImmediatePropagation();
+                    
+                    if (isYearPickerTransitioning) return;
+                    isYearPickerTransitioning = true;
+                    
+                    console.log('Year picker clicked');
+                    toggleYearPicker(e);
+                    
+                    // Reset the flag after the transition
+                    setTimeout(() => {
+                        isYearPickerTransitioning = false;
+                    }, 150);
+                }, true); // Use capture phase to ensure we catch the event first
+                
+                // Add navigation buttons for year picker
+                if (prevDecadeBtn && nextDecadeBtn) {
+                    const handleDecadeNav = (e, direction) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        e.stopImmediatePropagation();
+                        
+                        currentDecadeStart += (direction === 'prev' ? -10 : 10);
+                        renderYearGrid(currentDecadeStart);
+                        
+                        // Focus on the first year in the new decade for better keyboard navigation
+                        setTimeout(() => {
+                            const firstYear = yearGrid.querySelector('.year-item:not(.other-decade)');
+                            if (firstYear) firstYear.focus();
+                        }, 10);
+                    };
+                    
+                    prevDecadeBtn.addEventListener('click', (e) => handleDecadeNav(e, 'prev'), true);
+                    nextDecadeBtn.addEventListener('click', (e) => handleDecadeNav(e, 'next'), true);
+                    
+                    // Prevent closing when clicking on the navigation buttons
+                    const navButtons = [prevDecadeBtn, nextDecadeBtn];
+                    navButtons.forEach(btn => {
+                        if (btn) {
+                            btn.style.pointerEvents = 'auto';
+                            btn.addEventListener('mousedown', (e) => {
+                                e.stopPropagation();
+                                e.stopImmediatePropagation();
+                            }, true);
+                        }
+                    });
+                }
+            }
+            
+            // Render month grid
+            function renderMonthGrid(year) {
+                monthGrid.innerHTML = '';
+                pickerYearEl.textContent = year;
+                
+                monthNames.forEach((month, index) => {
+                    const monthItem = document.createElement('div');
+                    monthItem.className = 'month-item';
+                    monthItem.textContent = month;
+                    
+                    // Highlight current month in the grid
+                    if (index === currentMonth && year === currentYear) {
+                        monthItem.classList.add('active');
+                    }
+                    
+                    // Use a named function for better event handling
+                    monthItem.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        selectMonth(index, year);
+                        return false;
+                    });
+                    
+                    monthGrid.appendChild(monthItem);
+                });
+            }
+            
+            // Render year grid
+            function renderYearGrid(decadeStart) {
+                yearGrid.innerHTML = '';
+                const decadeEnd = decadeStart + 9;
+                yearRangeEl.textContent = `${decadeStart} - ${decadeEnd}`;
+                
+                // Show 12 years (previous, current, and next decade)
+                for (let year = decadeStart - 1; year <= decadeEnd + 2; year++) {
+                    const yearItem = document.createElement('button');
+                    yearItem.className = 'year-item';
+                    yearItem.type = 'button';
+                    yearItem.textContent = year;
+                    yearItem.setAttribute('data-year', year);
+                    yearItem.setAttribute('aria-label', `Select year ${year}`);
+                    
+                    // Highlight current year
+                    if (year === currentYear) {
+                        yearItem.classList.add('active');
+                        yearItem.setAttribute('aria-current', 'true');
+                    }
+                    
+                    // Style years outside the current decade differently
+                    const isOutsideDecade = year < decadeStart || year > decadeEnd;
+                    if (isOutsideDecade) {
+                        yearItem.classList.add('other-decade');
+                        yearItem.setAttribute('aria-hidden', 'true');
+                        yearItem.tabIndex = -1;
+                    } else {
+                        yearItem.tabIndex = 0;
+                    }
+                    
+                    // Add keyboard navigation
+                    yearItem.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            yearItem.click();
+                        }
+                    });
+                    
+                    yearItem.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        event.stopImmediatePropagation();
+                        
+                        // Update current year
+                        currentYear = year;
+                        
+                        // Update the month picker with the new year
+                        renderMonthGrid(currentYear);
+                        
+                        // Close the year picker and show month picker
+                        toggleYearPicker(event);
+                        
+                        return false;
+                    });
+                    
+                    yearGrid.appendChild(yearItem);
+                }
+                
+                // Set focus management
+                const currentYearElement = yearGrid.querySelector(`[data-year="${currentYear}"]`);
+                if (currentYearElement) {
+                    currentYearElement.focus();
+                }
+            }
+            
+            // Select month
+            function selectMonth(month, year) {
+                // Prevent any default behavior
+                event.stopPropagation();
+                
+                // Update the current month and year
+                currentMonth = month;
+                currentYear = year;
+                
+                // Update the hidden input value (format: YYYY-MM)
+                const monthStr = String(month + 1).padStart(2, '0');
+                selectedMonthInput.value = `${year}-${monthStr}`;
+                
+                // Close the picker
+                closeMonthPicker();
+                
+                // Update the UI with the selected month
+                handleMonthChange();
+                
+                // Trigger change event
+                const changeEvent = new Event('change');
+                selectedMonthInput.dispatchEvent(changeEvent);
+                
+                // Prevent the event from bubbling up
+                return false;
+            }
+            
+            // Update month display (no longer needed as we're not showing month/year separately)
+            function updateMonthDisplay() {
+                // This function is kept for compatibility but doesn't do anything
+            }
+            
+            // Toggle month picker
+            function toggleMonthPicker(event) {
+                // Don't do anything if this is a click on a protected element
+                const protectedElements = ['month-item', 'year-item', 'year-picker', 'month-picker-header'];
+                const clickedElement = event ? event.target : null;
+                
+                // Check if the click was on a protected element or its children
+                if (clickedElement && protectedElements.some(className => {
+                    return clickedElement.closest(`.${className}`) || 
+                           clickedElement.classList.contains(className);
+                })) {
+                    return false;
+                }
+                
+                if (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                const isOpen = !monthPicker.classList.contains('show');
+                
+                if (isOpen) {
+                    // Hide year picker if it's open
+                    if (yearPicker && yearPicker.classList.contains('show')) {
+                        toggleYearPicker();
+                        return false;
+                    }
+                    
+                    monthPicker.style.display = 'block';
+                    // Trigger reflow
+                    void monthPicker.offsetWidth;
+                    monthPicker.classList.add('show');
+                    // Update the picker to show the current selected year
+                    renderMonthGrid(currentYear);
+                } else {
+                    closeMonthPicker();
+                }
+                
+                return false;
+            }
+            
+            // Toggle year picker
+            function toggleYearPicker(event) {
+                if (event) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    
+                    // If this is a programmatic call without an event, don't prevent default
+                    if (event.cancelable) {
+                        event.stopPropagation();
+                    }
+                }
+                
+                console.log('toggleYearPicker called');
+                const isOpen = !yearPicker.classList.contains('show');
+                
+                // If we're already in the desired state, do nothing
+                if ((isOpen && yearPicker.classList.contains('show')) || 
+                    (!isOpen && !yearPicker.classList.contains('show'))) {
+                    return;
+                }
+                
+                if (isOpen) {
+                    console.log('Opening year picker');
+                    
+                    // Hide month picker if it's open
+                    if (monthPicker && monthPicker.classList.contains('show')) {
+                        monthPicker.classList.remove('show');
+                    }
+                    
+                    if (yearPicker) {
+                        yearPicker.style.display = 'block';
+                        // Trigger reflow
+                        void yearPicker.offsetWidth;
+                        yearPicker.classList.add('show');
+                        // Update the year grid
+                        renderYearGrid(currentDecadeStart);
+                        
+                        // Focus on the current year in the year picker
+                        setTimeout(() => {
+                            const currentYearElement = yearGrid.querySelector(`[data-year="${currentYear}"]`);
+                            if (currentYearElement) {
+                                currentYearElement.focus();
+                            }
+                        }, 50);
+                    } else {
+                        console.error('Year picker element not found');
+                    }
+                } else {
+                    console.log('Closing year picker');
+                    if (yearPicker) {
+                        yearPicker.classList.remove('show');
+                        // Wait for animation to complete before hiding
+                        setTimeout(() => {
+                            if (yearPicker) { // Check again in case component was unmounted
+                                yearPicker.style.display = 'none';
+                                // Show month picker again if needed
+                                if (monthPicker && !monthPicker.classList.contains('show')) {
+                                    monthPicker.style.display = 'block';
+                                    monthPicker.classList.add('show');
+                                }
+                            }
+                        }, 150);
+                    }
+                }
+                
+                // Stop any further propagation
+                return false;
+            }
+            
+            // Close month picker
+            function closeMonthPicker() {
+                if (monthPicker.classList.contains('show')) {
+                    monthPicker.classList.remove('show');
+                    // Wait for animation to complete before hiding
+                    setTimeout(() => {
+                        monthPicker.style.display = 'none';
+                    }, 300);
+                }
+            }
+            
+            // Event listeners
+            monthBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMonthPicker();
+            });
+            
+            monthSelector.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMonthPicker();
+            });
+            
+            prevYearBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentYear--;
+                renderMonthGrid(currentYear);
+            });
+            
+            nextYearBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentYear++;
+                renderMonthGrid(currentYear);
+            });
+            
+            // Close month picker when clicking outside
+            document.addEventListener('click', function(event) {
+                // Don't close if clicking on protected elements
+                const protectedElements = [
+                    'month-item', 'year-item', 'year-picker', 'month-picker-header',
+                    'year-picker-header', 'nav-btn', 'year-grid', 'month-grid',
+                    'year-range', 'picker-year'
+                ];
+                
+                const isProtectedElement = protectedElements.some(className => {
+                    return event.target.closest(`.${className}`) || 
+                           event.target.classList.contains(className);
+                });
+                
+                const isMonthPickerOpen = monthPicker && monthPicker.classList.contains('show');
+                const isClickInsideMonthPicker = monthPicker && monthPicker.contains(event.target);
+                const isClickOnMonthBtn = monthBtn && (monthBtn === event.target || monthBtn.contains(event.target));
+                
+                if (isMonthPickerOpen && !isClickInsideMonthPicker && !isClickOnMonthBtn && !isProtectedElement) {
+                    closeMonthPicker();
+                }
+            });
+            
+            // Initialize
+            initMonthPicker();
+            
+            // Initialize the UI with current month
+            handleMonthChange();
+            
+            // Add change listener to the hidden input
+            selectedMonthInput.addEventListener('change', handleMonthChange);
+            
+            // Handle month change
+            function handleMonthChange() {
+                const [year, month] = selectedMonthInput.value.split('-').map(Number);
+                
+                // Update the summary header
+                const summaryHeader = document.querySelector('.summary-header h3');
+                if (summaryHeader) {
+                    const monthName = monthNames[month - 1];
+                    summaryHeader.textContent = `Общо за ${monthName.toLowerCase()} ${year}`;
+                }
+                
+                // Show/hide pay all button based on selected month
+                const today = new Date();
+                const isCurrentMonth = (year === today.getFullYear() && 
+                                      month === (today.getMonth() + 1));
+                
+                if (payAllBtn) {
+                    payAllBtn.style.display = isCurrentMonth ? 'flex' : 'none';
+                }
+                
+                // Update the bill items
+                updateBillDates(month, year);
+                
+                // Call updateBills with the new month and year
+                updateBillsForMonth(month, year);
+            }
+            
+            // Update bill dates in the UI
+            function updateBillDates(month, year) {
+                const billDates = document.querySelectorAll('.bill-date');
+                billDates.forEach(dateElement => {
+                    if (dateElement.textContent.includes('До')) {
+                        dateElement.textContent = `До 15.${month.toString().padStart(2, '0')}.${year}`;
+                    } else {
+                        dateElement.textContent = `Платена на 10.${month.toString().padStart(2, '0')}.${year}`;
+                    }
+                });
+            }
+            
+            // Function to update bills for selected month
+            function updateBillsForMonth(month, year) {
+                console.log(`Updating bills for ${month}/${year}`);
+                
+                // Format month with leading zero
+                const formattedMonth = String(month).padStart(2, '0');
+                
+                // Update bill dates in the UI
+                updateBillDates(month, year);
+                
+                // Here you would typically fetch bill data for the selected month
+                console.log(`Fetching bills for ${year}-${formattedMonth}`);
+                
+                // Example of what you might do with the bill data:
+                // fetch(`/api/bills?year=${year}&month=${month}`)
+                //     .then(response => response.json())
+                //     .then(data => {
+                //         // Update the UI with the new bill data
+                //         updateBillItems(data);
+                //     })
+                //     .catch(error => {
+                //         console.error('Error fetching bills:', error);
+                //     });
+            }
+            
+            // Initialize with current month
+            handleMonthChange();
+            
+            // Pay All button click handler
+            function updatePayAllButton() {
+                const pendingBills = document.querySelectorAll('.status.pending');
+                let totalPending = 0;
+                
+                pendingBills.forEach(bill => {
+                    const amountText = bill.closest('.bill-item').querySelector('.amount').textContent;
+                    const amount = parseFloat(amountText.replace(/[^\d,.]/g, '').replace(',', '.'));
+                    totalPending += amount;
+                });
+                
+                if (totalPending > 0) {
+                    payAllBtn.style.display = 'flex';
+                    payAllText.textContent = `Плати всички чакащи сметки (${totalPending.toFixed(2).replace('.', ',')} лв)`;
+                    payAllBtn.disabled = false;
+                } else {
+                    payAllBtn.style.display = 'none';
+                }
+                
+                // Update pending amount in summary
+                const pendingElement = document.querySelector('.detail-item .pending');
+                if (pendingElement) {
+                    pendingElement.textContent = `${totalPending.toFixed(2).replace('.', ',')} лв`;
+                }
+                
+                return totalPending;
+            }
+            
+            if (payAllBtn) {
+                payAllBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get all pending bills
+                    const pendingBills = document.querySelectorAll('.status.pending');
+                    
+                    // Mark all pending bills as paid
+                    pendingBills.forEach(bill => {
+                        const statusElement = bill;
+                        const billDate = bill.closest('.bill-item').querySelector('.bill-date');
+                        
+                        // Update status
+                        statusElement.textContent = 'Платена';
+                        statusElement.classList.remove('pending');
+                        statusElement.classList.add('paid');
+                        
+                        // Update date to today
+                        const today = new Date();
+                        const day = String(today.getDate()).padStart(2, '0');
+                        const month = String(today.getMonth() + 1).padStart(2, '0');
+                        const year = today.getFullYear();
+                        billDate.textContent = `Платена на ${day}.${month}.${year}`;
+                    });
+                    
+                    // Update summary
+                    const paidElement = document.querySelector('.detail-item .paid');
+                    const pendingElement = document.querySelector('.detail-item .pending');
+                    
+                    if (paidElement && pendingElement) {
+                        // Add pending amount to paid amount
+                        const paidAmount = parseFloat(paidElement.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+                        const pendingAmount = parseFloat(pendingElement.textContent.replace(/[^\d,.]/g, '').replace(',', '.'));
+                        
+                        paidElement.textContent = `${(paidAmount + pendingAmount).toFixed(2).replace('.', ',')} лв`;
+                        pendingElement.textContent = '0,00 лв';
+                    }
+                    
+                    // Hide pay all button
+                    payAllBtn.style.display = 'none';
+                    
+                    // Show success message
+                    alert('Плащането на всички чакащи сметки беше успешно!');
+                });
+                
+                // Initial update
+                updatePayAllButton();
+            }
+            
+            // Sorting functionality
+            let currentSort = 'date';
+            let isAscending = true;
+            
+            const sortButtons = document.querySelectorAll('.sort-btn');
+            sortButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const sortBy = this.getAttribute('data-sort');
+                    
+                    // Toggle sort direction if clicking the same sort type
+                    if (currentSort === sortBy) {
+                        isAscending = !isAscending;
+                    } else {
+                        // Reset to ascending when changing sort type
+                        isAscending = true;
+                        sortButtons.forEach(btn => btn.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                    
+                    // Update sort indicators
+                    document.querySelectorAll('.sort-arrow').forEach(arrow => {
+                        arrow.textContent = '';
+                    });
+                    
+                    const arrow = this.querySelector('.sort-arrow');
+                    if (arrow) {
+                        arrow.textContent = isAscending ? '↑' : '↓';
+                    }
+                    
+                    currentSort = sortBy;
+                    sortBills(sortBy, isAscending);
+                });
+            });
+            
+            function parseBillDate(dateText, month, year) {
+                // Handle different date formats
+                if (dateText.includes('Платена на')) {
+                    // Format: "Платена на DD.MM.YYYY"
+                    const [, dateStr] = dateText.split('на ');
+                    const [day, ,] = dateStr.split('.').map(Number);
+                    return new Date(year, month - 1, day);
+                } else if (dateText.includes('До')) {
+                    // Format: "До DD.MM.YYYY"
+                    const [, dateStr] = dateText.split('До ');
+                    const [day, ,] = dateStr.split('.').map(Number);
+                    return new Date(year, month - 1, day);
+                }
+                return new Date(year, month - 1, 1); // Default to first of month if format is unknown
+            }
+            
+            function parseBillAmount(amountText) {
+                // Extract number from "XX.XX лв"
+                return parseFloat(amountText.replace(/[^\d,.]/g, '').replace(',', '.'));
+            }
+            
+            function sortBills(sortBy, ascending = true) {
+                const billsList = document.querySelector('.bills-list');
+                if (!billsList) return;
+                
+                const bills = Array.from(billsList.children);
+                const [currentYear, currentMonth] = document.getElementById('selected-month').value.split('-').map(Number);
+                
+                // Create a document fragment to hold the sorted bills
+                const fragment = document.createDocumentFragment();
+                
+                bills.sort((a, b) => {
+                    let compareResult = 0;
+                    
+                    try {
+                        if (sortBy === 'date') {
+                            const dateA = parseBillDate(a.querySelector('.bill-date').textContent, currentMonth, currentYear);
+                            const dateB = parseBillDate(b.querySelector('.bill-date').textContent, currentMonth, currentYear);
+                            compareResult = dateA - dateB;
+                        } 
+                        else if (sortBy === 'amount') {
+                            const amountA = parseBillAmount(a.querySelector('.amount').textContent);
+                            const amountB = parseBillAmount(b.querySelector('.amount').textContent);
+                            compareResult = amountA - amountB;
+                        }
+                    } catch (e) {
+                        console.error('Error sorting bills:', e);
+                    }
+                    
+                    // Apply sort direction
+                    return ascending ? compareResult : -compareResult;
+                });
+                
+                // Append sorted bills to the fragment
+                bills.forEach(bill => fragment.appendChild(bill));
+                
+                // Clear and repopulate the bills list
+                while (billsList.firstChild) {
+                    billsList.removeChild(billsList.firstChild);
+                }
+                billsList.appendChild(fragment);
+            }
+            
+            // Initialize with current month
+            handleMonthChange();
+            
+            // Initialize sorting
+            function initSorting() {
+                const defaultSortBtn = document.querySelector('.sort-btn[data-sort="date"]');
+                if (defaultSortBtn) {
+                    defaultSortBtn.click();
+                }
+            }
+            
+            // Handle sorting info toggle
+            document.addEventListener('DOMContentLoaded', function() {
+                const sortingInfo = document.querySelector('.sorting-info');
+                const header = document.querySelector('.sorting-info-header');
+                
+                if (header && sortingInfo) {
+                    // Toggle function
+                    header.addEventListener('click', function() {
+                        sortingInfo.classList.toggle('collapsed');
+                    });
+                }
+            });
+            
+            // Call initialization functions
+            document.addEventListener('DOMContentLoaded', function() {
+                updatePayAllButton();
+                initSorting();
+                
+                // Initialize sorting info toggle
+                const toggleButton = document.getElementById('sorting-toggle');
+                const content = document.getElementById('sorting-content');
+                const arrow = document.getElementById('sorting-arrow');
+                
+                if (toggleButton && content && arrow) {
+                    toggleButton.addEventListener('click', function() {
+                        content.classList.toggle('hidden');
+                        arrow.classList.toggle('rotated');
+                    });
+                }
+            });
+            
+            // Update summary
+            function updateSummary() {
+                const paidAmount = document.querySelector('.detail-item .paid');
+                if (paidAmount) {
+                    const currentPaid = parseFloat(paidAmount.textContent.replace(/[^\d,.]/g, '').replace(',', '.')) || 0;
+                    paidAmount.textContent = `${currentPaid.toFixed(2).replace('.', ',')} лв`;
+                }
+                updatePayAllButton();
+            }
+            
+            // Initialize the picker
+            initMonthPicker();
+            
+            // Handle filter and sort buttons
+            document.addEventListener('click', function(e) {
+                // Handle filter button clicks
+                const filterBtn = e.target.closest('.filter-btn');
+                if (filterBtn) {
+                    e.preventDefault();
+                    const filterType = filterBtn.dataset.filter;
+                    
+                    // Update active state
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    filterBtn.classList.add('active');
+                    
+                    // Show/hide bills based on filter
+                    const bills = document.querySelectorAll('.bill-item');
+                    bills.forEach(bill => {
+                        const isPaid = bill.querySelector('.status').classList.contains('paid');
+                        
+                        if (filterType === 'all') {
+                            bill.style.display = 'flex';
+                        } else if (filterType === 'unpaid') {
+                            bill.style.display = isPaid ? 'none' : 'flex';
+                        }
+                    });
+                    
+                    return; // Exit early if this was a filter button click
+                }
+                
+                // Handle sort button clicks
+                const sortBtn = e.target.closest('.sort-btn');
+                if (sortBtn) {
+                    e.preventDefault();
+                    const sortType = sortBtn.dataset.sort;
+                    
+                    // Update active state
+                    document.querySelectorAll('.sort-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    sortBtn.classList.add('active');
+                    
+                    // Get all visible bills
+                    const billsContainer = document.querySelector('.bills-list');
+                    const bills = Array.from(document.querySelectorAll('.bill-item'));
+                    
+                    // Sort bills based on the selected type
+                    bills.sort((a, b) => {
+                        if (sortType === 'date') {
+                            const dateA = new Date(a.querySelector('.bill-date').textContent.replace('Платена на ', '').replace('До ', ''));
+                            const dateB = new Date(b.querySelector('.bill-date').textContent.replace('Платена на ', '').replace('До ', ''));
+                            return dateA - dateB;
+                        } else if (sortType === 'amount') {
+                            const amountA = parseFloat(a.querySelector('.amount').textContent.replace(' лв', '').replace(',', '.'));
+                            const amountB = parseFloat(b.querySelector('.amount').textContent.replace(' лв', '').replace(',', '.'));
+                            return amountB - amountB; // Sort descending
+                        }
+                        return 0;
+                    });
+                    
+                    // Re-append sorted bills
+                    bills.forEach(bill => {
+                        billsContainer.appendChild(bill);
+                    });
+                    
+                    return; // Exit early if this was a sort button click
+                }
+                
+                // Handle individual bill payment
+                if (e.target.closest('.bill-pay-btn')) {
+                    const billItem = e.target.closest('.bill-item');
+                    const billName = billItem.querySelector('.bill-name').textContent;
+                    const amount = billItem.querySelector('.amount').textContent.trim();
+                    
+                    // Show confirmation dialog
+                    if (confirm(`Сигурни ли сте, че искате да платите сметка за ${billName} на стойност ${amount}?`)) {
+                        // Simulate payment processing
+                        const payButton = billItem.querySelector('.bill-pay-btn');
+                        const statusBadge = billItem.querySelector('.status');
+                        
+                        // Disable button and show loading state
+                        payButton.disabled = true;
+                        payButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Обработва се...';
+                        
+                        // Simulate API call
+                        setTimeout(() => {
+                            // Update UI to show payment is complete
+                            payButton.remove();
+                            statusBadge.textContent = 'Платена';
+                            statusBadge.className = 'status paid';
+                            
+                            // Update the date to show when it was paid
+                            const dateElement = billItem.querySelector('.bill-date');
+                            const today = new Date();
+                            const formattedDate = today.toLocaleDateString('bg-BG');
+                            dateElement.textContent = `Платена на ${formattedDate}`;
+                            
+                            // Update the summary
+                            updateSummary();
+                            
+                            // Show success message
+                            alert(`Успешно платихте сметка за ${billName} на стойност ${amount}.`);
+                        }, 1500);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

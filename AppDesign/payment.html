@@ -165,6 +165,8 @@
                 </div>
 
                 <div class="bills-list">
+                    <!-- No Bills Message (will be added dynamically) -->
+                    
                     <!-- Bill Item 1 -->
                     <div class="bill-item">
                         <div class="bill-item-content">
@@ -715,23 +717,48 @@
                 
                 // Format month with leading zero
                 const formattedMonth = String(month).padStart(2, '0');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonth = currentDate.getMonth() + 1; // Months are 0-indexed
                 
-                // Update bill dates in the UI
-                updateBillDates(month, year);
+                // Check if the selected month is the current month
+                const isCurrentMonth = (year === currentYear && month === currentMonth);
                 
-                // Here you would typically fetch bill data for the selected month
-                console.log(`Fetching bills for ${year}-${formattedMonth}`);
+                // Get all bill items
+                const billItems = document.querySelectorAll('.bill-item');
+                let hasBills = false;
                 
-                // Example of what you might do with the bill data:
-                // fetch(`/api/bills?year=${year}&month=${month}`)
-                //     .then(response => response.json())
-                //     .then(data => {
-                //         // Update the UI with the new bill data
-                //         updateBillItems(data);
-                //     })
-                //     .catch(error => {
-                //         console.error('Error fetching bills:', error);
-                //     });
+                // Show/hide bills based on whether it's the current month
+                billItems.forEach(item => {
+                    if (isCurrentMonth) {
+                        item.style.display = '';
+                        hasBills = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide "No bills available" message
+                const noBillsMessage = document.getElementById('no-bills-message');
+                if (!noBillsMessage) {
+                    // Create the message if it doesn't exist
+                    const billsList = document.querySelector('.bills-list');
+                    const message = document.createElement('div');
+                    message.id = 'no-bills-message';
+                    message.textContent = 'Няма налични сметки';
+                    message.style.textAlign = 'center';
+                    message.style.padding = '40px 20px';
+                    message.style.color = '#666';
+                    message.style.display = isCurrentMonth ? 'none' : 'block';
+                    billsList.insertBefore(message, billsList.firstChild);
+                } else {
+                    noBillsMessage.style.display = isCurrentMonth ? 'none' : 'block';
+                }
+                
+                // Update bill dates in the UI if it's the current month
+                if (isCurrentMonth) {
+                    updateBillDates(month, year);
+                }
             }
             
             // Initialize with current month

@@ -3387,19 +3387,28 @@ body.products-page main {
     }
     
     .month-picker {
+        /* Keep the same styles as desktop */
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        border-radius: 12px 12px 0 0;
-        margin: 0;
-        animation: slideUp 0.3s ease;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        width: 90%;
+        max-width: 300px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+        padding: 20px;
+        z-index: 1002;
+        display: none;
+        opacity: 0;
+        transition: all 0.3s ease;
+        pointer-events: none;
     }
     
-    @keyframes slideUp {
-        from { transform: translateY(100%); }
-        to { transform: translateY(0); }
+    .month-picker.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        pointer-events: auto;
     }
 }
 
@@ -3738,11 +3747,9 @@ body.products-page main {
 
 /* Pay All Button */
 .pay-all-btn {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 40px);
+    position: relative;
+    display: block;
+    width: 100%;
     max-width: 400px;
     background: #4f8cff;
     color: white;
@@ -3751,25 +3758,40 @@ body.products-page main {
     padding: 16px;
     font-size: 16px;
     font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    margin: 20px auto 40px;
+    text-align: center;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(79, 140, 255, 0.3);
-    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+    z-index: 10;
 }
 
 .pay-all-btn:active {
-    transform: translateX(-50%) scale(0.98);
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .pay-all-btn:hover {
     background: #3a7bfd;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .pay-all-btn i {
-    font-size: 14px;
+    font-size: 16px;
+    margin-right: 8px;
+    transition: transform 0.2s ease;
+}
+
+/* Ensure the button has enough space at the bottom of the page */
+.taxes-container {
+    position: relative;
+    padding-bottom: 20px;
+}
+
+/* Remove the main padding-bottom since we're not using fixed positioning anymore */
+main {
+    padding-bottom: 0;
 }
 
 .form-select {

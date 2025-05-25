@@ -1,3 +1,643 @@
+/* Transfer Page Styles */
+.transfer-container {
+    padding: 16px;
+    padding-bottom: 120px; /* Extra space for bottom elements */
+}
+
+/* Transfer type selector */
+.transfer-type-selector {
+    display: flex;
+    background: #f5f5f5;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.transfer-type-option {
+    flex: 1 0 0;
+    text-align: center;
+    padding: 12px 8px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    margin: 0 2px;
+}
+
+.transfer-type-selector::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    width: calc(33.333% - 8px);
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 86, 179, 0.15);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1;
+    left: 6px;
+}
+
+/* Position the active indicator based on the active tab */
+.transfer-type-selector[data-active-tab="between-accounts"]::before {
+    transform: translateX(0);
+}
+
+.transfer-type-selector[data-active-tab="mobile"]::before {
+    transform: translateX(calc(100% + 4px));
+}
+
+.transfer-type-selector[data-active-tab="currency"]::before {
+    transform: translateX(calc(200% + 4px));
+}
+
+.transfer-type-selector > .transfer-type-option.active {
+    color: #0056b3;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+}
+
+/* Form sections */
+.transfer-form-section {
+    display: none; /* Hidden by default, shown when active */
+}
+
+/* Form groups */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Form inputs */
+
+.form-control:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.2);
+    outline: none;
+}
+
+/* Amount input container */
+.amount-input-container {
+    position: relative;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.amount-input-container:focus-within {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.2);
+}
+
+/* Currency input specific styles */
+.currency-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.currency-symbol {
+    position: absolute;
+    left: 16px;
+    font-weight: 600;
+    color: #333;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#amount {
+    width: 100%;
+    padding: 16px 16px 16px 50px;
+    border: none;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+    background: transparent;
+    -moz-appearance: textfield;
+}
+
+#amount:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Hide number input spinners */
+#amount::-webkit-outer-spin-button,
+#amount::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.currency-input input {
+    padding-left: 46px !important;
+    font-size: 22px;
+    font-weight: 600;
+    height: 56px;
+    color: #1a1a1a;
+}
+
+/* Description input */
+#description {
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+    min-height: 56px;
+    padding: 16px;
+    margin: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1a1a1a;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    resize: vertical;
+    max-width: 100%;
+    -webkit-box-sizing: border-box; /* For Safari */
+    -moz-box-sizing: border-box; /* For Firefox */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#description:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.2);
+    outline: none;
+}
+
+/* Label styles */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+}
+
+/* Converted amount display */
+.converted-amount {
+    margin-top: 8px;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #666;
+    display: none; /* Hidden by default */
+}
+
+.converted-amount.visible {
+    display: block;
+}
+
+/* Form controls */
+.form-control {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: 56px;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.2);
+    outline: none;
+}
+
+/* Mobile number input */
+.input-with-prefix {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.input-with-prefix:focus-within {
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.2);
+}
+
+.input-prefix {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    height: 100%;
+    background: #f8f9fa;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    border-right: 1px solid #e0e0e0;
+    min-width: 90px;
+    box-sizing: border-box;
+}
+
+.input-with-prefix .form-control {
+    flex: 1;
+    height: 100%;
+    padding: 0 16px;
+    border: none;
+    font-size: 16px;
+    color: #1a1a1a;
+    background: transparent;
+    outline: none;
+    box-shadow: none;
+    border-radius: 0;
+    box-sizing: border-box;
+}
+
+.input-with-prefix .form-control::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+.input-with-prefix .form-control:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Save as contact */
+.save-contact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    color: #666;
+    font-size: 14px;
+}
+
+.save-contact input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0056b3;
+}
+
+/* Transfer button */
+.transfer-btn-container {
+    position: fixed;
+    bottom: 70px;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    background: #fff;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.transfer-btn {
+    width: 100%;
+    padding: 16px;
+    background: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.transfer-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.transfer-btn-currency {
+    font-weight: 400;
+    opacity: 0.9;
+    font-size: 0.9em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .transfer-btn {
+        padding: 14px;
+        font-size: 15px;
+    }
+}
+
+/* Form sections */
+.transfer-form-section {
+    display: none; /* Hidden by default, shown via JS */
+}
+
+/* Custom select styles */
+.custom-select-trigger {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 15px;
+    color: #333;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s;
+}
+
+.custom-select-trigger:after {
+    content: '▼';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 10px;
+    color: #666;
+}
+
+.custom-select-trigger.selected {
+    border-color: #0056b3;
+    background-color: #f0f7ff;
+}
+
+/* Sheet styles */
+.sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 16px 30px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sheet.show {
+    transform: translateY(0);
+}
+
+.sheet-header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.sheet-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.sheet-close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.sheet-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.sheet-item:active {
+    background-color: #f5f5f5;
+}
+
+.sheet-item:last-child {
+    border-bottom: none;
+}
+
+/* Overlay for sheet */
+.sheet-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.sheet-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.transfer-form {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.amount-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.amount-input-container .form-control {
+    padding-right: 50px;
+}
+
+.currency-symbol {
+    position: absolute;
+    right: 12px;
+    color: #666;
+    font-weight: 500;
+}
+
+.transfer-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    background: #4f8cff;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+
+.transfer-btn:disabled {
+    background: #b3c6ff;
+    cursor: not-allowed;
+}
+
+.transfer-btn:not(:disabled):hover {
+    background: #3a7bf0;
+}
+
+/* Recent Transfers */
+.recent-transfers {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.recent-transfers h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    color: #2e3a59;
+}
+
+.transfers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.transfer-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9ff;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.transfer-item:hover {
+    background: #f0f3ff;
+}
+
+.transfer-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e6f0ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    color: #4f8cff;
+    font-size: 1rem;
+}
+
+.transfer-details {
+    flex: 1;
+}
+
+.transfer-accounts {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.transfer-accounts i {
+    color: #9aa8c7;
+    font-size: 0.8rem;
+}
+
+.transfer-from, .transfer-to {
+    font-size: 0.9rem;
+    color: #2e3a59;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+.transfer-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #8f9bb3;
+}
+
+.transfer-amount {
+    font-weight: 600;
+    color: #ff4d4f;
+}
+
+.transfer-description {
+    font-size: 0.8rem;
+    color: #8f9bb3;
+    margin-top: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: #8f9bb3;
+}
+
+.empty-state i {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    color: #d9e1f0;
+}
+
+.empty-state p {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 400px) {
+    .transfer-from, .transfer-to {
+        max-width: 100px;
+    }
+}
+
 /* Remove number input spinners */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -1389,17 +2029,7 @@ body, html {
 }
 
 .account-list-icon {
-    width: 54px;
-    height: 54px;
-    background: linear-gradient(135deg, #4f8cff 0%, #6fbcff 100%);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.1rem;
-    color: #fff;
     flex-shrink: 0;
-    margin-right: 12px;
 }
 .account-list-details {
     flex: 1;
@@ -1571,14 +2201,6 @@ body, html {
     box-shadow: 0 4px 16px #29a8ff22;
 }
 .account-icon {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(90deg, #4f8cff 0%, #6f6fff 100%);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     margin-bottom: 6px;

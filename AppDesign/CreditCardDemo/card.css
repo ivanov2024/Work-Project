@@ -75,27 +75,31 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 56px;
+  min-height: 56px;
   background: #fff;
   border-bottom: 1px solid #f1f5fa;
   box-shadow: none;
-  padding: 0;
+  padding: 14px 16px 10px 16px;
   top: 0;
   z-index: 10;
+  width: 100%;
+  box-sizing: border-box;
+  text-align:center;
 }
 
 .open-account-header .back-btn {
   position: absolute;
-  left: 14px;
+  left: 16px;
   top: 50%;
   width: 38px;
+  height: 38px;
   transform: translateY(-50%);
   z-index: 2;
   background: none;
   border: none;
   color: #29a8ff;
   font-size: 1.2rem;
-  padding: 7px 9px 7px 5px;
+  padding: 8px;
   cursor: pointer;
   border-radius: 50%;
   transition: background 0.16s;
@@ -107,6 +111,13 @@ body {
 }
 .open-account-header .back-btn:hover {
   background: #f1f5fa;
+}
+
+.open-account-title {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+  position: relative;
 }
 
 .mobile-frame {
@@ -128,14 +139,18 @@ body {
     display: block;
     position: relative;
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     font-weight: 600;
     color: #19335a;
     letter-spacing: 0.01em;
-    margin: 0 auto;
-    z-index: 1;
-    pointer-events: none;
-    user-select: none;
+    margin: 0;
+    padding: 0 50px; /* Make room for the back button */
+}
+
+.section-title {
+  z-index: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
 .center-content {
@@ -147,17 +162,9 @@ body {
   gap: 32px;
 }
 
-.open-account-header {
-  margin-bottom: 16px;
-}
-
 .card {
   margin-top: 0;
   margin-bottom: 0;
-}
-
-.open-account-header {
-  margin-bottom: 16px;
 }
 
 .card {

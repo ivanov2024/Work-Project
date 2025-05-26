@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кредити | Банка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="credits-page">
+    <div class="mobile-frame">
+        <header class="page-header">
+            <h1 class="page-title">Кредити</h1>
+        </header>
+        
+        <main class="credits-main">
+            <div class="credit-score-container">
+                <div class="credit-score">
+                    <div class="score-label">Кредитен рейтинг</div>
+                    <div class="score-content">
+                        <div class="score-circle">
+                            <div class="score-value">720</div>
+                        </div>
+                        <div class="score-details">
+                            <div class="credits-count">
+                                <i class="fas fa-star"></i>
+                                <span>12 кредита</span>
+                            </div>
+                            <div class="score-category good">Добър</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Active Credits Section -->
+            <div class="active-credits">
+                <h3 class="active-credits-title">Активни Кредити</h3>
+                <div class="active-credits-list">
+                    <!-- Credit Item 1 -->
+                    <div class="credit-item">
+                        <h3 class="credit-name">
+                            <i class="fas fa-home credit-name-icon"></i>
+                            Ипотечен Кредит
+                        </h3>
+                        <div class="credit-item-content">
+                            <div class="credit-info">
+                                <div class="credit-details">
+                                    <span class="credit-amount">120 000 лв</span>
+                                    <span class="credit-separator">-</span>
+                                    <span class="credit-term">остават 15 години</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="credit-footer">
+                            <div class="credit-progress">
+                                <div class="progress-bar" style="width: 30%;"></div>
+                            </div>
+                            <div class="next-payment">Следваща вноска: 850 лв</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Credit Item 2 -->
+                    <div class="credit-item">
+                        <h3 class="credit-name">
+                            <i class="fas fa-car credit-name-icon"></i>
+                            Автокредит
+                        </h3>
+                        <div class="credit-item-content">
+                            <div class="credit-info">
+                                <div class="credit-details">
+                                    <span class="credit-amount">35 000 лв</span>
+                                    <span class="credit-separator">-</span>
+                                    <span class="credit-term">остават 4 години</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="credit-footer">
+                            <div class="credit-progress">
+                                <div class="progress-bar" style="width: 60%;"></div>
+                            </div>
+                            <div class="next-payment">Следваща вноска: 520 лв</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="available-credits-title">Налични Кредити</div>
+            <div class="credit-cards-container">
+                <!-- 1. Personal Loan -->
+                <div class="credit-card credit-card-blue">
+                    <h3>Персонален Кредит</h3>
+                    <p>Гъвкав кредит за всякакви лични нужди</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">7.9%</span>
+                        </div>
+                        <button class="apply-btn btn-blue" onclick="location.href='apply-credit.html?type=1'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 2. Mortgage -->
+                <div class="credit-card credit-card-green">
+                    <h3>Ипотечен Кредит</h3>
+                    <p>За закупуване на имот или рефинансиране</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">3.9%</span>
+                        </div>
+                        <button class="apply-btn btn-green" onclick="location.href='apply-credit.html?type=2'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 3. Auto Loan -->
+                <div class="credit-card credit-card-purple">
+                    <h3>Автокредит</h3>
+                    <p>За нов или употребяван автомобил</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">4.9%</span>
+                        </div>
+                        <button class="apply-btn btn-purple" onclick="location.href='apply-credit.html?type=3'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 4. Student Loan -->
+                <div class="credit-card credit-card-teal">
+                    <h3>Студентски Кредит</h3>
+                    <p>За покриване на учебни разходи</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">5.5%</span>
+                        </div>
+                        <button class="apply-btn btn-teal" onclick="location.href='apply-credit.html?type=4'">Кандидатствай</button>
+                    </div>
+                </div>
+
+
+                <!-- 5. Business Loan -->
+                <div class="credit-card credit-card-indigo">
+                    <h3>Бизнес Кредит</h3>
+                    <p>За разширяване на бизнеса</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">6.5%</span>
+                        </div>
+                        <button class="apply-btn btn-indigo" onclick="location.href='apply-credit.html?type=5'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 6. Payday Loan -->
+                <div class="credit-card credit-card-orange">
+                    <h3>Бърз Кредит</h3>
+                    <p>Бързо парично решение до заплата</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">9.9%</span>
+                        </div>
+                        <button class="apply-btn btn-orange" onclick="location.href='apply-credit.html?type=6'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 7. Home Improvement -->
+                <div class="credit-card credit-card-brown">
+                    <h3>Кредит за Ремонт</h3>
+                    <p>За обновяване на дома ви</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">5.9%</span>
+                        </div>
+                        <button class="apply-btn btn-brown" onclick="location.href='apply-credit.html?type=7'">Кандидатствай</button>
+                    </div>
+                </div>
+
+
+                <!-- 8. Credit Card -->
+                <div class="credit-card credit-card-gold">
+                    <h3>Кредитна Карта</h3>
+                    <p>Гъвкаво разполагане с пари</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">11.9%</span>
+                        </div>
+                        <button class="apply-btn btn-gold" onclick="location.href='apply-credit.html?type=8'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 9. Consolidation -->
+                <div class="credit-card credit-card-pink">
+                    <h3>Обединителен Кредит</h3>
+                    <p>Обединете всичките си дългове</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">6.9%</span>
+                        </div>
+                        <button class="apply-btn btn-pink" onclick="location.href='apply-credit.html?type=9'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 10. Agricultural -->
+                <div class="credit-card credit-card-green-dark">
+                    <h3>Земеделски Кредит</h3>
+                    <p>За селскостопански дейности</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">4.5%</span>
+                        </div>
+                        <button class="apply-btn btn-green-dark" onclick="location.href='apply-credit.html?type=10'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 11. Travel -->
+                <div class="credit-card credit-card-cyan">
+                    <h3>Пътуване</h3>
+                    <p>За вашите мечтани ваканции</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">8.9%</span>
+                        </div>
+                        <button class="apply-btn btn-cyan" onclick="location.href='apply-credit.html?type=11'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 12. Wedding -->
+                <div class="credit-card credit-card-pink-light">
+                    <h3>Сватбен Кредит</h3>
+                    <p>За перфектната сватба</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">7.5%</span>
+                        </div>
+                        <button class="apply-btn btn-pink-light" onclick="location.href='apply-credit.html?type=12'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 13. Medical -->
+                <div class="credit-card credit-card-red">
+                    <h3>Медицински Кредит</h3>
+                    <p>За здравни грижи и процедури</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">6.0%</span>
+                        </div>
+                        <button class="apply-btn btn-red" onclick="location.href='apply-credit.html?type=13'">Кандидатствай</button>
+                    </div>
+                </div>
+
+                <!-- 14. Green -->
+                <div class="credit-card credit-card-emerald">
+                    <h3>Екологичен Кредит</h3>
+                    <p>За екологични проекти и подобрения</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">3.5%</span>
+                        </div>
+                        <button class="apply-btn btn-emerald" onclick="location.href='apply-credit.html?type=14'">Кандидатствай</button>
+                    </div>
+                </div>
+
+
+                <!-- 15. Emergency -->
+                <div class="credit-card credit-card-orange-dark">
+                    <h3>Спешен Кредит</h3>
+                    <p>За неочаквани разходи</p>
+                    <div class="card-footer">
+                        <div>
+                            <p>Годишен лихвен процент:</p>
+                            <span class="interest-rate">10.5%</span>
+                        </div>
+                        <button class="apply-btn btn-orange-dark" onclick="location.href='apply-credit.html?type=15'">Кандидатствай</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-home"></i></span>
+            <span class="nav-label">Начало</span>
+        </a>
+        <a href="products.html" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-list"></i></span>
+            <span class="nav-label">Продукти</span>
+        </a>
+        <a href="credits.html" class="nav-item active">
+            <span class="nav-icon"><i class="fa-solid fa-credit-card"></i></span>
+            <span class="nav-label">Кредити</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span class="nav-icon"><i class="fa-solid fa-ellipsis-h"></i></span>
+            <span class="nav-label">Повече</span>
+        </a>
+    </nav>
+
+    <script>
+        // Set the mobile frame height
+        function setMobileFrameHeight() {
+            document.querySelector('.mobile-frame').style.height = window.innerHeight + 'px';
+        }
+        
+        window.addEventListener('load', setMobileFrameHeight);
+        window.addEventListener('resize', setMobileFrameHeight);
+    </script>
+</body>
+</html>

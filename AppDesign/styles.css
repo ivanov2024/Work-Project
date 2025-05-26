@@ -753,7 +753,6 @@ main {
 }
 
 .section-title {
-    margin: 0 auto;
     z-index: 1;
     pointer-events: none;
     user-select: none;
@@ -774,7 +773,7 @@ main {
     background: #fff;
     border-bottom: 1px solid #f1f5fa;
     box-shadow: none;
-    padding: 14px 16px 10px 16px; /* Reduced top padding from 18px to 14px */
+    padding: 14px 16px 10px 16px;
     top: 0;
     z-index: 10;
     width: 100%;
@@ -1756,12 +1755,6 @@ body, html {
     text-align: left;
 }
 
-.products-title {
-    font-size: 1.7rem;
-    font-weight: 700;
-    color: #1b2d4b;
-    letter-spacing: 0.5px;
-}
 .add-account-btn {
     background: none;
     border: none;
@@ -3177,6 +3170,7 @@ body.products-page main {
 .request-card-subtitle {
     color: #666;
     margin-bottom: 30px;
+    line-height: 1.5;
     line-height: 1.5;
 }
 
@@ -4668,6 +4662,428 @@ main {
     padding: 12px 16px;
     cursor: pointer;
     transition: background 0.2s;
+}
+
+/* Credits Page Styles */
+.credits-page .credit-card {
+    background: linear-gradient(135deg, #2c3e50, #3498db);
+    color: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.credits-page .credit-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.2em;
+}
+
+.credits-page .credit-card p {
+    margin: 4px 0;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
+
+.credits-page .credit-card .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.2);
+}
+
+.credits-page .apply-btn {
+    background-color: #fff;
+    color: #2c3e50;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.credits-page .interest-rate {
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+/* Credits page main content */
+.credits-page .credits-main {
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 150px;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+}
+
+/* Credit Score Styles */
+.credit-score-container {
+    padding: 0 16px;
+    margin-top: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.credit-score {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 16px;
+    position: relative;
+    text-align: center;
+}
+
+.score-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 16px auto 0px auto;
+}
+
+.score-circle {
+    width: 100px;
+    height: 100px;
+    margin-left: 20px;
+    border-radius: 50%;
+    background: conic-gradient(#4CAF50 0% 70%, #E0E0E0 70% 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #1a1a1a;
+    flex-shrink: 0;
+}
+
+.score-value {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.score-label {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    display: block;
+}
+
+.score-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 0;
+}
+
+.credits-count {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: #5f6368;
+}
+
+.credits-count i {
+    color: #FFC107;
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+.score-category {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.score-category.good {
+    background-color: #E8F5E9;
+    color: #2E7D32;
+}
+
+/* Active Credits Section */
+.active-credits {
+    width: 100%;
+    padding: 0 16px;
+    margin-bottom: 24px;
+    box-sizing: border-box;
+}
+
+.active-credits-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 32px 24px 16px;
+}
+
+.available-credits-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 32px 24px 0px;
+}
+
+.active-credits > .active-credits-title {
+    text-align: center;
+}
+
+.active-credits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.credit-item {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+}
+
+.credit-item-content {
+    padding-top: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.credit-item:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.credit-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: #f0f7ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+    align-self:center;
+}
+
+.credit-icon i {
+    font-size: 20px;
+    color: #1a73e8;
+}
+
+.credit-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.credit-name {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0;
+    padding: 16px 16px 12px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: center;
+}
+
+.credit-name-icon {
+    color: #1a73e8;
+    font-size: 1.2em;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.credit-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    color: #5f6368;
+    align-items: center;
+    width: 100%;
+}
+
+.credit-separator {
+    color: #9aa0a6;
+    margin: 0 4px;
+}
+
+.credit-amount {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.credit-progress {
+    flex: 1;
+    height: 6px;
+    background: #f1f3f4;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-right: 16px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #1a73e8;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.credit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px 16px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #f0f0f0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.status-badge.active {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+
+.next-payment {
+    font-size: 0.85rem;
+    color: #5f6368;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.credits-page .credit-cards-container {
+    padding: 0 16px 60px; /* Increased bottom padding */
+    flex: 1;
+    margin-bottom: 80px; /* Increased margin to ensure space above bottom nav */
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+}
+
+.credits-page .page-header {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.credits-page .page-title {
+    font-size: 1.7em;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Credit card color variations */
+.credits-page .credit-card-blue {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+}
+
+.credits-page .credit-card-green {
+    background: linear-gradient(135deg, #0a7e07, #4caf50);
+}
+
+.credits-page .credit-card-purple {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.credits-page .credit-card-teal {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+
+.credits-page .credit-card-indigo {
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+}
+
+.credits-page .credit-card-orange {
+    background: linear-gradient(135deg, #f46b45, #eea849);
+}
+
+.credits-page .credit-card-brown {
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+}
+
+.credits-page .credit-card-gold {
+    background: linear-gradient(135deg, #f7971e, #ffd200);
+}
+
+.credits-page .credit-card-pink {
+    background: linear-gradient(135deg, #ec008c, #fc6767);
+}
+
+.credits-page .credit-card-green-dark {
+    background: linear-gradient(135deg, #0f9b0f, #3cba92);
+}
+
+.credits-page .credit-card-cyan {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+.credits-page .credit-card-pink-light {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+}
+
+.credits-page .credit-card-red {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+.credits-page .credit-card-emerald {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+.credits-page .credit-card-orange-dark {
+    background: linear-gradient(135deg, #f46b45, #eea849);
+}
+
+/* Button color variations */
+.credits-page .btn-green {
+    color: #27ae60 !important;
+}
+
+.credits-page .btn-purple {
+    color: #8e44ad !important;
+}
+
+.credits-page .btn-orange {
+    color: #e67e22 !important;
 }
 
 .topup-card .select-option:hover {

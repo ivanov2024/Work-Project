@@ -1,452 +1,609 @@
 <!DOCTYPE html>
 <html lang="bg">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Превод между сметки</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <div class="mobile-frame">
-        <header class="open-account-header">
-            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-            <span class="open-account-title">Превод</span>
-        </header>
-        <main>
-            <div class="transfer-container">
-                <!-- Transfer Type Selection -->
-                <div class="transfer-type-selector">
-                    <div class="transfer-type-option active" data-type="between-accounts">
-                        <i class="fas fa-exchange-alt"></i>
-                        <span>Между сметки</span>
-                    </div>
-                    <div class="transfer-type-option" data-type="mobile">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>По телефон</span>
-                    </div>
-                    <div class="transfer-type-option" data-type="currency">
-                        <i class="fas fa-euro-sign"></i>
-                        <span>Валутен превод</span>
-                    </div>
-                </div>
-
-                <!-- Transfer Forms -->
-                <form id="transfer-form" class="transfer-form">
-                    <!-- Between Accounts Transfer (default) -->
-                    <div id="between-accounts-form" class="transfer-form-section" style="display: block;">
-                        <!-- From Account -->
-                        <div class="form-group">
-                            <label class="form-label">От сметка/карта</label>
-                            <div id="from-account-trigger" class="account-details-select custom-select-trigger">Изберете сметка/карта</div>
-                            <input type="hidden" id="from-account-value" value="">
-                            <select id="from-account" class="form-select" style="display:none;">
-                                <option value="">Изберете сметка/карта</option>
-                                <option value="account1">BG12 3456 7890 1234 56 - 1,245.67 BGN</option>
-                                <option value="account2">BG98 7654 3210 9876 54 - 3,210.45 EUR</option>
-                                <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
-                                <option value="card2">**** 5678 (Mastercard) - 3,210.45 EUR</option>
-                            </select>
-                        </div>
-
-                        <!-- To Account -->
-                        <div class="form-group">
-                            <label class="form-label">Към сметка/карта</label>
-                            <div id="to-account-trigger" class="account-details-select custom-select-trigger">Изберете сметка/карта</div>
-                            <input type="hidden" id="to-account-value" value="">
-                            <select id="to-account" class="form-select" style="display:none;">
-                                <option value="">Изберете сметка/карта</option>
-                                <option value="account1">BG12 3456 7890 1234 56 - 1,245.67 BGN</option>
-                                <option value="account2">BG98 7654 3210 9876 54 - 3,210.45 EUR</option>
-                                <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
-                                <option value="card2">**** 5678 (Mastercard) - 3,210.45 EUR</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Mobile Transfer Form -->
-                    <div id="mobile-form" class="transfer-form-section">
-                        <div class="form-group">
-                            <label class="form-label">От сметка/карта</label>
-                            <div id="mobile-from-account-trigger" class="account-details-select custom-select-trigger">Изберете сметка/карта</div>
-                            <input type="hidden" id="mobile-from-account-value" value="">
-                            <select id="mobile-from-account" class="form-select" style="display:none;">
-                                <option value="">Изберете сметка/карта</option>
-                                <option value="account1">BG12 3456 7890 1234 56 - 1,245.67 BGN</option>
-                                <option value="account2">BG98 7654 3210 9876 54 - 3,210.45 EUR</option>
-                                <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Телефонен номер</label>
-                            <div class="input-with-prefix">
-                                <span class="input-prefix">+359</span>
-                                <input type="tel" id="mobile-number" class="form-control" placeholder="8XX XXX XXX" pattern="[0-9]{9}" inputmode="numeric">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Оператор</label>
-                            <div id="mobile-operator-trigger" class="account-details-select custom-select-trigger">Изберете оператор</div>
-                            <input type="hidden" id="mobile-operator-value" value="">
-                            <select id="mobile-operator" class="form-select" style="display:none;">
-                                <option value="">Изберете оператор</option>
-                                <option value="a1">A1 България</option>
-                                <option value="vivacom">Виваком</option>
-                                <option value="telenor">Йеттел</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Currency Exchange Form -->
-                    <div id="currency-form" class="transfer-form-section">
-                        <div class="form-group">
-                            <label class="form-label">От сметка</label>
-                            <div id="currency-from-account-trigger" class="account-details-select custom-select-trigger">Изберете сметка</div>
-                            <input type="hidden" id="currency-from-account-value" value="">
-                            <select id="currency-from-account" class="form-select" style="display:none;">
-                                <option value="">Изберете сметка</option>
-                                <option value="account1" data-currency="BGN">BG12 3456 7890 1234 56 - 1,245.67 BGN</option>
-                                <option value="account2" data-currency="EUR">BG98 7654 3210 9876 54 - 3,210.45 EUR</option>
-                                <option value="account3" data-currency="USD">BG76 5432 1098 7654 32 - 1,500.00 USD</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Към валута</label>
-                            <div id="to-currency-trigger" class="account-details-select custom-select-trigger">Изберете валута</div>
-                            <input type="hidden" id="to-currency-value" value="">
-                            <select id="to-currency" class="form-select" style="display:none;">
-                                <option value="">Изберете валута</option>
-                                <option value="BGN">Български лев (BGN)</option>
-                                <option value="EUR">Евро (EUR)</option>
-                                <option value="USD">Щатски долар (USD)</option>
-                                <option value="GBP">Британска лира (GBP)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Към сметка</label>
-                            <div id="currency-to-account-trigger" class="account-details-select custom-select-trigger">Изберете сметка</div>
-                            <input type="hidden" id="currency-to-account-value" value="">
-                            <select id="currency-to-account" class="form-select" style="display:none;">
-                                <option value="">Изберете сметка</option>
-                                <option value="account1" data-currency="BGN">BG12 3456 7890 1234 56 - 1,245.67 BGN</option>
-                                <option value="account2" data-currency="EUR">BG98 7654 3210 9876 54 - 3,210.45 EUR</option>
-                                <option value="account3" data-currency="USD">BG76 5432 1098 7654 32 - 1,500.00 USD</option>
-                            </select>
-                        </div>
-
-                        <div class="exchange-rate-info">
-                            <div class="exchange-rate">
-                                <span>Обменен курс:</span>
-                                <span id="exchange-rate">1 EUR = 1.95583 BGN</span>
-                            </div>
-                            <div class="last-updated">Актуализирано: днес, 12:45</div>
-                        </div>
-                    </div>
-
-                    <!-- Amount (common for all transfer types) -->
-                    <div class="form-group">
-                        <label class="form-label" for="amount">Сума</label>
-                        <div class="amount-input-container">
-                            <input type="number" id="amount" class="form-control" placeholder="0.00" step="0.01" min="0.01" required>
-                            <span id="currency-symbol" class="currency-symbol">BGN</span>
-                        </div>
-                        <!-- Converted amount for currency exchange -->
-                        <div id="converted-amount-container" class="converted-amount" style="display: none;">
-                            <span>Приблизително: </span>
-                            <span id="converted-amount">0.00</span>
-                            <span id="target-currency">EUR</span>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="form-group">
-                        <label class="form-label" for="description">Основание за превод</label>
-                        <input type="text" id="description" class="form-control" placeholder="По избор" maxlength="25">
-                    </div>
-
-                    <!-- Additional fields for mobile transfer -->
-                    <div id="mobile-extra-fields" style="display: none;">
-                        <div class="form-group">
-                            <label class="form-checkbox">
-                                <input type="checkbox" id="save-as-contact" checked>
-                                <span class="checkmark"></span>
-                                <span>Запази като контакт</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Transfer Button -->
-                    <button type="submit" class="btn btn-primary" id="transfer-btn" disabled>
-                        <i class="fas fa-exchange-alt"></i>
-                        <span id="transfer-btn-text">Извърши превод</span>
-                        <span id="transfer-btn-currency" style="display: none;">в <span id="target-currency-btn">EUR</span></span>
-                    </button>
-                </form>
-
-                <!-- Recent Transfers -->
-                <div class="recent-transfers">
-                    <h3>Скорошни преводи</h3>
-                    <div class="transfers-list" id="transfers-list">
-                        <!-- Recent transfers will be populated by JavaScript -->
-                        <div class="empty-state">
-                            <i class="fas fa-exchange-alt"></i>
-                            <p>Нямате скорошни преводи</p>
-                        </div>
-                    </div>
-                </div>
+      <header class="open-account-header">
+        <a href="index.html" class="back-btn"
+          ><i class="fa-solid fa-arrow-left"></i
+        ></a>
+        <span class="open-account-title">Превод</span>
+      </header>
+      <main>
+        <div class="transfer-container">
+          <!-- Transfer Type Selection -->
+          <div class="transfer-type-selector">
+            <div
+              class="transfer-type-option active"
+              data-type="between-accounts"
+            >
+              <i class="fas fa-exchange-alt"></i>
+              <span>Между сметки</span>
             </div>
-        </main>
+            <div class="transfer-type-option" data-type="mobile">
+              <i class="fas fa-mobile-alt"></i>
+              <span>По телефон</span>
+            </div>
+            <div class="transfer-type-option" data-type="currency">
+              <i class="fas fa-euro-sign"></i>
+              <span>Валутен превод</span>
+            </div>
+          </div>
+
+          <!-- Transfer Forms -->
+          <form id="transfer-form" class="transfer-form">
+            <!-- Between Accounts Transfer (default) -->
+            <div
+              id="between-accounts-form"
+              class="transfer-form-section"
+              style="display: block"
+            >
+              <!-- From Account -->
+              <div class="form-group">
+                <label class="form-label">От сметка/карта</label>
+                <div
+                  id="from-account-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете сметка/карта
+                </div>
+                <input type="hidden" id="from-account-value" value="" />
+                <select
+                  id="from-account"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете сметка/карта</option>
+                  <option value="account1">
+                    BG12 3456 7890 1234 56 - 1,245.67 BGN
+                  </option>
+                  <option value="account2">
+                    BG98 7654 3210 9876 54 - 3,210.45 EUR
+                  </option>
+                  <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
+                  <option value="card2">
+                    **** 5678 (Mastercard) - 3,210.45 EUR
+                  </option>
+                </select>
+              </div>
+
+              <!-- To Account -->
+              <div class="form-group">
+                <label class="form-label">Към сметка/карта</label>
+                <div
+                  id="to-account-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете сметка/карта
+                </div>
+                <input type="hidden" id="to-account-value" value="" />
+                <select
+                  id="to-account"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете сметка/карта</option>
+                  <option value="account1">
+                    BG12 3456 7890 1234 56 - 1,245.67 BGN
+                  </option>
+                  <option value="account2">
+                    BG98 7654 3210 9876 54 - 3,210.45 EUR
+                  </option>
+                  <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
+                  <option value="card2">
+                    **** 5678 (Mastercard) - 3,210.45 EUR
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Mobile Transfer Form -->
+            <div id="mobile-form" class="transfer-form-section">
+              <div class="form-group">
+                <label class="form-label">От сметка/карта</label>
+                <div
+                  id="mobile-from-account-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете сметка/карта
+                </div>
+                <input type="hidden" id="mobile-from-account-value" value="" />
+                <select
+                  id="mobile-from-account"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете сметка/карта</option>
+                  <option value="account1">
+                    BG12 3456 7890 1234 56 - 1,245.67 BGN
+                  </option>
+                  <option value="account2">
+                    BG98 7654 3210 9876 54 - 3,210.45 EUR
+                  </option>
+                  <option value="card1">**** 1234 (Visa) - 1,245.67 BGN</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Телефонен номер</label>
+                <div class="input-with-prefix">
+                  <span class="input-prefix">+359</span>
+                  <input
+                    type="tel"
+                    id="mobile-number"
+                    class="form-control"
+                    placeholder="8XX XXX XXX"
+                    pattern="[0-9]{9}"
+                    inputmode="numeric"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Оператор</label>
+                <div
+                  id="mobile-operator-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете оператор
+                </div>
+                <input type="hidden" id="mobile-operator-value" value="" />
+                <select
+                  id="mobile-operator"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете оператор</option>
+                  <option value="a1">A1 България</option>
+                  <option value="vivacom">Виваком</option>
+                  <option value="telenor">Йеттел</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Currency Exchange Form -->
+            <div id="currency-form" class="transfer-form-section">
+              <div class="form-group">
+                <label class="form-label">От сметка</label>
+                <div
+                  id="currency-from-account-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете сметка
+                </div>
+                <input
+                  type="hidden"
+                  id="currency-from-account-value"
+                  value=""
+                />
+                <select
+                  id="currency-from-account"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете сметка</option>
+                  <option value="account1" data-currency="BGN">
+                    BG12 3456 7890 1234 56 - 1,245.67 BGN
+                  </option>
+                  <option value="account2" data-currency="EUR">
+                    BG98 7654 3210 9876 54 - 3,210.45 EUR
+                  </option>
+                  <option value="account3" data-currency="USD">
+                    BG76 5432 1098 7654 32 - 1,500.00 USD
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Към валута</label>
+                <div
+                  id="to-currency-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете валута
+                </div>
+                <input type="hidden" id="to-currency-value" value="" />
+                <select
+                  id="to-currency"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете валута</option>
+                  <option value="BGN">Български лев (BGN)</option>
+                  <option value="EUR">Евро (EUR)</option>
+                  <option value="USD">Щатски долар (USD)</option>
+                  <option value="GBP">Британска лира (GBP)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Към сметка</label>
+                <div
+                  id="currency-to-account-trigger"
+                  class="account-details-select custom-select-trigger"
+                >
+                  Изберете сметка
+                </div>
+                <input type="hidden" id="currency-to-account-value" value="" />
+                <select
+                  id="currency-to-account"
+                  class="form-select"
+                  style="display: none"
+                >
+                  <option value="">Изберете сметка</option>
+                  <option value="account1" data-currency="BGN">
+                    BG12 3456 7890 1234 56 - 1,245.67 BGN
+                  </option>
+                  <option value="account2" data-currency="EUR">
+                    BG98 7654 3210 9876 54 - 3,210.45 EUR
+                  </option>
+                  <option value="account3" data-currency="USD">
+                    BG76 5432 1098 7654 32 - 1,500.00 USD
+                  </option>
+                </select>
+              </div>
+
+              <div class="exchange-rate-info">
+                <div class="exchange-rate">
+                  <span>Обменен курс:</span>
+                  <span id="exchange-rate">1 EUR = 1.95583 BGN</span>
+                </div>
+                <div class="last-updated">Актуализирано: днес, 12:45</div>
+              </div>
+            </div>
+
+            <!-- Amount (common for all transfer types) -->
+            <div class="form-group">
+              <label class="form-label" for="amount">Сума</label>
+              <div class="amount-input-container">
+                <input
+                  type="number"
+                  id="amount"
+                  class="form-control"
+                  placeholder="0.00"
+                  step="0.01"
+                  min="0.01"
+                  required
+                />
+                <span id="currency-symbol" class="currency-symbol">BGN</span>
+              </div>
+              <!-- Converted amount for currency exchange -->
+              <div
+                id="converted-amount-container"
+                class="converted-amount"
+                style="display: none"
+              >
+                <span>Приблизително: </span>
+                <span id="converted-amount">0.00</span>
+                <span id="target-currency">EUR</span>
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label class="form-label" for="description"
+                >Основание за превод</label
+              >
+              <input
+                type="text"
+                id="description"
+                class="form-control"
+                placeholder="По избор"
+                maxlength="25"
+              />
+            </div>
+
+            <!-- Additional fields for mobile transfer -->
+            <div id="mobile-extra-fields" style="display: none">
+              <div class="form-group">
+                <label class="form-checkbox">
+                  <input type="checkbox" id="save-as-contact" checked />
+                  <span class="checkmark"></span>
+                  <span>Запази като контакт</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Transfer Button -->
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="transfer-btn"
+              disabled
+            >
+              <i class="fas fa-exchange-alt"></i>
+              <span id="transfer-btn-text">Извърши превод</span>
+              <span id="transfer-btn-currency" style="display: none"
+                >в <span id="target-currency-btn">EUR</span></span
+              >
+            </button>
+          </form>
+
+          <!-- Recent Transfers -->
+          <div class="recent-transfers">
+            <h3>Скорошни преводи</h3>
+            <div class="transfers-list" id="transfers-list">
+              <!-- Recent transfers will be populated by JavaScript -->
+              <div class="empty-state">
+                <i class="fas fa-exchange-alt"></i>
+                <p>Нямате скорошни преводи</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="bottom-nav">
-        <a href="index.html" class="nav-item">
-            <span class="nav-icon"><i class="fa-solid fa-home"></i></span>
-            <span class="nav-label">Начало</span>
-        </a>
-        <a href="products.html" class="nav-item">
-            <span class="nav-icon"><i class="fa-solid fa-list"></i></span>
-            <span class="nav-label">Продукти</span>
-        </a>
-        <a href="#" class="nav-item active">
-            <span class="nav-icon"><i class="fa-solid fa-exchange-alt"></i></span>
-            <span class="nav-label">Преводи</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon"><i class="fa-solid fa-lightbulb"></i></span>
-            <span class="nav-label">Битови</span>
-        </a>
-        <a href="#" class="nav-item">
-            <span class="nav-icon"><i class="fa-solid fa-ellipsis-h"></i></span>
-            <span class="nav-label">Повече</span>
-        </a>
-    </nav>
-
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // --- Transfer Type Selection ---
-        const transferTypeOptions = document.querySelectorAll('.transfer-type-option');
+        const transferTypeOptions = document.querySelectorAll(
+          ".transfer-type-option"
+        );
         const transferFormSections = {
-            'between-accounts': document.getElementById('between-accounts-form'),
-            'mobile': document.getElementById('mobile-form'),
-            'currency': document.getElementById('currency-form')
+          "between-accounts": document.getElementById("between-accounts-form"),
+          mobile: document.getElementById("mobile-form"),
+          currency: document.getElementById("currency-form"),
         };
-        
+
         // Show mobile extra fields when mobile transfer is selected
-        const mobileExtraFields = document.getElementById('mobile-extra-fields');
-        const transferBtnText = document.getElementById('transfer-btn-text');
-        const transferBtnCurrency = document.getElementById('transfer-btn-currency');
-        const targetCurrencyBtn = document.getElementById('target-currency-btn');
-        const currencySymbol = document.getElementById('currency-symbol');
-        const convertedAmountContainer = document.getElementById('converted-amount-container');
-        const convertedAmount = document.getElementById('converted-amount');
-        const targetCurrency = document.getElementById('target-currency');
-        
+        const mobileExtraFields = document.getElementById(
+          "mobile-extra-fields"
+        );
+        const transferBtnText = document.getElementById("transfer-btn-text");
+        const transferBtnCurrency = document.getElementById(
+          "transfer-btn-currency"
+        );
+        const targetCurrencyBtn = document.getElementById(
+          "target-currency-btn"
+        );
+        const currencySymbol = document.getElementById("currency-symbol");
+        const convertedAmountContainer = document.getElementById(
+          "converted-amount-container"
+        );
+        const convertedAmount = document.getElementById("converted-amount");
+        const targetCurrency = document.getElementById("target-currency");
+
         // Exchange rates (in a real app, these would come from an API)
         const exchangeRates = {
-            'BGN': { 'EUR': 0.5113, 'USD': 0.5432, 'GBP': 0.4289 },
-            'EUR': { 'BGN': 1.9558, 'USD': 1.0623, 'GBP': 0.8389 },
-            'USD': { 'BGN': 1.8409, 'EUR': 0.9413, 'GBP': 0.7898 },
-            'GBP': { 'BGN': 2.3316, 'EUR': 1.1920, 'USD': 1.2661 }
+          BGN: { EUR: 0.5113, USD: 0.5432, GBP: 0.4289 },
+          EUR: { BGN: 1.9558, USD: 1.0623, GBP: 0.8389 },
+          USD: { BGN: 1.8409, EUR: 0.9413, GBP: 0.7898 },
+          GBP: { BGN: 2.3316, EUR: 1.192, USD: 1.2661 },
         };
-        
+
         // Set initial active transfer type
-        let activeTransferType = 'between-accounts';
-        
+        let activeTransferType = "between-accounts";
+
         // Handle transfer type selection
-        transferTypeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const type = this.dataset.type;
-                const selector = document.querySelector('.transfer-type-selector');
-                
-                // Update active state
-                transferTypeOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Update the active tab data attribute for the sliding animation
-                selector.setAttribute('data-active-tab', type);
-                
-                // Hide all form sections
-                Object.values(transferFormSections).forEach(section => {
-                    if (section) section.style.display = 'none';
-                });
-                
-                // Show selected form section
-                if (transferFormSections[type]) {
-                    transferFormSections[type].style.display = 'block';
-                }
-                
-                // Update UI based on transfer type
-                updateUIForTransferType(type);
-                
-                // Store active transfer type
-                activeTransferType = type;
-                
-                // Trigger validation
-                validateForm();
-            });
-        });
-        
-        function updateUIForTransferType(type) {
+        transferTypeOptions.forEach((option) => {
+          option.addEventListener("click", function () {
+            const type = this.dataset.type;
+            const selector = document.querySelector(".transfer-type-selector");
+
+            // Update active state
+            transferTypeOptions.forEach((opt) =>
+              opt.classList.remove("active")
+            );
+            this.classList.add("active");
+
+            // Update the active tab data attribute for the sliding animation
+            selector.setAttribute("data-active-tab", type);
+
             // Hide all form sections
-            document.querySelectorAll('.transfer-form-section').forEach(section => {
-                section.style.display = 'none';
+            Object.values(transferFormSections).forEach((section) => {
+              if (section) section.style.display = "none";
             });
-            
-            // Show the active form section
-            const activeForm = document.getElementById(`${type}-form`);
-            if (activeForm) {
-                activeForm.style.display = 'block';
+
+            // Show selected form section
+            if (transferFormSections[type]) {
+              transferFormSections[type].style.display = "block";
             }
-            
-            // Update button text and show/hide currency
-            if (type === 'currency') {
-                transferBtnText.textContent = 'Конвертирай и преведи';
-                transferBtnCurrency.style.display = 'inline';
-                convertedAmountContainer.style.display = 'block';
-                updateConvertedAmount();
-            } else {
-                transferBtnText.textContent = 'Извърши превод';
-                transferBtnCurrency.style.display = 'none';
-                convertedAmountContainer.style.display = 'none';
-            }
-            
-            // Show/hide mobile extra fields
-            mobileExtraFields.style.display = type === 'mobile' ? 'block' : 'none';
-            
-            // Update currency symbol based on from account
-            updateCurrencySymbol();
+
+            // Update UI based on transfer type
+            updateUIForTransferType(type);
+
+            // Store active transfer type
+            activeTransferType = type;
+
+            // Trigger validation
+            validateForm();
+          });
+        });
+
+        function updateUIForTransferType(type) {
+          // Hide all form sections
+          document
+            .querySelectorAll(".transfer-form-section")
+            .forEach((section) => {
+              section.style.display = "none";
+            });
+
+          // Show the active form section
+          const activeForm = document.getElementById(`${type}-form`);
+          if (activeForm) {
+            activeForm.style.display = "block";
+          }
+
+          // Update button text and show/hide currency
+          if (type === "currency") {
+            transferBtnText.textContent = "Конвертирай и преведи";
+            transferBtnCurrency.style.display = "inline";
+            convertedAmountContainer.style.display = "block";
+            updateConvertedAmount();
+          } else {
+            transferBtnText.textContent = "Извърши превод";
+            transferBtnCurrency.style.display = "none";
+            convertedAmountContainer.style.display = "none";
+          }
+
+          // Show/hide mobile extra fields
+          mobileExtraFields.style.display =
+            type === "mobile" ? "block" : "none";
+
+          // Update currency symbol based on from account
+          updateCurrencySymbol();
         }
-        
+
         function updateCurrencySymbol() {
-            let currency = 'BGN'; // Default
-            
-            if (activeTransferType === 'currency') {
-                const fromAccount = document.getElementById('currency-from-account');
-                if (fromAccount && fromAccount.value) {
-                    const selectedOption = fromAccount.options[fromAccount.selectedIndex];
-                    currency = selectedOption.dataset.currency || 'BGN';
-                }
-            } else if (activeTransferType === 'mobile') {
-                const fromAccount = document.getElementById('mobile-from-account');
-                if (fromAccount && fromAccount.value) {
-                    const selectedOption = fromAccount.options[fromAccount.selectedIndex];
-                    // Extract currency from account text (e.g., "... - 1,245.67 BGN")
-                    const match = selectedOption.textContent.match(/\b([A-Z]{3})$/);
-                    currency = match ? match[1] : 'BGN';
-                }
-            } else {
-                const fromAccount = document.getElementById('from-account');
-                if (fromAccount && fromAccount.value) {
-                    const selectedOption = fromAccount.options[fromAccount.selectedIndex];
-                    // Extract currency from account text (e.g., "... - 1,245.67 BGN")
-                    const match = selectedOption.textContent.match(/\b([A-Z]{3})$/);
-                    currency = match ? match[1] : 'BGN';
-                }
+          let currency = "BGN"; // Default
+
+          if (activeTransferType === "currency") {
+            const fromAccount = document.getElementById(
+              "currency-from-account"
+            );
+            if (fromAccount && fromAccount.value) {
+              const selectedOption =
+                fromAccount.options[fromAccount.selectedIndex];
+              currency = selectedOption.dataset.currency || "BGN";
             }
-            
-            currencySymbol.textContent = currency;
-            return currency;
+          } else if (activeTransferType === "mobile") {
+            const fromAccount = document.getElementById("mobile-from-account");
+            if (fromAccount && fromAccount.value) {
+              const selectedOption =
+                fromAccount.options[fromAccount.selectedIndex];
+              // Extract currency from account text (e.g., "... - 1,245.67 BGN")
+              const match = selectedOption.textContent.match(/\b([A-Z]{3})$/);
+              currency = match ? match[1] : "BGN";
+            }
+          } else {
+            const fromAccount = document.getElementById("from-account");
+            if (fromAccount && fromAccount.value) {
+              const selectedOption =
+                fromAccount.options[fromAccount.selectedIndex];
+              // Extract currency from account text (e.g., "... - 1,245.67 BGN")
+              const match = selectedOption.textContent.match(/\b([A-Z]{3})$/);
+              currency = match ? match[1] : "BGN";
+            }
+          }
+
+          currencySymbol.textContent = currency;
+          return currency;
         }
-        
+
         function updateConvertedAmount() {
-            const amountInput = document.getElementById('amount');
-            const amount = parseFloat(amountInput.value) || 0;
-            
-            const fromAccount = document.getElementById('currency-from-account');
-            const toCurrencySelect = document.getElementById('to-currency');
-            
-            if (!fromAccount || !fromAccount.value || !toCurrencySelect || !toCurrencySelect.value) {
-                return;
-            }
-            
-            const fromCurrency = fromAccount.options[fromAccount.selectedIndex].dataset.currency;
-            const toCurrency = toCurrencySelect.value;
-            
-            if (fromCurrency === toCurrency) {
-                convertedAmountContainer.style.display = 'none';
-                return;
-            }
-            
-            const rate = exchangeRates[fromCurrency]?.[toCurrency];
-            if (rate) {
-                const converted = (amount * rate).toFixed(2);
-                convertedAmount.textContent = converted;
-                targetCurrency.textContent = toCurrency;
-                targetCurrencyBtn.textContent = toCurrency;
-                convertedAmountContainer.style.display = 'block';
-            } else {
-                convertedAmountContainer.style.display = 'none';
-            }
+          const amountInput = document.getElementById("amount");
+          const amount = parseFloat(amountInput.value) || 0;
+
+          const fromAccount = document.getElementById("currency-from-account");
+          const toCurrencySelect = document.getElementById("to-currency");
+
+          if (
+            !fromAccount ||
+            !fromAccount.value ||
+            !toCurrencySelect ||
+            !toCurrencySelect.value
+          ) {
+            return;
+          }
+
+          const fromCurrency =
+            fromAccount.options[fromAccount.selectedIndex].dataset.currency;
+          const toCurrency = toCurrencySelect.value;
+
+          if (fromCurrency === toCurrency) {
+            convertedAmountContainer.style.display = "none";
+            return;
+          }
+
+          const rate = exchangeRates[fromCurrency]?.[toCurrency];
+          if (rate) {
+            const converted = (amount * rate).toFixed(2);
+            convertedAmount.textContent = converted;
+            targetCurrency.textContent = toCurrency;
+            targetCurrencyBtn.textContent = toCurrency;
+            convertedAmountContainer.style.display = "block";
+          } else {
+            convertedAmountContainer.style.display = "none";
+          }
         }
         // --- Form Validation ---
         function validateForm() {
-            let isValid = true;
-            const amount = parseFloat(document.getElementById('amount').value) || 0;
-            
-            // Common validation for all transfer types
-            if (amount <= 0) {
-                isValid = false;
+          let isValid = true;
+          const amount =
+            parseFloat(document.getElementById("amount").value) || 0;
+
+          // Common validation for all transfer types
+          if (amount <= 0) {
+            isValid = false;
+          }
+
+          // Transfer type specific validation
+          if (activeTransferType === "between-accounts") {
+            const fromAccount =
+              document.getElementById("from-account-value").value;
+            const toAccount = document.getElementById("to-account-value").value;
+
+            if (!fromAccount || !toAccount || fromAccount === toAccount) {
+              isValid = false;
             }
-            
-            // Transfer type specific validation
-            if (activeTransferType === 'between-accounts') {
-                const fromAccount = document.getElementById('from-account-value').value;
-                const toAccount = document.getElementById('to-account-value').value;
-                
-                if (!fromAccount || !toAccount || fromAccount === toAccount) {
-                    isValid = false;
-                }
-                
-            } else if (activeTransferType === 'mobile') {
-                const fromAccount = document.getElementById('mobile-from-account-value').value;
-                const mobileNumber = document.getElementById('mobile-number').value;
-                const operator = document.getElementById('mobile-operator-value').value;
-                
-                if (!fromAccount || !mobileNumber || !operator) {
-                    isValid = false;
-                }
-                
-            } else if (activeTransferType === 'currency') {
-                const fromAccount = document.getElementById('currency-from-account-value').value;
-                const toAccount = document.getElementById('currency-to-account-value').value;
-                const toCurrency = document.getElementById('to-currency-value').value;
-                
-                if (!fromAccount || !toAccount || !toCurrency) {
-                    isValid = false;
-                }
-                
-                // Check if currencies are different for currency conversion
-                const fromCurrency = document.querySelector('#currency-from-account option:checked')?.dataset.currency;
-                if (fromCurrency === toCurrency) {
-                    isValid = false;
-                }
+          } else if (activeTransferType === "mobile") {
+            const fromAccount = document.getElementById(
+              "mobile-from-account-value"
+            ).value;
+            const mobileNumber = document.getElementById("mobile-number").value;
+            const operator = document.getElementById(
+              "mobile-operator-value"
+            ).value;
+
+            if (!fromAccount || !mobileNumber || !operator) {
+              isValid = false;
             }
-            
-            // Update button state
-            document.getElementById('transfer-btn').disabled = !isValid;
-            return isValid;
+          } else if (activeTransferType === "currency") {
+            const fromAccount = document.getElementById(
+              "currency-from-account-value"
+            ).value;
+            const toAccount = document.getElementById(
+              "currency-to-account-value"
+            ).value;
+            const toCurrency =
+              document.getElementById("to-currency-value").value;
+
+            if (!fromAccount || !toAccount || !toCurrency) {
+              isValid = false;
+            }
+
+            // Check if currencies are different for currency conversion
+            const fromCurrency = document.querySelector(
+              "#currency-from-account option:checked"
+            )?.dataset.currency;
+            if (fromCurrency === toCurrency) {
+              isValid = false;
+            }
+          }
+
+          // Update button state
+          document.getElementById("transfer-btn").disabled = !isValid;
+          return isValid;
         }
-        
+
         // --- Account Selection Logic ---
         function createAccountSheet(id, triggerId, options, onSelectCallback) {
-            const trigger = document.getElementById(triggerId);
-            const sheet = document.createElement('div');
-            sheet.id = `${id}-sheet`;
-            sheet.className = 'currency-sheet';
-            sheet.style.display = 'none';
-            
-            let optionsHtml = '';
-            options.forEach(option => {
-                optionsHtml += `<div class="currency-sheet-option" data-value="${option.value}">${option.text}</div>`;
-            });
-            
-            sheet.innerHTML = `
+          const trigger = document.getElementById(triggerId);
+          const sheet = document.createElement("div");
+          sheet.id = `${id}-sheet`;
+          sheet.className = "currency-sheet";
+          sheet.style.display = "none";
+
+          let optionsHtml = "";
+          options.forEach((option) => {
+            optionsHtml += `<div class="currency-sheet-option" data-value="${option.value}">${option.text}</div>`;
+          });
+
+          sheet.innerHTML = `
                 <div class="currency-sheet-backdrop"></div>
                 <div class="currency-sheet-modal">
                     <div class="currency-sheet-bar"></div>
@@ -454,328 +611,445 @@
                         ${optionsHtml}
                     </div>
                 </div>`;
-                
-            document.body.appendChild(sheet);
-            
-            const backdrop = sheet.querySelector('.currency-sheet-backdrop');
-            const optionElements = sheet.querySelectorAll('.currency-sheet-option');
-            const hiddenInput = document.getElementById(`${id}-value`);
-            const select = document.getElementById(id);
-            
-            function openSheet(e) {
-                if (e) e.stopPropagation();
-                sheet.style.display = 'flex';
-                setTimeout(() => sheet.querySelector('.currency-sheet-modal').focus(), 10);
-            }
-            
-            function closeSheet() {
-                sheet.style.display = 'none';
-            }
-            
-            if (trigger) {
-                trigger.addEventListener('click', openSheet);
-            }
-            
-            if (backdrop) {
-                backdrop.addEventListener('click', closeSheet);
-            }
-            
-            optionElements.forEach(option => {
-                option.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    optionElements.forEach(opt => opt.classList.remove('selected'));
-                    this.classList.add('selected');
-                    const value = this.dataset.value;
-                    const text = this.textContent;
-                    hiddenInput.value = value;
-                    trigger.textContent = text;
-                    trigger.classList.add('selected');
-                    select.value = value;
-                    closeSheet();
-                            
-                            // Update currency symbol when account changes
-                            if (id.includes('from-account') || id.includes('currency-from-account') || id.includes('mobile-from-account')) {
-                                updateCurrencySymbol();
-                                if (activeTransferType === 'currency') {
-                                    updateConvertedAmount();
-                                }
-                            } else if (id === 'to-currency') {
-                                updateConvertedAmount();
-                            }
-                            
-                            validateForm();
-                });
-            });
-            
-            // Close sheet when clicking outside
-            document.addEventListener('click', function(e) {
-                if (!sheet.contains(e.target) && e.target !== trigger) {
-                    closeSheet();
+
+          document.body.appendChild(sheet);
+
+          const backdrop = sheet.querySelector(".currency-sheet-backdrop");
+          const optionElements = sheet.querySelectorAll(
+            ".currency-sheet-option"
+          );
+          const hiddenInput = document.getElementById(`${id}-value`);
+          const select = document.getElementById(id);
+
+          function openSheet(e) {
+            if (e) e.stopPropagation();
+            sheet.style.display = "flex";
+            setTimeout(
+              () => sheet.querySelector(".currency-sheet-modal").focus(),
+              10
+            );
+          }
+
+          function closeSheet() {
+            sheet.style.display = "none";
+          }
+
+          if (trigger) {
+            trigger.addEventListener("click", openSheet);
+          }
+
+          if (backdrop) {
+            backdrop.addEventListener("click", closeSheet);
+          }
+
+          optionElements.forEach((option) => {
+            option.addEventListener("click", function (e) {
+              e.stopPropagation();
+              optionElements.forEach((opt) => opt.classList.remove("selected"));
+              this.classList.add("selected");
+              const value = this.dataset.value;
+              const text = this.textContent;
+              hiddenInput.value = value;
+              trigger.textContent = text;
+              trigger.classList.add("selected");
+              select.value = value;
+              closeSheet();
+
+              // Update currency symbol when account changes
+              if (
+                id.includes("from-account") ||
+                id.includes("currency-from-account") ||
+                id.includes("mobile-from-account")
+              ) {
+                updateCurrencySymbol();
+                if (activeTransferType === "currency") {
+                  updateConvertedAmount();
                 }
+              } else if (id === "to-currency") {
+                updateConvertedAmount();
+              }
+
+              validateForm();
             });
+          });
+
+          // Close sheet when clicking outside
+          document.addEventListener("click", function (e) {
+            if (!sheet.contains(e.target) && e.target !== trigger) {
+              closeSheet();
+            }
+          });
         }
-        
+
         // Account options
         const accountOptions = [
-            { value: 'account1', text: 'BG12 3456 7890 1234 56 - 1,245.67 BGN', currency: 'BGN' },
-            { value: 'account2', text: 'BG98 7654 3210 9876 54 - 3,210.45 EUR', currency: 'EUR' },
-            { value: 'card1', text: '**** 1234 (Visa) - 1,245.67 BGN', currency: 'BGN' },
-            { value: 'card2', text: '**** 5678 (Mastercard) - 3,210.45 EUR', currency: 'EUR' }
+          {
+            value: "account1",
+            text: "BG12 3456 7890 1234 56 - 1,245.67 BGN",
+            currency: "BGN",
+          },
+          {
+            value: "account2",
+            text: "BG98 7654 3210 9876 54 - 3,210.45 EUR",
+            currency: "EUR",
+          },
+          {
+            value: "card1",
+            text: "**** 1234 (Visa) - 1,245.67 BGN",
+            currency: "BGN",
+          },
+          {
+            value: "card2",
+            text: "**** 5678 (Mastercard) - 3,210.45 EUR",
+            currency: "EUR",
+          },
         ];
-        
+
         // Mobile account options (no cards)
         const mobileAccountOptions = [
-            { value: 'account1', text: 'BG12 3456 7890 1234 56 - 1,245.67 BGN', currency: 'BGN' },
-            { value: 'account2', text: 'BG98 7654 3210 9876 54 - 3,210.45 EUR', currency: 'EUR' }
+          {
+            value: "account1",
+            text: "BG12 3456 7890 1234 56 - 1,245.67 BGN",
+            currency: "BGN",
+          },
+          {
+            value: "account2",
+            text: "BG98 7654 3210 9876 54 - 3,210.45 EUR",
+            currency: "EUR",
+          },
         ];
-        
+
         // Currency account options (only accounts, no cards)
         const currencyAccountOptions = [
-            { value: 'account1', text: 'BG12 3456 7890 1234 56 - 1,245.67 BGN', currency: 'BGN' },
-            { value: 'account2', text: 'BG98 7654 3210 9876 54 - 3,210.45 EUR', currency: 'EUR' },
-            { value: 'account3', text: 'BG76 5432 1098 7654 32 - 1,500.00 USD', currency: 'USD' }
+          {
+            value: "account1",
+            text: "BG12 3456 7890 1234 56 - 1,245.67 BGN",
+            currency: "BGN",
+          },
+          {
+            value: "account2",
+            text: "BG98 7654 3210 9876 54 - 3,210.45 EUR",
+            currency: "EUR",
+          },
+          {
+            value: "account3",
+            text: "BG76 5432 1098 7654 32 - 1,500.00 USD",
+            currency: "USD",
+          },
         ];
-        
+
         // Operator options
         const operatorOptions = [
-            { value: 'quantum', text: 'Квантум Телеком' },
-            { value: 'nexus', text: 'Нексус Мобайл' },
-            { value: 'horizon', text: 'Хоризонт Уайърлес' },
-            { value: 'velocity', text: 'Велоцити Телеком' },
-            { value: 'zenith', text: 'Зенит Мобайл' }
+          { value: "quantum", text: "Квантум Телеком" },
+          { value: "nexus", text: "Нексус Мобайл" },
+          { value: "horizon", text: "Хоризонт Уайърлес" },
+          { value: "velocity", text: "Велоцити Телеком" },
+          { value: "zenith", text: "Зенит Мобайл" },
         ];
-        
+
         // Currency options
         const currencyOptions = [
-            { value: 'BGN', text: 'Български лев (BGN)' },
-            { value: 'EUR', text: 'Евро (EUR)' },
-            { value: 'USD', text: 'Щатски долар (USD)' },
-            { value: 'GBP', text: 'Британска лира (GBP)' }
+          { value: "BGN", text: "Български лев (BGN)" },
+          { value: "EUR", text: "Евро (EUR)" },
+          { value: "USD", text: "Щатски долар (USD)" },
+          { value: "GBP", text: "Британска лира (GBP)" },
         ];
-        
+
         // Create all the sheets
-        createAccountSheet('from-account', 'from-account-trigger', accountOptions);
-        createAccountSheet('to-account', 'to-account-trigger', accountOptions);
-        createAccountSheet('mobile-from-account', 'mobile-from-account-trigger', mobileAccountOptions);
-        createAccountSheet('mobile-operator', 'mobile-operator-trigger', operatorOptions);
-        createAccountSheet('currency-from-account', 'currency-from-account-trigger', currencyAccountOptions);
-        createAccountSheet('currency-to-account', 'currency-to-account-trigger', currencyAccountOptions);
-        createAccountSheet('to-currency', 'to-currency-trigger', currencyOptions);
-        
+        createAccountSheet(
+          "from-account",
+          "from-account-trigger",
+          accountOptions
+        );
+        createAccountSheet("to-account", "to-account-trigger", accountOptions);
+        createAccountSheet(
+          "mobile-from-account",
+          "mobile-from-account-trigger",
+          mobileAccountOptions
+        );
+        createAccountSheet(
+          "mobile-operator",
+          "mobile-operator-trigger",
+          operatorOptions
+        );
+        createAccountSheet(
+          "currency-from-account",
+          "currency-from-account-trigger",
+          currencyAccountOptions
+        );
+        createAccountSheet(
+          "currency-to-account",
+          "currency-to-account-trigger",
+          currencyAccountOptions
+        );
+        createAccountSheet(
+          "to-currency",
+          "to-currency-trigger",
+          currencyOptions
+        );
+
         // Form elements
-        const form = document.getElementById('transfer-form');
-        const amountInput = document.getElementById('amount');
-        
+        const form = document.getElementById("transfer-form");
+        const amountInput = document.getElementById("amount");
+
         // Validate on input change
-        amountInput.addEventListener('input', function() {
-            validateForm();
-            if (activeTransferType === 'currency') {
-                updateConvertedAmount();
-            }
+        amountInput.addEventListener("input", function () {
+          validateForm();
+          if (activeTransferType === "currency") {
+            updateConvertedAmount();
+          }
         });
-        
+
         // Add event listeners for currency conversion
-        document.getElementById('amount')?.addEventListener('input', updateConvertedAmount);
-        document.getElementById('currency-from-account')?.addEventListener('change', updateConvertedAmount);
-        document.getElementById('to-currency')?.addEventListener('change', updateConvertedAmount);
-        
+        document
+          .getElementById("amount")
+          ?.addEventListener("input", updateConvertedAmount);
+        document
+          .getElementById("currency-from-account")
+          ?.addEventListener("change", updateConvertedAmount);
+        document
+          .getElementById("to-currency")
+          ?.addEventListener("change", updateConvertedAmount);
+
         // Function to initialize the form
         function initializeForm() {
-            // Set the active transfer type
-            activeTransferType = 'between-accounts';
-            
-            // Set the initial active tab data attribute
-            const selector = document.querySelector('.transfer-type-selector');
-            selector.setAttribute('data-active-tab', activeTransferType);
-            
-            // Initialize form validation
-            validateForm();
-            
-            // Update UI for the active transfer type
-            updateUIForTransferType(activeTransferType);
-            
-            // Make sure the active tab is highlighted
-            document.querySelectorAll('.transfer-type-option').forEach(option => {
-                option.classList.toggle('active', option.dataset.type === activeTransferType);
+          // Set the active transfer type
+          activeTransferType = "between-accounts";
+
+          // Set the initial active tab data attribute
+          const selector = document.querySelector(".transfer-type-selector");
+          selector.setAttribute("data-active-tab", activeTransferType);
+
+          // Initialize form validation
+          validateForm();
+
+          // Update UI for the active transfer type
+          updateUIForTransferType(activeTransferType);
+
+          // Make sure the active tab is highlighted
+          document
+            .querySelectorAll(".transfer-type-option")
+            .forEach((option) => {
+              option.classList.toggle(
+                "active",
+                option.dataset.type === activeTransferType
+              );
             });
         }
-        
+
         // Initialize the form when the DOM is fully loaded
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initializeForm);
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initializeForm);
         } else {
-            initializeForm();
+          initializeForm();
         }
-        
+
         // Handle form submission
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const fromAccount = document.getElementById('from-account-trigger').textContent;
-            const toAccount = document.getElementById('to-account-trigger').textContent;
-            const amount = amountInput.value;
-            const description = document.getElementById('description').value || 'Без описание';
-            
-            // Prepare transfer data based on transfer type
-            let transferData = { type: activeTransferType, amount, description };
-            
-            if (activeTransferType === 'between-accounts') {
-                const fromAccount = document.getElementById('from-account-trigger').textContent;
-                const toAccount = document.getElementById('to-account-trigger').textContent;
-                transferData = { ...transferData, fromAccount, toAccount };
-                
-            } else if (activeTransferType === 'mobile') {
-                const fromAccount = document.getElementById('mobile-from-account-trigger').textContent;
-                const mobileNumber = document.getElementById('mobile-number').value;
-                const operator = document.getElementById('mobile-operator-trigger').textContent;
-                const saveAsContact = document.getElementById('save-as-contact').checked;
-                transferData = { 
-                    ...transferData, 
-                    fromAccount, 
-                    mobileNumber: '+359' + mobileNumber, 
-                    operator,
-                    saveAsContact 
-                };
-                
-            } else if (activeTransferType === 'currency') {
-                const fromAccount = document.getElementById('currency-from-account-trigger').textContent;
-                const toAccount = document.getElementById('currency-to-account-trigger').textContent;
-                const fromCurrency = document.querySelector('#currency-from-account option:checked')?.dataset.currency;
-                const toCurrency = document.getElementById('to-currency-value').value;
-                const convertedAmount = document.getElementById('converted-amount').textContent;
-                
-                transferData = { 
-                    ...transferData, 
-                    fromAccount, 
-                    toAccount, 
-                    fromCurrency, 
-                    toCurrency,
-                    convertedAmount,
-                    exchangeRate: exchangeRates[fromCurrency]?.[toCurrency] || 0
-                };
-            }
-            
-            // Here you would typically make an API call to process the transfer
-            console.log('Transfer initiated:', transferData);
-            
-            // Show success message
-            let successMessage = '';
-            if (activeTransferType === 'between-accounts') {
-                successMessage = `Успешен превод от ${transferData.fromAccount} към ${transferData.toAccount} за сума ${amount} ${currencySymbol.textContent}`;
-            } else if (activeTransferType === 'mobile') {
-                successMessage = `Успешно изпратени ${amount} ${currencySymbol.textContent} на ${transferData.mobileNumber} (${transferData.operator})`;
-            } else if (activeTransferType === 'currency') {
-                successMessage = `Успешна конвертация от ${amount} ${transferData.fromCurrency} към ${transferData.convertedAmount} ${transferData.toCurrency}`;
-            }
-            
-            alert(successMessage);
-            
-            // Reset form
-            form.reset();
-            
-            // Reset all select triggers
-            document.querySelectorAll('.custom-select-trigger').forEach(trigger => {
-                const id = trigger.id.replace('-trigger', '');
-                const defaultText = {
-                    'from-account': 'Изберете сметка/карта',
-                    'to-account': 'Изберете сметка/карта',
-                    'mobile-from-account': 'Изберете сметка/карта',
-                    'mobile-operator': 'Изберете оператор',
-                    'currency-from-account': 'Изберете сметка',
-                    'currency-to-account': 'Изберете сметка',
-                    'to-currency': 'Изберете валута'
-                }[id] || 'Изберете опция';
-                
-                trigger.textContent = defaultText;
-                trigger.classList.remove('selected');
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const fromAccount = document.getElementById(
+            "from-account-trigger"
+          ).textContent;
+          const toAccount =
+            document.getElementById("to-account-trigger").textContent;
+          const amount = amountInput.value;
+          const description =
+            document.getElementById("description").value || "Без описание";
+
+          // Prepare transfer data based on transfer type
+          let transferData = { type: activeTransferType, amount, description };
+
+          if (activeTransferType === "between-accounts") {
+            const fromAccount = document.getElementById(
+              "from-account-trigger"
+            ).textContent;
+            const toAccount =
+              document.getElementById("to-account-trigger").textContent;
+            transferData = { ...transferData, fromAccount, toAccount };
+          } else if (activeTransferType === "mobile") {
+            const fromAccount = document.getElementById(
+              "mobile-from-account-trigger"
+            ).textContent;
+            const mobileNumber = document.getElementById("mobile-number").value;
+            const operator = document.getElementById(
+              "mobile-operator-trigger"
+            ).textContent;
+            const saveAsContact =
+              document.getElementById("save-as-contact").checked;
+            transferData = {
+              ...transferData,
+              fromAccount,
+              mobileNumber: "+359" + mobileNumber,
+              operator,
+              saveAsContact,
+            };
+          } else if (activeTransferType === "currency") {
+            const fromAccount = document.getElementById(
+              "currency-from-account-trigger"
+            ).textContent;
+            const toAccount = document.getElementById(
+              "currency-to-account-trigger"
+            ).textContent;
+            const fromCurrency = document.querySelector(
+              "#currency-from-account option:checked"
+            )?.dataset.currency;
+            const toCurrency =
+              document.getElementById("to-currency-value").value;
+            const convertedAmount =
+              document.getElementById("converted-amount").textContent;
+
+            transferData = {
+              ...transferData,
+              fromAccount,
+              toAccount,
+              fromCurrency,
+              toCurrency,
+              convertedAmount,
+              exchangeRate: exchangeRates[fromCurrency]?.[toCurrency] || 0,
+            };
+          }
+
+          // Here you would typically make an API call to process the transfer
+          console.log("Transfer initiated:", transferData);
+
+          // Show success message
+          let successMessage = "";
+          if (activeTransferType === "between-accounts") {
+            successMessage = `Успешен превод от ${transferData.fromAccount} към ${transferData.toAccount} за сума ${amount} ${currencySymbol.textContent}`;
+          } else if (activeTransferType === "mobile") {
+            successMessage = `Успешно изпратени ${amount} ${currencySymbol.textContent} на ${transferData.mobileNumber} (${transferData.operator})`;
+          } else if (activeTransferType === "currency") {
+            successMessage = `Успешна конвертация от ${amount} ${transferData.fromCurrency} към ${transferData.convertedAmount} ${transferData.toCurrency}`;
+          }
+
+          alert(successMessage);
+
+          // Reset form
+          form.reset();
+
+          // Reset all select triggers
+          document
+            .querySelectorAll(".custom-select-trigger")
+            .forEach((trigger) => {
+              const id = trigger.id.replace("-trigger", "");
+              const defaultText =
+                {
+                  "from-account": "Изберете сметка/карта",
+                  "to-account": "Изберете сметка/карта",
+                  "mobile-from-account": "Изберете сметка/карта",
+                  "mobile-operator": "Изберете оператор",
+                  "currency-from-account": "Изберете сметка",
+                  "currency-to-account": "Изберете сметка",
+                  "to-currency": "Изберете валута",
+                }[id] || "Изберете опция";
+
+              trigger.textContent = defaultText;
+              trigger.classList.remove("selected");
             });
-            
-            // Reset hidden inputs
-            document.querySelectorAll('input[type="hidden"]').forEach(input => {
-                input.value = '';
-            });
-            
-            // Reset currency display
-            currencySymbol.textContent = 'BGN';
-            convertedAmountContainer.style.display = 'none';
-            
-            // Reset transfer type to default
-            if (activeTransferType !== 'between-accounts') {
-                document.querySelector(`.transfer-type-option[data-type="between-accounts"]`).click();
-            } else {
-                validateForm();
-            }
-            
-            // Add to recent transfers
-            addToRecentTransfers({
-                from: fromAccount,
-                to: toAccount,
-                amount: parseFloat(amount),
-                currency: 'BGN',
-                date: new Date(),
-                description: description
-            });
+
+          // Reset hidden inputs
+          document.querySelectorAll('input[type="hidden"]').forEach((input) => {
+            input.value = "";
+          });
+
+          // Reset currency display
+          currencySymbol.textContent = "BGN";
+          convertedAmountContainer.style.display = "none";
+
+          // Reset transfer type to default
+          if (activeTransferType !== "between-accounts") {
+            document
+              .querySelector(
+                `.transfer-type-option[data-type="between-accounts"]`
+              )
+              .click();
+          } else {
+            validateForm();
+          }
+
+          // Add to recent transfers
+          addToRecentTransfers({
+            from: fromAccount,
+            to: toAccount,
+            amount: parseFloat(amount),
+            currency: "BGN",
+            date: new Date(),
+            description: description,
+          });
         });
-        
+
         // Recent transfers functionality
         function addToRecentTransfers(transfer) {
-            const transfersList = document.getElementById('transfers-list');
-            const emptyState = transfersList.querySelector('.empty-state');
-            
-            if (emptyState) {
-                transfersList.removeChild(emptyState);
-            }
-            
-            const transferElement = document.createElement('div');
-            transferElement.className = 'transfer-item';
-            transferElement.innerHTML = `
+          const transfersList = document.getElementById("transfers-list");
+          const emptyState = transfersList.querySelector(".empty-state");
+
+          if (emptyState) {
+            transfersList.removeChild(emptyState);
+          }
+
+          const transferElement = document.createElement("div");
+          transferElement.className = "transfer-item";
+          transferElement.innerHTML = `
                 <div class="transfer-icon">
                     <i class="fas fa-exchange-alt"></i>
                 </div>
                 <div class="transfer-details">
                     <div class="transfer-accounts">
-                        <span class="transfer-from">${transfer.from.split(' - ')[0]}</span>
+                        <span class="transfer-from">${
+                          transfer.from.split(" - ")[0]
+                        }</span>
                         <i class="fas fa-arrow-right"></i>
-                        <span class="transfer-to">${transfer.to.split(' - ')[0]}</span>
+                        <span class="transfer-to">${
+                          transfer.to.split(" - ")[0]
+                        }</span>
                     </div>
                     <div class="transfer-meta">
-                        <span class="transfer-amount">-${transfer.amount.toFixed(2)} ${transfer.currency}</span>
-                        <span class="transfer-date">${formatDate(transfer.date)}</span>
+                        <span class="transfer-amount">-${transfer.amount.toFixed(
+                          2
+                        )} ${transfer.currency}</span>
+                        <span class="transfer-date">${formatDate(
+                          transfer.date
+                        )}</span>
                     </div>
-                    ${transfer.description ? `<div class="transfer-description">${transfer.description}</div>` : ''}
+                    ${
+                      transfer.description
+                        ? `<div class="transfer-description">${transfer.description}</div>`
+                        : ""
+                    }
                 </div>`;
-                
-            transfersList.insertBefore(transferElement, transfersList.firstChild);
+
+          transfersList.insertBefore(transferElement, transfersList.firstChild);
         }
-        
+
         function formatDate(date) {
-            const options = { day: '2-digit', month: 'short', year: 'numeric' };
-            return new Date(date).toLocaleDateString('bg-BG', options);
+          const options = { day: "2-digit", month: "short", year: "numeric" };
+          return new Date(date).toLocaleDateString("bg-BG", options);
         }
-        
+
         // Sample recent transfers (in a real app, this would come from an API)
         const sampleTransfers = [
-            {
-                from: 'BG12 3456 7890 1234 56 - 1,245.67 BGN',
-                to: 'BG98 7654 3210 9876 54 - 3,210.45 EUR',
-                amount: 150.75,
-                currency: 'BGN',
-                date: new Date('2025-05-23'),
-                description: 'Месечна вноска'
-            },
-            {
-                from: '**** 1234 (Visa) - 1,245.67 BGN',
-                to: 'BG12 3456 7890 1234 56 - 1,245.67 BGN',
-                amount: 300,
-                currency: 'BGN',
-                date: new Date('2025-05-15'),
-                description: 'Връщане на заем'
-            }
+          {
+            from: "BG12 3456 7890 1234 56 - 1,245.67 BGN",
+            to: "BG98 7654 3210 9876 54 - 3,210.45 EUR",
+            amount: 150.75,
+            currency: "BGN",
+            date: new Date("2025-05-23"),
+            description: "Месечна вноска",
+          },
+          {
+            from: "**** 1234 (Visa) - 1,245.67 BGN",
+            to: "BG12 3456 7890 1234 56 - 1,245.67 BGN",
+            amount: 300,
+            currency: "BGN",
+            date: new Date("2025-05-15"),
+            description: "Връщане на заем",
+          },
         ];
-        
+
         // Add sample transfers to the list
-        sampleTransfers.forEach(transfer => addToRecentTransfers(transfer));
-    });
+        sampleTransfers.forEach((transfer) => addToRecentTransfers(transfer));
+      });
     </script>
-</body>
+  </body>
 </html>

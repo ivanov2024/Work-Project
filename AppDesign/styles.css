@@ -4712,6 +4712,246 @@ main {
     font-weight: 600;
 }
 
+/* Credit Item Links */
+.credit-item-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 16px;
+    transition: transform 0.2s ease;
+}
+
+.credit-item-link:active {
+    transform: scale(0.98);
+}
+
+.credit-item {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.credit-item-link:hover .credit-item {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.credit-item-link:active .credit-item {
+    transform: translateY(1px);
+}
+
+/* Credit Details Page */
+.credit-details-page .page-header {
+    position: relative;
+    justify-content: center;
+}
+
+.credit-details-page .back-button {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1a73e8;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+.credit-details-main {
+    padding: 16px;
+    padding-bottom: 80px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.credit-summary,
+.credit-info-section,
+.action-buttons {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.action-buttons::after {
+    content: '';
+    display: block;
+    height: 22vh;
+    width: 100%;
+    position: absolute;
+    left: 0;
+}
+
+.credit-summary {
+    text-align: center;
+}
+
+.credit-icon {
+    width: 64px;
+    height: 64px;
+    background: #f0f7ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    color: #1a73e8;
+    font-size: 28px;
+}
+
+.credit-details-icon {
+    width: 60px;
+    height: 60px;
+    background: #f0f7ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    color: #1a73e8;
+    font-size: 24px;
+}
+
+.credit-name {
+    font-size: 1.3em;
+    margin: 8px 0;
+    color: #1a1a1a;
+}
+
+.credit-amount {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin: 8px 0;
+    color: #1a1a1a;
+}
+
+.credit-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+.credit-status.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.info-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 1.1em;
+    color: #1a1a1a;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95em;
+}
+
+.info-label {
+    color: #5f6368;
+}
+
+.info-value {
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+.progress-container {
+    margin-bottom: 16px;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.progress-bar-container {
+    height: 8px;
+    background: #f1f3f4;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #1a73e8;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.payment-schedule {
+    margin-bottom: 12px;
+}
+
+.payment-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9em;
+}
+
+.payment-row:last-child {
+    border-bottom: none;
+}
+
+.view-all-payments {
+    width: 100%;
+    background: none;
+    border: 1px solid #e0e0e0;
+    color: #1a73e8;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-primary {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: white;
+    color: #1a73e8;
+    border: 1px solid #1a73e8;
+    padding: 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1em;
+    cursor: pointer;
+}
+
 /* Credits page main content */
 .credits-page .credits-main {
     display: flex;

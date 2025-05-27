@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детайли за кредит | Банка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="credit-details-page">
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="credits.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="account-details-title section-title">Детайли за кредит</span>
+        </header>
+        
+        <main class="credit-details-main">
+            <div class="credit-summary">
+                <div class="credit-details-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h2 class="credit-name">Ипотечен Кредит</h2>
+                <div class="credit-amount">120 000 лв</div>
+                <div class="credit-status active">Активен</div>
+            </div>
+            
+            <div class="credit-info-section">
+                <div class="info-card">
+                    <h3>Основна информация</h3>
+                    <div class="info-row">
+                        <span class="info-label">Номер на кредит:</span>
+                        <span class="info-value">CRD-2023-12345</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Дата на отпускане:</span>
+                        <span class="info-value">15.03.2023</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Срок (месеци):</span>
+                        <span class="info-value">360</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Лихва:</span>
+                        <span class="info-value">3.5% годишно</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Състояние на кредита</h3>
+                    <div class="progress-container">
+                        <div class="progress-labels">
+                            <span>Изплатено: 30%</span>
+                            <span>70 000 лв / 120 000 лв</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" style="width: 30%;"></div>
+                        </div>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Оставащ главник:</span>
+                        <span class="info-value">84 000 лв</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Следваща вноска:</span>
+                        <span class="info-value">850 лв (15.06.2023)</span>
+                    </div>
+                </div>
+                
+                <div class="info-card">
+                    <h3>Следващи плащания</h3>
+                    <div class="payment-schedule">
+                        <div class="payment-row">
+                            <div>15.06.2023</div>
+                            <div>850 лв</div>
+                            <div>Планирано</div>
+                        </div>
+                        <div class="payment-row">
+                            <div>15.07.2023</div>
+                            <div>850 лв</div>
+                            <div>Планирано</div>
+                        </div>
+                        <div class="payment-row">
+                            <div>15.08.2023</div>
+                            <div>850 лв</div>
+                            <div>Планирано</div>
+                        </div>
+                    </div>
+                    <button class="view-all-payments">Виж всички плащания</button>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn-primary">Направи извънредно плащане</button>
+                <button class="btn-secondary">Изтепи извлечение</button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Set the mobile frame height
+        function setMobileFrameHeight() {
+            const frame = document.querySelector('.mobile-frame');
+            frame.style.height = window.innerHeight + 'px';
+        }
+        
+        window.addEventListener('load', setMobileFrameHeight);
+        window.addEventListener('resize', setMobileFrameHeight);
+
+        // Get credit ID from URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const creditId = urlParams.get('id');
+            
+            // Here you would typically fetch the credit details based on the ID
+            // For now, we'll use the ID to update the page if needed
+            if (creditId) {
+                // Update page content based on creditId
+                console.log('Loading credit details for ID:', creditId);
+            }
+        });
+    </script>
+</body>
+</html>

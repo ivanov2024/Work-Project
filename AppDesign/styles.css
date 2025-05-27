@@ -5013,6 +5013,10 @@ main {
     align-items: center;
     background-color: #fafafa;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .credits-page .page-title {

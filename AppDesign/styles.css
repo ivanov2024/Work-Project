@@ -4714,12 +4714,10 @@ main {
 
 /* Credits page main content */
 .credits-page .credits-main {
-    min-height: calc(100vh - 100px);
     display: flex;
     flex-direction: column;
-    padding-bottom: 150px;
     box-sizing: border-box;
-    background-color: #f8f9fa;
+    background-color: #fff;
 }
 
 /* Credit Score Styles */
@@ -4906,7 +4904,7 @@ main {
     align-items: center;
     justify-content: center;
     position: relative;
-    background-color: #f8f9fa;
+    background-color: #fff;
     border-bottom: 1px solid #f0f0f0;
     text-align: center;
 }
@@ -4963,7 +4961,7 @@ main {
     justify-content: space-between;
     align-items: center;
     padding: 12px 16px 16px;
-    background-color: #f8f9fa;
+    background-color: #fff;
     border-top: 1px solid #f0f0f0;
 }
 
@@ -4989,12 +4987,23 @@ main {
 }
 
 .credits-page .credit-cards-container {
-    padding: 0 16px 60px; /* Increased bottom padding */
+    padding: 0 16px 20px; /* Reduced bottom padding */
     flex: 1;
-    margin-bottom: 80px; /* Increased margin to ensure space above bottom nav */
     width: 100%;
     box-sizing: border-box;
-    background-color: #f8f9fa;
+    background-color: #fff;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.credits-main {
+    width: 100%;
+    min-height: 100vh;
+    padding-bottom: 50px;
+    position: relative;
+    overflow-y: auto;
 }
 
 .credits-page .page-header {
@@ -5002,7 +5011,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f8f9fa;
+    background-color: #fafafa;
     text-align: center;
 }
 

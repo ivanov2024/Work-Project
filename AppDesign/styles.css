@@ -1,9 +1,3 @@
-/* Transfer Page Styles */
-.transfer-container {
-    padding: 16px;
-    padding-bottom: 120px; /* Extra space for bottom elements */
-}
-
 /* Transfer type selector */
 .transfer-type-selector {
     display: flex;
@@ -5240,10 +5234,9 @@ main {
 
 .credits-main {
     width: 100%;
-    min-height: 100vh;
+    min-height: 550vh;
     padding-bottom: 50px;
     position: relative;
-    overflow-y: auto;
 }
 
 .credits-page .page-header {
@@ -5253,10 +5246,11 @@ main {
     align-items: center;
     background-color: #fafafa;
     text-align: center;
-    position: sticky;
-    top: 0;
+    position: relative;
     z-index: 100;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: static;
+    transform: none !important;
 }
 
 .credits-page .page-title {

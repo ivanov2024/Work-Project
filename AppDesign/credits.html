@@ -7,6 +7,37 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Mobile frame styles */
+        .credits-page .mobile-frame {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 80px;
+            box-sizing: border-box;
+        }
+        
+        /* Bottom nav animation styles */
+        .credits-page .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: transform 0.15s ease-in-out; /* Faster animation */
+            transform: translateY(0);
+            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .credits-page .bottom-nav.hide {
+            transform: translateY(100%);
+        }
+    </style>
 </head>
 <body class="credits-page">
     <div class="mobile-frame">
@@ -189,10 +220,11 @@
                     <p>Гъвкаво разполагане с пари</p>
                     <div class="card-footer">
                         <div>
-                            <p>Годишен лихвен процент:</p>
-                            <span class="interest-rate">11.9%</span>
+                            <!-- Interest rate field -->
+                            <!-- <p>Годишен лихвен процент:</p> -->
+                            <!-- <span class="interest-rate">11.9%</span> -->
                         </div>
-                        <button class="apply-btn btn-gold" onclick="location.href='apply-credit.html?type=8'">Кандидатствай</button>
+                        <button class="apply-btn btn-gold" onclick="location.href='request-card.html?type=8'">Кандидатствай</button>
                     </div>
                 </div>
 
@@ -312,13 +344,48 @@
     </nav>
 
     <script>
-        // Set the mobile frame height
-        function setMobileFrameHeight() {
-            document.querySelector('.mobile-frame').style.height = window.innerHeight + 'px';
+        // Initialize variables for scroll handling
+        let lastScrollTop = 0;
+        let isScrolling;
+        const bottomNav = document.querySelector('.bottom-nav');
+        const mobileFrame = document.querySelector('.mobile-frame');
+        
+        // Handle scroll events for bottom nav animation
+        function handleScroll() {
+            const scrollPosition = mobileFrame.scrollTop;
+            
+            // At the top of the page
+            if (scrollPosition <= 10) {
+                bottomNav.classList.remove('hide');
+                lastScrollTop = 0;
+                return;
+            }
+            
+            // Scrolling down
+            if (scrollPosition > lastScrollTop) {
+                bottomNav.classList.add('hide');
+            } 
+            // Scrolling up
+            else {
+                bottomNav.classList.remove('hide');
+            }
+            
+            lastScrollTop = scrollPosition <= 0 ? 0 : scrollPosition;
         }
         
-        window.addEventListener('load', setMobileFrameHeight);
-        window.addEventListener('resize', setMobileFrameHeight);
+        // Throttle the scroll event for better performance
+        function onScroll() {
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(handleScroll, 30); // Faster response
+        }
+        
+        // Add scroll listener to the mobile frame
+        mobileFrame.addEventListener('scroll', onScroll, { passive: true });
+        
+        // Initial check and setup
+        handleScroll();
+        document.body.style.overflow = 'hidden';
+        mobileFrame.style.overflowY = 'auto';
     </script>
 </body>
 </html>

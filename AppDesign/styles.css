@@ -5234,8 +5234,7 @@ main {
 
 .credits-main {
     width: 100%;
-    min-height: 550vh;
-    padding-bottom: 50px;
+    min-height: 450vh;
     position: relative;
 }
 

@@ -4843,7 +4843,7 @@ main {
 
 .info-card h3 {
     margin: 0 0 16px 0;
-    font-size: 1.1em;
+    font-size: 18px;
     color: #1a1a1a;
     padding-bottom: 8px;
     border-bottom: 1px solid #f0f0f0;
@@ -5206,6 +5206,8 @@ main {
     font-size: 0.75rem;
     font-weight: 500;
     margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .status-badge.active {
@@ -5341,4 +5343,396 @@ main {
     color: #666;
     margin-top: 5px;
     line-height: 1.4;
+}
+
+/* Credit Status Card */
+.credit-status-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.credit-status-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.credit-progress-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.progress-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.progress-percentage {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a73e8;
+}
+
+.progress-amount {
+    font-size: 14px;
+    color: #5f6368;
+}
+
+.progress-container {
+    height: 8px;
+    background: #f1f3f4;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #1a73e8;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+
+.progress-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.progress-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-size: 14px;
+    color: #5f6368;
+    flex: 1;
+}
+
+.detail-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-align: right;
+    flex: 1;
+}
+
+.remaining-amount {
+    color: #d93025;
+    font-weight: 600;
+}
+
+.next-payment {
+    color: #1e8e3e;
+    font-weight: 600;
+}
+
+.next-payment-date {
+    color: #5f6368;
+    font-size: 13px !important;
+}
+
+/* Credit Info Card */
+.credit-info-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.credit-info-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.credit-info-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-label {
+    font-size: 14px;
+    color: #5f6368;
+    flex: 1;
+}
+
+.info-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    text-align: right;
+    flex: 1;
+}
+
+.credit-number,
+.credit-date,
+.credit-term,
+.credit-rate {
+    font-weight: 600;
+}
+
+.credit-rate {
+    color: #1e8e3e;
+}
+
+/* Payments Card */
+.payments-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.payments-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.payments-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* Payment Rows Container */
+.payments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;  /* Reduced from 8px */
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 0 4px 4px 0;  /* Reduced padding */
+    margin-right: -4px;  /* Reduced negative margin */
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f1f1f1;
+    width: calc(100% + 4px);  /* Adjusted for reduced margin */
+}
+
+/* WebKit scrollbar styles */
+.payments-list::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.payments-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.payments-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.payments-list::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Base Payment Row */
+.payments-row {
+    display: flex;
+    align-items: stretch;
+    background: #f8f9fa;
+    border-radius: 8px;
+    font-size: 14px;
+    min-width: min-content;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease;
+    overflow: visible;
+    position: relative;
+}
+
+/* Payment Header Row */
+.payments-header {
+    width: 100%;
+    min-width: 100%;
+    background: #f1f3f4;
+    border-radius: 8px 8px 0 0;
+    margin: 0 -4px 8px -4px;
+    padding: 8px 4px 8px 8px;
+    font-weight: 500;
+    color: #5f6368;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    box-sizing: border-box;
+}
+
+/* Payment Content Wrapper */
+.payment-content {
+    display: flex;
+    min-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 16px;
+}
+
+/* Payment Content in Header */
+.payments-header .payment-content {
+    padding: 8px 4px;
+}
+
+/* Header-specific content */
+.payments-row.header .payment-content {
+    padding: 8px 4px;  /* Match content row padding */
+    min-width: 100%;
+}
+
+/* Header column styles */
+.payments-header .col-date,
+.payments-header .col-amount,
+.payments-header .col-status {
+    font-weight: 500;
+    color: #5f6368;
+    text-transform: none;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+/* Match header column widths with content columns */
+.payments-header .col-date {
+    width: 80px;
+    padding: 0 4px;
+}
+
+.payments-header .col-amount {
+    width: 80px;
+    padding: 0 4px;
+    text-align: right;
+}
+
+.payments-header .col-status {
+    width: 70px;
+    padding: 0 4px 0 0;
+    text-align: right;
+}
+
+/* Hover effect for non-header rows */
+.payments-row:not(.header):hover {
+    background-color: #f1f3f4;
+}
+
+/* Columns */
+.col-date, .col-amount, .col-status {
+    display: flex;
+    align-items: center;
+    background: inherit;
+    white-space: nowrap;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+/* Default column styles */
+.col-date {
+    width: 120px;
+    color: #5f6368;
+    padding: 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.col-amount {
+    width: 100px;
+    font-weight: 500;
+    padding: 0 8px;
+    text-align: right;
+}
+
+.col-status {
+    width: 100px;
+    font-weight: 500;
+    text-transform: capitalize;
+    padding: 0 8px;
+    text-align: right;
+    color: #1a1a1a;
+}
+
+/* Header-specific column styles */
+.payments-header .col-date {
+    width: 80px;
+    padding: 0 4px;
+}
+
+.payments-header .col-amount {
+    width: 80px;
+    padding: 0 4px;
+}
+
+.payments-header .col-status {
+    width: 70px;
+    padding: 0 4px 0 0;
+}
+
+.status-upcoming {
+    color: #1a73e8;
+}
+
+.status-completed {
+    color: #1e8e3e;
+}
+
+.status-overdue {
+    color: #d93025;
+}
+
+.view-all-payments {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    color: #1a73e8;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: all 0.2s ease;
+}
+
+.view-all-payments:hover {
+    background-color: #f1f3f4;
+}
+
+.view-all-payments:active {
+    background-color: #e8f0fe;
+    border-color: #d2e3fc;
 }

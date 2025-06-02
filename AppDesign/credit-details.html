@@ -20,73 +20,101 @@
                 <div class="credit-details-icon">
                     <i class="fas fa-home"></i>
                 </div>
-                <h2 class="credit-name">Ипотечен Кредит</h2>
-                <div class="credit-amount">120 000 лв</div>
-                <div class="credit-status active">Активен</div>
+                <h2 class="credit-name"></h2>
+                <div class="credit-amount"></div>
+                <div class="credit-status active"></div>
             </div>
             
             <div class="credit-info-section">
-                <div class="info-card">
+                <div class="info-card credit-info-card">
                     <h3>Основна информация</h3>
-                    <div class="info-row">
-                        <span class="info-label">Номер на кредит:</span>
-                        <span class="info-value">CRD-2023-12345</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Дата на отпускане:</span>
-                        <span class="info-value">15.03.2023</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Срок (месеци):</span>
-                        <span class="info-value">360</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Лихва:</span>
-                        <span class="info-value">3.5% годишно</span>
+                    <div class="credit-info-wrapper">
+                        <div class="info-detail">
+                            <span class="info-label">Номер на кредит:</span>
+                            <span class="info-value credit-number"></span>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-label">Дата на отпускане:</span>
+                            <span class="info-value credit-date"></span>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-label">Срок (месеци):</span>
+                            <span class="info-value credit-term"></span>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-label">Лихва:</span>  
+                            <span class="info-value credit-rate"></span>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="info-card">
+                <div class="info-card credit-status-card">
                     <h3>Състояние на кредита</h3>
-                    <div class="progress-container">
-                        <div class="progress-labels">
-                            <span>Изплатено: 30%</span>
-                            <span>70 000 лв / 120 000 лв</span>
+                    <div class="credit-progress-wrapper">
+                        <div class="progress-summary">
+                            <span class="progress-percentage">0%</span>
+                            <span class="progress-amount">0 лв / 0 лв</span>
                         </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 30%;"></div>
+                        <div class="progress-container">
+                            <div class="progress-bar"></div>
                         </div>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Оставащ главник:</span>
-                        <span class="info-value">84 000 лв</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Следваща вноска:</span>
-                        <span class="info-value">850 лв (15.06.2023)</span>
+                        <div class="progress-details">
+                            <div class="progress-detail">
+                                <span class="detail-label">Оставащ главник:</span>
+                                <span class="detail-value remaining-amount">0.00 лв</span>
+                            </div>
+                            <div class="progress-detail">
+                                <span class="detail-label">Следваща вноска:</span>
+                                <span class="detail-value next-payment">0.00 лв</span>
+                            </div>
+                            <div class="progress-detail">
+                                <span class="detail-label">Дата на следваща вноска:</span>
+                                <span class="detail-value next-payment-date">--.--.----</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="info-card">
+                <div class="info-card payments-card">
                     <h3>Следващи плащания</h3>
-                    <div class="payment-schedule">
-                        <div class="payment-row">
-                            <div>15.06.2023</div>
-                            <div>850 лв</div>
-                            <div>Планирано</div>
+                    <div class="payments-container">
+                        <!-- Header -->
+                        <div class="payments-header">
+                            <div class="payment-content">
+                                <div class="col-date">Дата</div>
+                                <div class="col-amount">Сума</div>
+                                <div class="col-status">Статус</div>
+                            </div>
                         </div>
-                        <div class="payment-row">
-                            <div>15.07.2023</div>
-                            <div>850 лв</div>
-                            <div>Планирано</div>
+                        
+                        <!-- Payments List -->
+                        <div class="payments-list">
+                            <div class="payments-row">
+                                <div class="payment-content">
+                                    <div class="col-date">--.--.----</div>
+                                    <div class="col-amount">0.00 лв</div>
+                                    <div class="col-status">-</div>
+                                </div>
+                            </div>
+                            <div class="payments-row">
+                                <div class="payment-content">
+                                    <div class="col-date">--.--.----</div>
+                                    <div class="col-amount">0.00 лв</div>
+                                    <div class="col-status">-</div>
+                                </div>
+                            </div>
+                            <div class="payments-row">
+                                <div class="payment-content">
+                                    <div class="col-date">--.--.----</div>
+                                    <div class="col-amount">0.00 лв</div>
+                                    <div class="col-status">-</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="payment-row">
-                            <div>15.08.2023</div>
-                            <div>850 лв</div>
-                            <div>Планирано</div>
-                        </div>
+                        
+                        <!-- Footer -->
+                        <button class="view-all-payments">Виж всички плащания</button>
                     </div>
-                    <button class="view-all-payments">Виж всички плащания</button>
                 </div>
             </div>
             
@@ -98,27 +126,183 @@
     </div>
     
     <script>
+        // Credit data - in a real app, this would come from an API
+        const creditsData = {
+            '1': {
+                id: '1',
+                type: 'Ипотечен Кредит',
+                amount: 120000,
+                status: 'Активен',
+                number: 'CRD-2023-12345',
+                startDate: '15.03.2023',
+                term: 360,
+                interestRate: 3.5,
+                paidAmount: 36000,
+                remainingAmount: 84000,
+                nextPayment: {
+                    amount: 850,
+                    dueDate: '15.06.2023'
+                },
+                icon: 'fa-home',
+                payments: [
+                    { date: '15.06.2023', amount: 850, status: 'Планирано' },
+                    { date: '15.07.2023', amount: 850, status: 'Планирано' },
+                    { date: '15.08.2023', amount: 850, status: 'Планирано' }
+                ]
+            },
+            '2': {
+                id: '2',
+                type: 'Автокредит',
+                amount: 35000,
+                status: 'Активен',
+                number: 'CRD-2023-12346',
+                startDate: '10.01.2023',
+                term: 60,
+                interestRate: 4.9,
+                paidAmount: 14000,
+                remainingAmount: 21000,
+                nextPayment: {
+                    amount: 520,
+                    dueDate: '10.07.2023'
+                },
+                icon: 'fa-car',
+                payments: [
+                    { date: '10.06.2023', amount: 520, status: 'Платено' },
+                    { date: '10.07.2023', amount: 520, status: 'Планирано' },
+                    { date: '10.08.2023', amount: 520, status: 'Планирано' }
+                ]
+            },
+            '3': {
+                id: '3',
+                type: 'Персонален Кредит',
+                amount: 10000,
+                status: 'Активен',
+                number: 'CRD-2023-12347',
+                startDate: '05.05.2023',
+                term: 36,
+                interestRate: 7.9,
+                paidAmount: 2000,
+                remainingAmount: 8000,
+                nextPayment: {
+                    amount: 310,
+                    dueDate: '05.07.2023'
+                },
+                icon: 'fa-wallet',
+                payments: [
+                    { date: '05.06.2023', amount: 310, status: 'Платено' },
+                    { date: '05.07.2023', amount: 310, status: 'Планирано' },
+                    { date: '05.08.2023', amount: 310, status: 'Планирано' }
+                ]
+            }
+        };
+
         // Set the mobile frame height
         function setMobileFrameHeight() {
             const frame = document.querySelector('.mobile-frame');
             frame.style.height = window.innerHeight + 'px';
         }
-        
-        window.addEventListener('load', setMobileFrameHeight);
-        window.addEventListener('resize', setMobileFrameHeight);
 
-        // Get credit ID from URL parameters
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('bg-BG', { 
+                style: 'decimal', 
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2 
+            }).format(amount) + ' лв';
+        }
+
+        // Calculate progress percentage
+        function calculateProgress(paid, total) {
+            return Math.round((paid / total) * 100);
+        }
+
+        // Update page with credit data
+        function updateCreditDetails(credit) {
+            if (!credit) return;
+
+            // Update header and title
+            document.querySelector('.credit-name').textContent = credit.type;
+            document.querySelector('.credit-amount').textContent = formatCurrency(credit.amount);
+            document.querySelector('.credit-status').textContent = credit.status;
+            document.querySelector('.credit-details-icon i').className = `fas ${credit.icon}`;
+
+            // Update basic info
+            document.querySelector('.credit-number').textContent = credit.number;
+            document.querySelector('.credit-date').textContent = credit.startDate;
+            document.querySelector('.credit-term').textContent = credit.term;
+            document.querySelector('.credit-rate').textContent = `${credit.interestRate}% годишно`;
+
+            // Update progress bar and labels
+            const progressPercent = calculateProgress(credit.paidAmount, credit.amount);
+            document.querySelector('.progress-percentage').textContent = `${progressPercent}%`;
+            document.querySelector('.progress-amount').textContent = 
+                `${formatCurrency(credit.paidAmount)} / ${formatCurrency(credit.amount)}`;
+            document.querySelector('.progress-bar').style.width = `${progressPercent}%`;
+
+            // Update remaining amount and next payment
+            document.querySelector('.remaining-amount').textContent = formatCurrency(credit.remainingAmount);
+            document.querySelector('.next-payment').textContent = formatCurrency(credit.nextPayment.amount);
+            document.querySelector('.next-payment-date').textContent = credit.nextPayment.dueDate;
+
+            // Update payment schedule
+            const paymentRows = document.querySelectorAll('.payments-list .payments-row');
+            credit.payments.forEach((payment, index) => {
+                if (paymentRows[index]) {
+                    const row = paymentRows[index];
+                    const content = row.querySelector('.payment-content');
+                    
+                    // Update date
+                    const dateElement = document.createElement('div');
+                    dateElement.className = 'col-date';
+                    dateElement.textContent = payment.date;
+                    
+                    // Update amount
+                    const amountElement = document.createElement('div');
+                    amountElement.className = 'col-amount';
+                    amountElement.textContent = formatCurrency(payment.amount);
+                    
+                    // Update status
+                    const statusElement = document.createElement('div');
+                    statusElement.className = 'col-status';
+                    statusElement.textContent = payment.status;
+                    
+                    // Add status class
+                    if (payment.status.toLowerCase() === 'изпълнено') {
+                        statusElement.classList.add('status-completed');
+                    } else if (payment.status.toLowerCase() === 'предстоящо') {
+                        statusElement.classList.add('status-upcoming');
+                    } else if (payment.status.toLowerCase() === 'просрочено') {
+                        statusElement.classList.add('status-overdue');
+                    }
+                    
+                    // Clear existing content and append new elements
+                    content.innerHTML = '';
+                    content.appendChild(dateElement);
+                    content.appendChild(amountElement);
+                    content.appendChild(statusElement);
+                }
+            });
+        }
+
+        // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
+            setMobileFrameHeight();
+            
+            // Get credit ID from URL
             const urlParams = new URLSearchParams(window.location.search);
             const creditId = urlParams.get('id');
             
-            // Here you would typically fetch the credit details based on the ID
-            // For now, we'll use the ID to update the page if needed
-            if (creditId) {
-                // Update page content based on creditId
-                console.log('Loading credit details for ID:', creditId);
+            if (creditId && creditsData[creditId]) {
+                updateCreditDetails(creditsData[creditId]);
+            } else {
+                // Handle invalid or missing credit ID
+                console.error('Invalid or missing credit ID');
+                // Redirect back to credits page or show error
+                // window.location.href = 'credits.html';
             }
         });
+
+        window.addEventListener('resize', setMobileFrameHeight);
     </script>
 </body>
 </html>

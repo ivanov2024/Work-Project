@@ -89,27 +89,7 @@
                         
                         <!-- Payments List -->
                         <div class="payments-list">
-                            <div class="payments-row">
-                                <div class="payment-content">
-                                    <div class="col-date">--.--.----</div>
-                                    <div class="col-amount">0.00 лв</div>
-                                    <div class="col-status">-</div>
-                                </div>
-                            </div>
-                            <div class="payments-row">
-                                <div class="payment-content">
-                                    <div class="col-date">--.--.----</div>
-                                    <div class="col-amount">0.00 лв</div>
-                                    <div class="col-status">-</div>
-                                </div>
-                            </div>
-                            <div class="payments-row">
-                                <div class="payment-content">
-                                    <div class="col-date">--.--.----</div>
-                                    <div class="col-amount">0.00 лв</div>
-                                    <div class="col-status">-</div>
-                                </div>
-                            </div>
+                            <!-- Payments will be inserted here by JavaScript -->
                         </div>
                         
                         <!-- Footer -->
@@ -123,6 +103,24 @@
                 <button class="btn-secondary">Изтепи извлечение</button>
             </div>
         </main>
+    </div>
+    
+    <!-- Payments Modal -->
+    <div id="payments-modal" class="terms-modal" style="display:none;">
+        <div class="terms-modal-content">
+            <div class="terms-modal-content-inner">
+                <button class="terms-modal-close" id="payments-modal-close" aria-label="Затвори">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="terms-modal-title">Всички плащания</div>
+                <div class="payments-modal-container">
+                    <div id="all-payments-list" class="payments-list-vertical">
+                        <!-- Payments will be inserted here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="terms-modal-backdrop"></div>
     </div>
     
     <script>
@@ -218,70 +216,114 @@
 
         // Update page with credit data
         function updateCreditDetails(credit) {
-            if (!credit) return;
-
-            // Update header and title
+            // Update basic credit info
             document.querySelector('.credit-name').textContent = credit.type;
             document.querySelector('.credit-amount').textContent = formatCurrency(credit.amount);
             document.querySelector('.credit-status').textContent = credit.status;
-            document.querySelector('.credit-details-icon i').className = `fas ${credit.icon}`;
-
-            // Update basic info
             document.querySelector('.credit-number').textContent = credit.number;
             document.querySelector('.credit-date').textContent = credit.startDate;
             document.querySelector('.credit-term').textContent = credit.term;
             document.querySelector('.credit-rate').textContent = `${credit.interestRate}% годишно`;
-
-            // Update progress bar and labels
-            const progressPercent = calculateProgress(credit.paidAmount, credit.amount);
-            document.querySelector('.progress-percentage').textContent = `${progressPercent}%`;
-            document.querySelector('.progress-amount').textContent = 
-                `${formatCurrency(credit.paidAmount)} / ${formatCurrency(credit.amount)}`;
-            document.querySelector('.progress-bar').style.width = `${progressPercent}%`;
-
-            // Update remaining amount and next payment
-            document.querySelector('.remaining-amount').textContent = formatCurrency(credit.remainingAmount);
             document.querySelector('.next-payment').textContent = formatCurrency(credit.nextPayment.amount);
             document.querySelector('.next-payment-date').textContent = credit.nextPayment.dueDate;
-
-            // Update payment schedule
-            const paymentRows = document.querySelectorAll('.payments-list .payments-row');
-            credit.payments.forEach((payment, index) => {
-                if (paymentRows[index]) {
-                    const row = paymentRows[index];
-                    const content = row.querySelector('.payment-content');
-                    
-                    // Update date
-                    const dateElement = document.createElement('div');
-                    dateElement.className = 'col-date';
-                    dateElement.textContent = payment.date;
-                    
-                    // Update amount
-                    const amountElement = document.createElement('div');
-                    amountElement.className = 'col-amount';
-                    amountElement.textContent = formatCurrency(payment.amount);
-                    
-                    // Update status
-                    const statusElement = document.createElement('div');
-                    statusElement.className = 'col-status';
-                    statusElement.textContent = payment.status;
-                    
-                    // Add status class
-                    if (payment.status.toLowerCase() === 'изпълнено') {
-                        statusElement.classList.add('status-completed');
-                    } else if (payment.status.toLowerCase() === 'предстоящо') {
-                        statusElement.classList.add('status-upcoming');
-                    } else if (payment.status.toLowerCase() === 'просрочено') {
-                        statusElement.classList.add('status-overdue');
-                    }
-                    
-                    // Clear existing content and append new elements
-                    content.innerHTML = '';
-                    content.appendChild(dateElement);
-                    content.appendChild(amountElement);
-                    content.appendChild(statusElement);
+            document.querySelector('.remaining-amount').textContent = formatCurrency(credit.remainingAmount);
+            
+            // Update progress bar
+            const progressBar = document.querySelector('.progress-bar');
+            if (progressBar) {
+                const progress = calculateProgress(credit.paidAmount, credit.amount);
+                progressBar.style.width = `${progress}%`;
+            }
+            
+            // Update payments list in main view
+            const paymentsList = document.querySelector('.payments-list');
+            if (paymentsList) {
+                // Clear existing placeholders
+                paymentsList.innerHTML = '';
+                
+                // Add real payments (limited to 3 in main view)
+                credit.payments.slice(0, 3).forEach(payment => {
+                    const paymentRow = document.createElement('div');
+                    paymentRow.className = 'payments-row';
+                    paymentRow.innerHTML = `
+                        <div class="payment-content">
+                            <div class="col-date">${payment.date}</div>
+                            <div class="col-amount">${formatCurrency(payment.amount)}</div>
+                            <div class="col-status ${payment.status === 'Платено' ? 'status-completed' : 'status-upcoming'}">
+                                ${payment.status}
+                            </div>
+                        </div>
+                    `;
+                    paymentsList.appendChild(paymentRow);
+                });
+                
+                // Update all payments in modal
+                const allPaymentsList = document.getElementById('all-payments-list');
+                if (allPaymentsList) {
+                    allPaymentsList.innerHTML = '';
+                    credit.payments.forEach(payment => {
+                        const paymentRow = document.createElement('div');
+                        paymentRow.className = 'payment-item';
+                        paymentRow.innerHTML = `
+                            <div class="payment-content">
+                                <div class="payment-row">
+                                    <span class="payment-label">Дата:</span>
+                                    <span class="payment-value">${payment.date}</span>
+                                </div>
+                                <div class="payment-row">
+                                    <span class="payment-label">Сума:</span>
+                                    <span class="payment-value">${formatCurrency(payment.amount)}</span>
+                                </div>
+                                <div class="payment-row">
+                                    <span class="payment-label">Статус:</span>
+                                    <span class="payment-value ${payment.status === 'Платено' ? 'status-completed' : 'status-upcoming'}">
+                                        ${payment.status}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                        allPaymentsList.appendChild(paymentRow);
+                    });
                 }
-            });
+            }
+        }
+
+        // Payments Modal Elements
+        const paymentsModal = document.getElementById('payments-modal');
+        const paymentsModalClose = document.getElementById('payments-modal-close');
+        const viewAllPaymentsBtn = document.querySelector('.view-all-payments');
+        const allPaymentsList = document.getElementById('all-payments-list');
+        
+        // Open payments modal
+        function openPaymentsModal() {
+            if (paymentsModal) {
+                paymentsModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                // Scroll to top when opening
+                const contentInner = paymentsModal.querySelector('.terms-modal-content-inner');
+                if (contentInner) {
+                    contentInner.scrollTop = 0;
+                }
+            }
+        }
+        
+        // Close payments modal
+        function closePaymentsModal() {
+            if (paymentsModal) {
+                paymentsModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+        
+        // Event listeners for modal
+        if (viewAllPaymentsBtn) {
+            viewAllPaymentsBtn.addEventListener('click', openPaymentsModal);
+        }
+        if (paymentsModalClose) {
+            paymentsModalClose.addEventListener('click', closePaymentsModal);
+        }
+        if (paymentsModal) {
+            paymentsModal.querySelector('.terms-modal-backdrop').addEventListener('click', closePaymentsModal);
         }
 
         // Initialize the page

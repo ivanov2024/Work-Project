@@ -5516,36 +5516,56 @@ main {
     font-weight: 600;
     color: #1a1a1a;
     margin: 0 0 16px 0;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #eaeaea;
+    font-weight: 600;
+    font-size: 1.1em;
 }
 
 .payments-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 2px;
 }
-
 
 /* Payment Rows Container */
 .payments-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;  /* Reduced from 8px */
-    max-height: 300px;
+    gap: 12px;
+    max-height: 320px;
     overflow-y: auto;
     overflow-x: auto;
-    padding: 0 4px 4px 0;  /* Reduced padding */
-    margin-right: -4px;  /* Reduced negative margin */
+    padding: 4px 8px 8px 0px;
+    margin: 0 -4px;
     scrollbar-width: thin;
-    scrollbar-color: #c1c1c1 #f1f1f1;
-    width: calc(100% + 4px);  /* Adjusted for reduced margin */
+    scrollbar-color: #d0d0d0 #f5f5f5;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+/* Custom scrollbar for WebKit browsers */
+.payments-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.payments-list::-webkit-scrollbar-track {
+    background: #f5f5f5;
+    border-radius: 3px;
+}
+
+.payments-list::-webkit-scrollbar-thumb {
+    background-color: #d0d0d0;
+    border-radius: 3px;
+}
+
+.payments-list::-webkit-scrollbar-thumb:hover {
+    background-color: #b0b0b0;
 }
 
 /* WebKit scrollbar styles */
 .payments-list::-webkit-scrollbar {
     width: 6px;
-    height: 6px;
 }
 
 .payments-list::-webkit-scrollbar-track {
@@ -5569,10 +5589,9 @@ main {
     background: #f8f9fa;
     border-radius: 8px;
     font-size: 14px;
-    min-width: min-content;
-    width: 100%;
+    min-width: 100%;
+    width: max-content;
     box-sizing: border-box;
-    transition: background-color 0.2s ease;
     overflow: visible;
     position: relative;
 }
@@ -5582,9 +5601,8 @@ main {
     width: 100%;
     min-width: 100%;
     background: #f1f3f4;
-    border-radius: 8px 8px 0 0;
-    margin: 0 -4px 8px -4px;
-    padding: 8px 4px 8px 8px;
+    border-radius: 8px;
+    padding: 8px 12px;
     font-weight: 500;
     color: #5f6368;
     position: sticky;
@@ -5592,8 +5610,9 @@ main {
     z-index: 1;
     display: flex;
     font-size: 13px;
-    border-bottom: 1px solid #f0f0f0;
     box-sizing: border-box;
+    width: calc(100% + 8px);
+    margin-left: -4px;
 }
 
 /* Payment Content Wrapper */
@@ -5644,11 +5663,6 @@ main {
     width: 70px;
     padding: 0 4px 0 0;
     text-align: right;
-}
-
-/* Hover effect for non-header rows */
-.payments-row:not(.header):hover {
-    background-color: #f1f3f4;
 }
 
 /* Columns */
@@ -5735,4 +5749,129 @@ main {
 .view-all-payments:active {
     background-color: #e8f0fe;
     border-color: #d2e3fc;
+}
+
+/* Payments Modal Styles */
+.payments-modal-container {
+    margin-top: 15px;
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.payments-list-vertical {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 8px 0;
+}
+
+.payment-item {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 16px;
+}
+
+.payment-item:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Stack content vertically in modal */
+.payments-modal-container .payment-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+}
+
+.payments-modal-container .payment-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 15px;
+    line-height: 1.4;
+    border-bottom: 1px solid #f8f8f8;
+}
+
+.payments-modal-container .payment-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.payments-modal-container .payment-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.payments-modal-container .payment-value {
+    color: #333;
+    font-weight: 600;
+    text-align: right;
+}
+
+/* Make sure the modal content takes full width */
+.terms-modal .terms-modal-content {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 0;
+    height: 100%;
+}
+
+.terms-modal .terms-modal-content-inner {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.terms-modal .terms-modal-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-label {
+    color: #666;
+    font-weight: 500;
+    margin-right: 8px;
+}
+
+.payment-value {
+    color: #333;
+    font-weight: 600;
+    text-align: right;
+}
+
+.payment-value.status-completed {
+    color: #10b981;
+}
+
+.payment-value.status-upcoming {
+    color: #f59e0b;
+}
+
+/* Scrollbar styles for the modal */
+.payments-modal-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.payments-modal-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.payments-modal-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 10px;
+}
+
+.payments-modal-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
 }

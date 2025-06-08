@@ -3014,7 +3014,7 @@ body, html {
     position: relative;
     background: white;
     border-radius: 12px;
-    width: calc(100% - 32px); /* Account for padding */
+    width: calc(100% - 32px);
     max-width: 500px;
     max-height: 80vh;
     display: flex;
@@ -3022,10 +3022,9 @@ body, html {
     z-index: 1002;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     pointer-events: auto;
-    overflow-y: auto;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    margin: 20px 0; /* Reduced margin */
-    box-sizing: border-box; /* Include padding in width calculation */
+    overflow: hidden; /* Changed from overflow-y: auto to prevent scrollbar on content */
+    margin: 20px 0;
+    box-sizing: border-box;
 }
 
 .terms-modal-content-inner {
@@ -3034,8 +3033,9 @@ body, html {
     box-sizing: border-box;
     position: relative;
     max-width: 100%;
-    overflow-x: hidden; /* Prevent horizontal scroll */
-    word-wrap: break-word; /* Break long words if needed */
+    overflow: visible; /* Changed from overflow-x: hidden to allow content to flow */
+    word-wrap: break-word;
+    max-height: none; /* Ensure no height restriction */
 }
 /* Products page specific styles */
 body.products-page .mobile-frame {
@@ -3050,31 +3050,7 @@ body.products-page main {
     box-sizing: border-box;
 }
 
-/* Custom scrollbar for WebKit browsers */
-.terms-modal-content-inner::-webkit-scrollbar {
-    width: 8px;
-}
-
-.terms-modal-content-inner::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
-    margin: 8px 0;
-}
-
-.terms-modal-content-inner::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
-    border-radius: 4px;
-}
-
-.terms-modal-content-inner::-webkit-scrollbar-thumb:hover {
-    background-color: #a8a8a8;
-}
-
-/* Firefox scrollbar */
-.terms-modal-content-inner {
-    scrollbar-width: thin;
-    scrollbar-color: #c1c1c1 #f1f1f1;
-}
+/* Scrollbar styles removed as they're no longer needed for the inner content */
 
 .terms-modal-close {
     position: absolute;
@@ -4768,13 +4744,79 @@ main {
     box-sizing: border-box;
 }
 
+/* Payment Form Styles in Modal */
+#payment-modal .payment-form {
+    padding: 16px 0;
+}
+
+#payment-modal .form-group {
+    margin-bottom: 20px;
+}
+
+#payment-modal .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    font-weight: 500;
+    color: #202124;
+}
+
+#payment-modal .form-control {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 1em;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,0.1);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#payment-modal .form-control:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+    outline: none;
+}
+
+#payment-modal input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+#payment-modal input[type="number"]::-webkit-inner-spin-button,
+#payment-modal input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#payment-modal input[type="date"] {
+    position: relative;
+    padding-right: 40px;
+}
+
+#payment-modal input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    right: 12px;
+    padding: 0;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+#payment-modal select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px auto;
+    padding-right: 36px;
+}
+
 .action-buttons::after {
     content: '';
     display: block;
-    height: 22vh;
+    height: 5vh;
     width: 100%;
     position: absolute;
-    left: 0;
+    bottom: -130%;
 }
 
 .credit-summary {
@@ -4865,10 +4907,6 @@ main {
     color: #1a1a1a;
 }
 
-.progress-container {
-    margin-bottom: 16px;
-}
-
 .progress-labels {
     display: flex;
     justify-content: space-between;
@@ -4881,13 +4919,6 @@ main {
     background: #f1f3f4;
     border-radius: 4px;
     overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #1a73e8;
-    border-radius: 4px;
-    transition: width 0.3s ease;
 }
 
 .payment-schedule {
@@ -5181,13 +5212,6 @@ main {
     border-radius: 3px;
     overflow: hidden;
     margin-right: 16px;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #1a73e8;
-    border-radius: 3px;
-    transition: width 0.3s ease;
 }
 
 .credit-footer {
@@ -5825,9 +5849,10 @@ main {
 
 .terms-modal .terms-modal-content-inner {
     padding: 20px;
-    height: 100%;
+    height: auto; /* Changed from 100% to auto to prevent scrolling */
     display: flex;
     flex-direction: column;
+    overflow: visible; /* Ensure content can flow naturally */
 }
 
 .terms-modal .terms-modal-body {

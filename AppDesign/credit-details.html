@@ -99,8 +99,40 @@
             </div>
             
             <div class="action-buttons">
-                <button class="btn-primary">Направи извънредно плащане</button>
-                <button class="btn-secondary">Изтепи извлечение</button>
+                <button id="make-payment-btn" class="btn-primary">Направи извънредно плащане</button>
+                <button id="print-statement-btn" class="btn-secondary">Принтирай извлечение</button>
+            </div>
+
+            <!-- Payment Modal -->
+            <div id="payment-modal" class="terms-modal" style="display:none;">
+                <div class="terms-modal-content">
+                    <div class="terms-modal-content-inner">
+                        <button class="terms-modal-close" id="payment-modal-close" aria-label="Затвори">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div class="terms-modal-title">Направи извънредно плащане</div>
+                        <div class="payment-form">
+                            <div class="form-group">
+                                <label for="payment-amount">Сума за плащане (лв)</label>
+                                <input type="number" id="payment-amount" class="form-control" min="1" step="0.01" placeholder="Въведете сума">
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-date">Дата на плащане</label>
+                                <input type="date" id="payment-date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="payment-account">От сметка</label>
+                                <select id="payment-account" class="form-control">
+                                    <option value="">Изберете сметка</option>
+                                    <option value="BG12FINV91501012345678">Сметка 1 - 1000.00 лв</option>
+                                    <option value="BG12FINV91501012345679">Сметка 2 - 2500.50 лв</option>
+                                </select>
+                            </div>
+                            <button id="confirm-payment" class="btn-primary" style="width: 100%; margin-top: 20px;">Потвърди плащането</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="terms-modal-backdrop"></div>
             </div>
         </main>
     </div>
@@ -124,7 +156,6 @@
     </div>
     
     <script>
-        // Credit data - in a real app, this would come from an API
         const creditsData = {
             '1': {
                 id: '1',
@@ -194,13 +225,13 @@
             }
         };
 
-        // Set the mobile frame height
+
         function setMobileFrameHeight() {
             const frame = document.querySelector('.mobile-frame');
             frame.style.height = window.innerHeight + 'px';
         }
 
-        // Format currency
+
         function formatCurrency(amount) {
             return new Intl.NumberFormat('bg-BG', { 
                 style: 'decimal', 
@@ -209,14 +240,14 @@
             }).format(amount) + ' лв';
         }
 
-        // Calculate progress percentage
+
         function calculateProgress(paid, total) {
             return Math.round((paid / total) * 100);
         }
 
-        // Update page with credit data
+
         function updateCreditDetails(credit) {
-            // Update basic credit info
+
             document.querySelector('.credit-name').textContent = credit.type;
             document.querySelector('.credit-amount').textContent = formatCurrency(credit.amount);
             document.querySelector('.credit-status').textContent = credit.status;
@@ -228,20 +259,20 @@
             document.querySelector('.next-payment-date').textContent = credit.nextPayment.dueDate;
             document.querySelector('.remaining-amount').textContent = formatCurrency(credit.remainingAmount);
             
-            // Update progress bar
+
             const progressBar = document.querySelector('.progress-bar');
             if (progressBar) {
                 const progress = calculateProgress(credit.paidAmount, credit.amount);
                 progressBar.style.width = `${progress}%`;
             }
             
-            // Update payments list in main view
+
             const paymentsList = document.querySelector('.payments-list');
             if (paymentsList) {
-                // Clear existing placeholders
+
                 paymentsList.innerHTML = '';
                 
-                // Add real payments (limited to 3 in main view)
+
                 credit.payments.slice(0, 3).forEach(payment => {
                     const paymentRow = document.createElement('div');
                     paymentRow.className = 'payments-row';
@@ -256,8 +287,7 @@
                     `;
                     paymentsList.appendChild(paymentRow);
                 });
-                
-                // Update all payments in modal
+
                 const allPaymentsList = document.getElementById('all-payments-list');
                 if (allPaymentsList) {
                     allPaymentsList.innerHTML = '';
@@ -288,13 +318,13 @@
             }
         }
 
-        // Payments Modal Elements
+
         const paymentsModal = document.getElementById('payments-modal');
         const paymentsModalClose = document.getElementById('payments-modal-close');
         const viewAllPaymentsBtn = document.querySelector('.view-all-payments');
         const allPaymentsList = document.getElementById('all-payments-list');
         
-        // Open payments modal
+
         function openPaymentsModal() {
             if (paymentsModal) {
                 paymentsModal.style.display = 'flex';
@@ -307,7 +337,7 @@
             }
         }
         
-        // Close payments modal
+
         function closePaymentsModal() {
             if (paymentsModal) {
                 paymentsModal.style.display = 'none';
@@ -315,33 +345,163 @@
             }
         }
         
-        // Event listeners for modal
-        if (viewAllPaymentsBtn) {
-            viewAllPaymentsBtn.addEventListener('click', openPaymentsModal);
-        }
-        if (paymentsModalClose) {
-            paymentsModalClose.addEventListener('click', closePaymentsModal);
-        }
-        if (paymentsModal) {
-            paymentsModal.querySelector('.terms-modal-backdrop').addEventListener('click', closePaymentsModal);
+
+        const paymentModal = document.getElementById('payment-modal');
+        const paymentModalClose = document.getElementById('payment-modal-close');
+        const makePaymentBtn = document.getElementById('make-payment-btn');
+        const printStatementBtn = document.getElementById('print-statement-btn');
+        const confirmPaymentBtn = document.getElementById('confirm-payment');
+        const paymentAmountInput = document.getElementById('payment-amount');
+        const paymentDateInput = document.getElementById('payment-date');
+        const paymentAccountSelect = document.getElementById('payment-account');
+
+
+        if (paymentDateInput) {
+            const today = new Date();
+            paymentDateInput.value = today.toISOString().split('T')[0];
+            paymentDateInput.min = today.toISOString().split('T')[0];
         }
 
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', function() {
-            setMobileFrameHeight();
+
+        function openPaymentModal() {
+            if (paymentModal) {
+                paymentModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                // Scroll to top when opening
+                const contentInner = paymentModal.querySelector('.terms-modal-content-inner');
+                if (contentInner) {
+                    contentInner.scrollTop = 0;
+                }
+            }
+        }
+
+
+        function closePaymentModal() {
+            if (paymentModal) {
+                paymentModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+
+        function handlePaymentConfirmation() {
+            const amount = parseFloat(paymentAmountInput.value);
+            const date = paymentDateInput.value;
+            const account = paymentAccountSelect.value;
             
-            // Get credit ID from URL
+            if (!amount || amount <= 0) {
+                alert('Моля, въведете валидна сума за плащане.');
+                return;
+            }
+            
+            if (!date) {
+                alert('Моля, изберете дата на плащане.');
+                return;
+            }
+            
+            if (!account) {
+                alert('Моля, изберете сметка за плащане.');
+                return;
+            }
+            
+
+            alert(`Успешно извършихте извънредно плащане от ${amount} лв.`);
+            closePaymentModal();
+            
+
+            paymentAmountInput.value = '';
+            paymentDateInput.value = new Date().toISOString().split('T')[0];
+            paymentAccountSelect.value = '';
+        }
+
+
+        function handlePrintStatement() {
+
+            alert('Извличането на извлечението е започнало. Моля, изчакайте...');
+            
+
+            setTimeout(() => {
+
+                window.print();
+            }, 1000);
+        }
+
+
+        function setupEventListeners() {
+
+            document.addEventListener('click', function(event) {
+
+                const makePaymentBtn = event.target.closest('#make-payment-btn');
+                const printStatementBtn = event.target.closest('#print-statement-btn');
+                const viewAllPaymentsBtn = event.target.closest('.view-all-payments');
+                const paymentModalCloseBtn = event.target.closest('#payment-modal-close');
+                const confirmPaymentBtn = event.target.closest('#confirm-payment');
+                const paymentsModalCloseBtn = event.target.closest('#payments-modal-close');
+                const modalBackdrop = event.target.closest('.terms-modal-backdrop');
+                
+
+                if (makePaymentBtn) {
+                    event.preventDefault();
+                    openPaymentModal();
+                    return;
+                }
+                
+
+                if (printStatementBtn) {
+                    event.preventDefault();
+                    handlePrintStatement();
+                    return;
+                }
+                
+
+                if (viewAllPaymentsBtn) {
+                    event.preventDefault();
+                    openPaymentsModal();
+                    return;
+                }
+                
+
+                if (paymentModalCloseBtn) {
+                    event.preventDefault();
+                    closePaymentModal();
+                    return;
+                }
+                
+
+                if (confirmPaymentBtn) {
+                    event.preventDefault();
+                    handlePaymentConfirmation();
+                    return;
+                }
+                
+
+                if (paymentsModalCloseBtn) {
+                    event.preventDefault();
+                    closePaymentsModal();
+                    return;
+                }
+                
+
+                if (modalBackdrop) {
+                    closePaymentModal();
+                    closePaymentsModal();
+                    return;
+                }
+            });
+        }
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            setMobileFrameHeight();
             const urlParams = new URLSearchParams(window.location.search);
             const creditId = urlParams.get('id');
             
             if (creditId && creditsData[creditId]) {
                 updateCreditDetails(creditsData[creditId]);
-            } else {
-                // Handle invalid or missing credit ID
-                console.error('Invalid or missing credit ID');
-                // Redirect back to credits page or show error
-                // window.location.href = 'credits.html';
-            }
+            } 
         });
 
         window.addEventListener('resize', setMobileFrameHeight);

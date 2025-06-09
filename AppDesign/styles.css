@@ -347,6 +347,191 @@
     display: none; /* Hidden by default, shown via JS */
 }
 
+/* Credit Offer Details Page */
+.credit-offer-page {
+    background-color: #f5f7fa;
+    min-height: 100vh;
+}
+
+.credit-offer-main {
+    padding: 20px 16px 160px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.credit-offer-summary {
+    background: white;
+    border-radius: 16px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.credit-offer-icon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #4a6cf7 0%, #2546f0 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+}
+
+.credit-offer-icon i {
+    font-size: 28px;
+    color: white;
+}
+
+.offer-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.offer-description {
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.4;
+}
+
+.offer-rate {
+    font-size: 15px;
+    font-weight: 600;
+    color: #4a6cf7;
+    padding: 8px 16px;
+    background: rgba(74, 108, 247, 0.1);
+    border-radius: 20px;
+    display: inline-block;
+}
+
+.offer-details-section {
+    margin-bottom: 24px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info-card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.offer-details-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.info-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.info-label {
+    color: #666;
+    flex: 1;
+}
+
+.info-value {
+    color: #1a1a1a;
+    font-weight: 600;
+    text-align: right;
+    flex: 1;
+}
+
+.benefits-list,
+.requirements-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefits-list li,
+.requirements-list li {
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    color: #333;
+}
+
+.benefits-list li:last-child,
+.requirements-list li:last-child {
+    margin-bottom: 0;
+}
+
+.benefits-list li i {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: #4CAF50;
+    font-size: 16px;
+}
+
+.requirements-list li i {
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: #4a6cf7;
+    font-size: 16px;
+}
+
+.action-buttons {
+    max-width: 600px;
+    margin: 0 auto;
+    z-index: 1000;
+}
+
+.btn-primary {
+    background: #4a6cf7;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #3a5ce4;
+}
+
+.btn-secondary {
+    background: white;
+    color: #4a6cf7;
+    border: 2px solid #4a6cf7;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #f5f8ff;
+}
+
 /* Custom select styles */
 .custom-select-trigger {
     width: 100%;
@@ -4811,6 +4996,15 @@ main {
 }
 
 .action-buttons::after {
+    content: '';
+    display: block;
+    height: 1vh;
+    width: 100%;
+    position: absolute;
+    bottom: -90%;
+}
+
+.larger-after-element::after {
     content: '';
     display: block;
     height: 5vh;

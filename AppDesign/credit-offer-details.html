@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Детайли за кредитна оферта | Банка</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="credit-offer-page">
+    <div class="mobile-frame">
+        <header class="open-account-header">
+            <a href="credits.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <span class="account-details-title section-title">Детайли за оферта</span>
+        </header>
+        
+        <main class="credit-offer-main">
+            <div class="credit-offer-summary">
+                <div class="credit-offer-icon">
+                    <i id="offer-icon" class="fas"></i>
+                </div>
+                <h1 id="offer-title" class="offer-title"></h1>
+                <div id="offer-description" class="offer-description"></div>
+                <div id="offer-rate" class="offer-rate"></div>
+            </div>
+            
+            <div class="offer-details-section">
+                <div class="info-card offer-info-card">
+                    <h3>Основни условия</h3>
+                    <div class="offer-details-wrapper">
+                        <div class="info-detail">
+                            <span class="info-label">Лихвен процент:</span>
+                            <span id="interest-rate" class="info-value"></span>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-label">Срок:</span>
+                            <span id="term" class="info-value"></span>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-label">Вноска на 10 000 лв:</span>
+                            <span id="monthly-payment" class="info-value"></span>
+                        </div>
+                        <div class="info-detail">
+                            <span class="info-label">Такова за кандидатстване:</span>
+                            <span id="application-fee" class="info-value"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="info-card offer-benefits-card">
+                    <h3>Предимства</h3>
+                    <ul id="benefits-list" class="benefits-list">
+                        <!-- Benefits will be populated by JavaScript -->
+                    </ul>
+                </div>
+                
+                <div class="info-card offer-requirements-card">
+                    <h3>Изисквания</h3>
+                    <ul id="requirements-list" class="requirements-list">
+                        <!-- Requirements will be populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a id="apply-now-btn" href="#" class="btn-primary">Кандидатствайте сега</a>
+                <button id="contact-advisor" class="btn-secondary">Свържете се с консултант</button>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Credit offers data
+        const creditOffers = {
+            '1': {
+                id: '1',
+                type: 'Персонален Кредит',
+                description: 'Гъвкаво финансиране за вашите лични нужди',
+                icon: 'fa-wallet',
+                interestRate: '7.9%',
+                term: 'от 12 до 84 месеца',
+                monthlyPayment: 'от 120 лв/месец',
+                applicationFee: '0 лв',
+                benefits: [
+                    'Без обезпека',
+                    'Бързо одобрение',
+                    'Възможност за предсрочно изплащане',
+                    'Фиксиран лихвен процент'
+                ],
+                requirements: [
+                    'Възраст между 18 и 70 години',
+                    'Постоянен доход',
+                    'Гражданин на ЕС',
+                    'Лична карта'
+                ]
+            },
+            '2': {
+                id: '2',
+                type: 'Ипотечен Кредит',
+                description: 'За закупуване на имот или рефинансиране',
+                icon: 'fa-home',
+                interestRate: '3.9%',
+                term: 'до 30 години',
+                monthlyPayment: 'от 47 лв/месец',
+                applicationFee: '0.5% от сумата',
+                benefits: [
+                    'Дългосрочно финансиране',
+                    'Ниски лихвени проценти',
+                    'Възможност за авансово изплащане',
+                    'Избор между фиксиран и променлив лихвен процент'
+                ],
+                requirements: [
+                    'Възраст до 65 години при падеж',
+                    'Постоянен доход',
+                    'Осигуреност с имот',
+                    'Минимален доход 1000 лв'
+                ]
+            },
+            '3': {
+                id: '3',
+                type: 'Автокредит',
+                description: 'За нов или употребяван автомобил',
+                icon: 'fa-car',
+                interestRate: '4.9%',
+                term: 'от 12 до 84 месеца',
+                monthlyPayment: 'от 160 лв/месец',
+                applicationFee: '0.3% от сумата',
+                benefits: [
+                    'До 100% финансиране',
+                    'Бързо одобрение',
+                    'Възможност за предсрочно изплащане',
+                    'Допълнителни застраховки на изгодни условия'
+                ],
+                requirements: [
+                    'Възраст над 18 години',
+                    'Постоянен доход',
+                    'Регистриран автомобил в България',
+                    'Минимален доход 800 лв'
+                ]
+            },
+            '4': {
+                id: '4',
+                type: 'Студентски Кредит',
+                description: 'За покриване на учебни разходи',
+                icon: 'fa-graduation-cap',
+                interestRate: '5.9%',
+                term: 'до 10 години',
+                monthlyPayment: '105 лв/месец',
+                applicationFee: '0 лв',
+                benefits: [
+                    'Отсрочено погасяване до края на обучението',
+                    'Лихвени облекчения за отличници',
+                    'Без обезпека',
+                    'Гъвкава схема за погасяване'
+                ],
+                requirements: [
+                    'Възраст от 18 години',
+                    'Приет в акредитирано висше училище',
+                    'Гражданин на ЕС',
+                    'Поръчител с постоянен доход'
+                ]
+            }
+        };
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const offerId = urlParams.get('id');
+            
+            if (offerId && creditOffers[offerId]) {
+                const offer = creditOffers[offerId];
+                
+                // Update page title
+                document.title = `${offer.type} | Банка`;
+                
+                // Update header
+                document.querySelector('.section-title').textContent = offer.type;
+                
+                // Update offer summary
+                document.getElementById('offer-icon').className = `fas ${offer.icon}`;
+                document.getElementById('offer-title').textContent = offer.type;
+                document.getElementById('offer-description').textContent = offer.description;
+                document.getElementById('offer-rate').textContent = `Годишен лихвен процент: ${offer.interestRate}`;
+                
+                // Update offer details
+                document.getElementById('interest-rate').textContent = offer.interestRate;
+                document.getElementById('term').textContent = offer.term;
+                document.getElementById('monthly-payment').textContent = offer.monthlyPayment;
+                document.getElementById('application-fee').textContent = offer.applicationFee;
+                
+                // Update benefits list
+                const benefitsList = document.getElementById('benefits-list');
+                benefitsList.innerHTML = offer.benefits.map(benefit => 
+                    `<li><i class="fas fa-check-circle"></i>${benefit}</li>`
+                ).join('');
+                
+                // Update requirements list
+                const requirementsList = document.getElementById('requirements-list');
+                requirementsList.innerHTML = offer.requirements.map(req => 
+                    `<li><i class="fas fa-check"></i>${req}</li>`
+                ).join('');
+                
+                // Update apply button link
+                document.getElementById('apply-now-btn').href = `apply-credit.html?type=${offerId}`;
+                
+                // Set up contact advisor button
+                document.getElementById('contact-advisor').addEventListener('click', function() {
+                    alert('Моля, обадете се на телефонен номер 0700 12 345 за връзка с консултант.');
+                });
+            } else {
+                // Redirect to credits page if offer ID is invalid
+                window.location.href = 'credits.html';
+            }
+        });
+    </script>
+</body>
+</html>
